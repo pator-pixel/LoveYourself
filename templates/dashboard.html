@@ -66,6 +66,20 @@
     </div>
 </div>
 
+<div class="form-card">
+    <h3>Dein Fortschritt</h3>
+
+    {% if progress_percent is not none %}
+        <p>{{ progress_percent }} % deines Zieles erreicht</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ progress_percent }}%;"></div>
+        </div>
+    {% else %}
+        <p>Trage Startgewicht, aktuelles Gewicht und Zielgewicht ein, um deinen Fortschritt zu sehen.</p>
+    {% endif %}
+</div>
+
 <div class="message-box">
     <h3>Love Yourself Reminder</h3>
     <p>{{ message }}</p>

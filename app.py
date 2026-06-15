@@ -219,6 +219,7 @@ def dashboard():
     remaining_weight = None
     start_weight = None
     lost_weight = None
+    progress_percent = None
 
     if profile:
         current_weight = profile.weight
@@ -235,6 +236,14 @@ def dashboard():
     if start_weight and current_weight:
         lost_weight = round(start_weight - current_weight, 1)
 
+    if start_weight and current_weight and goal_weight:
+        total_goal = start_weight - goal_weight
+        current_progress = start_weight - current_weight
+
+        if total_goal > 0:
+            progress_percent = round((current_progress / total_goal) * 100)
+            progress_percent = max(0, min(progress_percent, 100))
+
     message = random.choice(LOVE_MESSAGES_DE)
 
     return render_template(
@@ -246,6 +255,7 @@ def dashboard():
         remaining_weight=remaining_weight,
         start_weight=start_weight,
         lost_weight=lost_weight,
+        progress_percent=progress_percent,
         total_entries=len(entries)
     )
 

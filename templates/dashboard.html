@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Willkommen, {{ user.username }}!</h2>
+
+<div class="message-box">
+    <h3>Love Yourself Reminder</h3>
+    <p>{{ message }}</p>
+</div>
+
+<a class="button" href="{{ url_for('profile') }}">Profil bearbeiten</a>
+
+<p>Hier entsteht später dein Gewichtstracking und dein AI-Plan.</p>
+{% endblock %}

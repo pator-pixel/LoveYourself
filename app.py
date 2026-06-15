@@ -1,8 +1,12 @@
 import random
 import string
+from datetime import date
+
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, User, Profile
+
+from models import db, User, Profile, WeightEntry
+
 
 app = Flask(__name__)
 
@@ -11,6 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///love_yourself.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
+
 
 LOVE_MESSAGES_DE = [
     "Es ist nicht schlimm, wenn du heute einen schlechten Tag hattest. Morgen ist eine neue Chance. Denk daran: Love Yourself.",
@@ -135,22 +140,41 @@ def change_password():
 
         if not check_password_hash(user.password_hash, current_password):
             error = "Das aktuelle Passwort ist falsch."
-            return render_template("change_password.html", error=error, success=success)
+            return render_template(
+                "change_password.html",
+                error=error,
+                success=success
+            )
 
         if new_password != confirm_password:
             error = "Die neuen Passwörter stimmen nicht überein."
-            return render_template("change_password.html", error=error, success=success)
+            return render_template(
+                "change_password.html",
+                error=error,
+                success=success
+            )
 
         if not is_valid_password(new_password):
-            error = "Das neue Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
-            return render_template("change_password.html", error=error, success=success)
+            error = (
+                "Das neue Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, "
+                "einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
+            )
+            return render_template(
+                "change_password.html",
+                error=error,
+                success=success
+            )
 
         user.password_hash = generate_password_hash(new_password)
         db.session.commit()
 
         success = "Dein Passwort wurde erfolgreich geändert."
 
-    return render_template("change_password.html", error=error, success=success)
+    return render_template(
+        "change_password.html",
+        error=error,
+        success=success
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -181,9 +205,66 @@ def dashboard():
         return redirect(url_for("login"))
 
     user = User.query.get(user_id)
+    profile = Profile.query.filter_by(user_id=user_id).first()
+
+    entries = (
+        WeightEntry.query
+        .filter_by(user_id=user_id)
+        .order_by(WeightEntry.id.asc())
+        .all()
+    )
+
+    current_weight = None
+    goal_weight = None
+    remaining_weight = None
+    start_weight = None
+    lost_weight = None
+
+    if profile:
+        current_weight = profile.weight
+        goal_weight = profile.goal_weight
+
+    if entries:
+        start_weight = entries[0].weight
+    elif current_weight:
+        start_weight = current_weight
+
+    if current_weight and goal_weight:
+        remaining_weight = round(current_weight - goal_weight, 1)
+
+    if start_weight and current_weight:
+        lost_weight = round(start_weight - current_weight, 1)
+
     message = random.choice(LOVE_MESSAGES_DE)
 
-    return render_template("dashboard.html", user=user, message=message)
+    return render_template(
+        "dashboard.html",
+        user=user,
+        message=message,
+        current_weight=current_weight,
+        goal_weight=goal_weight,
+        remaining_weight=remaining_weight,
+        start_weight=start_weight,
+        lost_weight=lost_weight,
+        total_entries=len(entries)
+    )
+
+
+@app.route("/profile-view")
+def profile_view():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = User.query.get(user_id)
+    profile = Profile.query.filter_by(user_id=user_id).first()
+
+    return render_template(
+        "profile_view.html",
+        user=user,
+        profile=profile
+    )
 
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -258,6 +339,44 @@ def profile():
         return redirect(url_for("dashboard"))
 
     return render_template("profile.html", user=user, profile=profile, error=error)
+
+
+@app.route("/weight", methods=["GET", "POST"])
+def weight_tracking():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        weight = request.form.get("weight")
+        entry_date = request.form.get("date")
+
+        if weight:
+            new_entry = WeightEntry(
+                weight=float(weight),
+                date=entry_date if entry_date else str(date.today()),
+                user_id=user_id
+            )
+
+            db.session.add(new_entry)
+
+            profile = Profile.query.filter_by(user_id=user_id).first()
+            if profile:
+                profile.weight = float(weight)
+
+            db.session.commit()
+
+        return redirect(url_for("weight_tracking"))
+
+    entries = (
+        WeightEntry.query
+        .filter_by(user_id=user_id)
+        .order_by(WeightEntry.id.desc())
+        .all()
+    )
+
+    return render_template("weight.html", entries=entries)
 
 
 @app.route("/logout")

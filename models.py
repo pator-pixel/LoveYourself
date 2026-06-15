@@ -10,6 +10,7 @@ class User(db.Model):
     language = db.Column(db.String(10), default="de")
 
     profile = db.relationship("Profile", backref="user", uselist=False)
+    weight_entries = db.relationship("WeightEntry", backref="user", lazy=True)
 
 
 class Profile(db.Model):
@@ -33,5 +34,13 @@ class Profile(db.Model):
     training_days = db.Column(db.Integer)
     has_gym = db.Column(db.Boolean, default=False)
     home_equipment = db.Column(db.Text)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+
+class WeightEntry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    weight = db.Column(db.Float, nullable=False)
+    date = db.Column(db.String(20), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)

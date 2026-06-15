@@ -1,16 +1,80 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Willkommen, {{ user.username }}!</h2>
+
+<h2>Willkommen, {{ user.username }} ❤️</h2>
+
+<div class="form-grid">
+    <div class="form-card">
+        <h3>Startgewicht</h3>
+        <p>
+            {% if start_weight %}
+                {{ start_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="form-card">
+        <h3>Aktuelles Gewicht</h3>
+        <p>
+            {% if current_weight %}
+                {{ current_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="form-card">
+        <h3>Zielgewicht</h3>
+        <p>
+            {% if goal_weight %}
+                {{ goal_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="form-card">
+        <h3>Noch zu verlieren</h3>
+        <p>
+            {% if remaining_weight %}
+                {{ remaining_weight }} kg
+            {% else %}
+                -
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="form-card">
+        <h3>Bisher verloren</h3>
+        <p>
+            {% if lost_weight is not none %}
+                {{ lost_weight }} kg
+            {% else %}
+                -
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="form-card">
+        <h3>Gewichtseinträge</h3>
+        <p>{{ total_entries }}</p>
+    </div>
+</div>
 
 <div class="message-box">
     <h3>Love Yourself Reminder</h3>
     <p>{{ message }}</p>
 </div>
 
-<a class="button" href="{{ url_for('profile') }}">Profil bearbeiten</a>
+<div class="dashboard-actions">
+    <a class="button" href="{{ url_for('profile_view') }}">Profil anzeigen</a>
+    <a class="button" href="{{ url_for('weight_tracking') }}">Gewicht tracken</a>
+    <a class="button" href="{{ url_for('change_password') }}">Passwort ändern</a>
+</div>
 
-<a class="button" href="{{ url_for('change_password') }}">Passwort ändern</a>
-
-<p>Hier entsteht später dein Gewichtstracking und dein AI-Plan.</p>
 {% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dein Profil</h2>
+
+{% if profile %}
+
+<div class="form-card">
+    <h3>Persönliche Daten</h3>
+    <p><strong>Alter:</strong> {{ profile.age or "Nicht angegeben" }}</p>
+    <p><strong>Geschlecht:</strong> {{ profile.gender or "Nicht angegeben" }}</p>
+    <p><strong>Größe:</strong> {{ profile.height or "Nicht angegeben" }} cm</p>
+    <p><strong>Aktuelles Gewicht:</strong> {{ profile.weight or "Nicht angegeben" }} kg</p>
+    <p><strong>Zielgewicht:</strong> {{ profile.goal_weight or "Nicht angegeben" }} kg</p>
+</div>
+
+<div class="form-card">
+    <h3>Ernährung</h3>
+    <p><strong>Ernährungsform:</strong> {{ profile.diet_type or "Nicht angegeben" }}</p>
+    <p><strong>Allergien:</strong><br>{{ profile.allergies.replace('\n', '<br>')|safe if profile.allergies else "Keine Angabe" }}</p>
+    <p><strong>Krankheiten:</strong><br>{{ profile.diseases.replace('\n', '<br>')|safe if profile.diseases else "Keine Angabe" }}</p>
+    <p><strong>Einschränkungen:</strong><br>{{ profile.limitations.replace('\n', '<br>')|safe if profile.limitations else "Keine Angabe" }}</p>
+    <p><strong>Mag ich:</strong><br>{{ profile.liked_foods.replace('\n', '<br>')|safe if profile.liked_foods else "Keine Angabe" }}</p>
+    <p><strong>Mag ich nicht:</strong><br>{{ profile.disliked_foods.replace('\n', '<br>')|safe if profile.disliked_foods else "Keine Angabe" }}</p>
+</div>
+
+<div class="form-card">
+    <h3>Training</h3>
+    <p><strong>Fitnesslevel:</strong> {{ profile.fitness_level or "Nicht angegeben" }}</p>
+    <p><strong>Trainingstage pro Woche:</strong> {{ profile.training_days or "Nicht angegeben" }}</p>
+    <p><strong>Fitnessstudio:</strong> {% if profile.has_gym %}Ja{% else %}Nein{% endif %}</p>
+    <p><strong>Home-Equipment:</strong><br>{{ profile.home_equipment.replace('\n', '<br>')|safe if profile.home_equipment else "Keine Angabe" }}</p>
+</div>
+
+<a class="button" href="{{ url_for('profile') }}">Profil bearbeiten</a>
+
+{% else %}
+
+<p>Du hast noch kein Profil erstellt.</p>
+<a class="button" href="{{ url_for('profile') }}">Profil erstellen</a>
+
+{% endif %}
+
+<a class="button" href="{{ url_for('dashboard') }}">Zurück zum Dashboard</a>
+{% endblock %}

@@ -44,6 +44,15 @@
                 <label>Zielgewicht in kg:</label>
                 <input type="number" step="0.1" name="goal_weight" value="{{ profile.goal_weight if profile else '' }}">
             </div>
+
+            <div>
+                <label>Aktivitätslevel:</label>
+                <select name="activity_level">
+                    <option value="low" {% if profile and profile.activity_level == "low" %}selected{% endif %}>Wenig aktiv</option>
+                    <option value="medium" {% if profile and profile.activity_level == "medium" %}selected{% endif %}>Normal aktiv</option>
+                    <option value="high" {% if profile and profile.activity_level == "high" %}selected{% endif %}>Sehr aktiv</option>
+                </select>
+            </div>
         </div>
     </section>
 

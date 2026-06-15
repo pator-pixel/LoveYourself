@@ -44,6 +44,35 @@ def generate_temporary_password():
     ) + "!"
 
 
+def calculate_calories(profile):
+    if not profile:
+        return None, None, None
+
+    if not profile.age or not profile.height or not profile.weight or not profile.gender:
+        return None, None, None
+
+    if profile.gender == "male":
+        bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5
+    else:
+        bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161
+
+    activity_factors = {
+        "low": 1.2,
+        "medium": 1.55,
+        "high": 1.75
+    }
+
+    factor = activity_factors.get(profile.activity_level, 1.2)
+
+    maintenance_calories = round(bmr * factor)
+    target_calories = maintenance_calories - 500
+
+    if target_calories < 1200:
+        target_calories = 1200
+
+    return round(bmr), maintenance_calories, target_calories
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -244,6 +273,8 @@ def dashboard():
             progress_percent = round((current_progress / total_goal) * 100)
             progress_percent = max(0, min(progress_percent, 100))
 
+    bmr, maintenance_calories, target_calories = calculate_calories(profile)
+
     message = random.choice(LOVE_MESSAGES_DE)
 
     return render_template(
@@ -256,7 +287,10 @@ def dashboard():
         start_weight=start_weight,
         lost_weight=lost_weight,
         progress_percent=progress_percent,
-        total_entries=len(entries)
+        total_entries=len(entries),
+        bmr=bmr,
+        maintenance_calories=maintenance_calories,
+        target_calories=target_calories
     )
 
 
@@ -313,6 +347,7 @@ def profile():
         profile.height = float(request.form.get("height")) if request.form.get("height") else None
         profile.weight = float(request.form.get("weight")) if request.form.get("weight") else None
         profile.goal_weight = float(request.form.get("goal_weight")) if request.form.get("goal_weight") else None
+        profile.activity_level = request.form.get("activity_level")
 
         profile.diet_type = request.form.get("diet_type")
 

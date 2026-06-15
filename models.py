@@ -21,6 +21,7 @@ class Profile(db.Model):
     height = db.Column(db.Float)
     weight = db.Column(db.Float)
     goal_weight = db.Column(db.Float)
+    activity_level = db.Column(db.String(50))
 
     diet_type = db.Column(db.String(50))
     allergies = db.Column(db.Text)

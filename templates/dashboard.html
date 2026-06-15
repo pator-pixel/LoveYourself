@@ -80,6 +80,19 @@
     {% endif %}
 </div>
 
+<div class="form-card">
+    <h3>Kalorienberechnung</h3>
+
+    {% if target_calories %}
+        <p><strong>Grundumsatz:</strong> {{ bmr }} kcal</p>
+        <p><strong>Erhaltungsbedarf:</strong> {{ maintenance_calories }} kcal</p>
+        <p><strong>Empfohlenes Kalorienziel zum Abnehmen:</strong> {{ target_calories }} kcal</p>
+        <small>Diese Werte sind Schätzungen und ersetzen keine ärztliche Beratung.</small>
+    {% else %}
+        <p>Fülle Alter, Geschlecht, Größe, Gewicht und Aktivitätslevel aus, um dein Kalorienziel zu berechnen.</p>
+    {% endif %}
+</div>
+
 <div class="message-box">
     <h3>Love Yourself Reminder</h3>
     <p>{{ message }}</p>

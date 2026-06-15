@@ -34,7 +34,9 @@ def is_valid_password(password):
 
 
 def generate_temporary_password():
-    return "Love" + "".join(random.choices(string.ascii_letters + string.digits, k=8)) + "!"
+    return "Love" + "".join(
+        random.choices(string.ascii_letters + string.digits, k=8)
+    ) + "!"
 
 
 @app.route("/")
@@ -67,7 +69,10 @@ def register():
             return render_template("register.html", error=error)
 
         if not is_valid_password(password):
-            error = "Das Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
+            error = (
+                "Das Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, "
+                "einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
+            )
             return render_template("register.html", error=error)
 
         new_user = User(
@@ -110,6 +115,42 @@ def forgot_password():
         error=error,
         temporary_password=temporary_password
     )
+
+
+@app.route("/change-password", methods=["GET", "POST"])
+def change_password():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = User.query.get(user_id)
+    error = None
+    success = None
+
+    if request.method == "POST":
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if not check_password_hash(user.password_hash, current_password):
+            error = "Das aktuelle Passwort ist falsch."
+            return render_template("change_password.html", error=error, success=success)
+
+        if new_password != confirm_password:
+            error = "Die neuen Passwörter stimmen nicht überein."
+            return render_template("change_password.html", error=error, success=success)
+
+        if not is_valid_password(new_password):
+            error = "Das neue Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
+            return render_template("change_password.html", error=error, success=success)
+
+        user.password_hash = generate_password_hash(new_password)
+        db.session.commit()
+
+        success = "Dein Passwort wurde erfolgreich geändert."
+
+    return render_template("change_password.html", error=error, success=success)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -163,7 +204,12 @@ def profile():
             training_days = int(training_days_value)
             if training_days < 1 or training_days > 7:
                 error = "Trainingstage müssen zwischen 1 und 7 liegen."
-                return render_template("profile.html", user=user, profile=profile, error=error)
+                return render_template(
+                    "profile.html",
+                    user=user,
+                    profile=profile,
+                    error=error
+                )
         else:
             training_days = None
 
@@ -178,17 +224,34 @@ def profile():
         profile.goal_weight = float(request.form.get("goal_weight")) if request.form.get("goal_weight") else None
 
         profile.diet_type = request.form.get("diet_type")
-        profile.allergies = request.form.get("allergies")
-        profile.diseases = request.form.get("diseases")
-        profile.limitations = request.form.get("limitations")
 
-        profile.liked_foods = request.form.get("liked_foods")
-        profile.disliked_foods = request.form.get("disliked_foods")
+        profile.allergies = "\n".join(
+            item for item in request.form.getlist("allergies_item") if item.strip()
+        )
+
+        profile.diseases = "\n".join(
+            item for item in request.form.getlist("diseases_item") if item.strip()
+        )
+
+        profile.limitations = "\n".join(
+            item for item in request.form.getlist("limitations_item") if item.strip()
+        )
+
+        profile.liked_foods = "\n".join(
+            item for item in request.form.getlist("liked_foods_item") if item.strip()
+        )
+
+        profile.disliked_foods = "\n".join(
+            item for item in request.form.getlist("disliked_foods_item") if item.strip()
+        )
 
         profile.fitness_level = request.form.get("fitness_level")
         profile.training_days = training_days
         profile.has_gym = request.form.get("has_gym") == "yes"
-        profile.home_equipment = request.form.get("home_equipment")
+
+        profile.home_equipment = "\n".join(
+            item for item in request.form.getlist("home_equipment_item") if item.strip()
+        )
 
         db.session.commit()
 

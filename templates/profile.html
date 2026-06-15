@@ -3,74 +3,181 @@
 {% block content %}
 <h2>Dein Profil</h2>
 
+{% if error %}
+<div class="message-box">
+    <p>{{ error }}</p>
+</div>
+{% endif %}
+
 <form method="POST">
-    <h3>Persönliche Daten</h3>
 
-    <label>Alter:</label>
-    <input type="number" name="age" value="{{ profile.age if profile else '' }}">
+    <section class="form-card">
+        <h3>Persönliche Daten</h3>
 
-    <label>Geschlecht:</label>
-    <select name="gender">
-        <option value="">Bitte wählen</option>
-        <option value="female" {% if profile and profile.gender == "female" %}selected{% endif %}>Weiblich</option>
-        <option value="male" {% if profile and profile.gender == "male" %}selected{% endif %}>Männlich</option>
-        <option value="diverse" {% if profile and profile.gender == "diverse" %}selected{% endif %}>Divers</option>
-    </select>
+        <div class="form-grid">
+            <div>
+                <label>Alter:</label>
+                <input type="number" name="age" value="{{ profile.age if profile else '' }}">
+            </div>
 
-    <label>Größe in cm:</label>
-    <input type="number" step="0.1" name="height" value="{{ profile.height if profile else '' }}">
+            <div>
+                <label>Geschlecht:</label>
+                <select name="gender">
+                    <option value="">Bitte wählen</option>
+                    <option value="female" {% if profile and profile.gender == "female" %}selected{% endif %}>Weiblich</option>
+                    <option value="male" {% if profile and profile.gender == "male" %}selected{% endif %}>Männlich</option>
+                    <option value="diverse" {% if profile and profile.gender == "diverse" %}selected{% endif %}>Divers</option>
+                </select>
+            </div>
 
-    <label>Aktuelles Gewicht in kg:</label>
-    <input type="number" step="0.1" name="weight" value="{{ profile.weight if profile else '' }}">
+            <div>
+                <label>Größe in cm:</label>
+                <input type="number" step="0.1" name="height" value="{{ profile.height if profile else '' }}">
+            </div>
 
-    <label>Zielgewicht in kg:</label>
-    <input type="number" step="0.1" name="goal_weight" value="{{ profile.goal_weight if profile else '' }}">
+            <div>
+                <label>Aktuelles Gewicht in kg:</label>
+                <input type="number" step="0.1" name="weight" value="{{ profile.weight if profile else '' }}">
+            </div>
 
-    <h3>Ernährung</h3>
+            <div>
+                <label>Zielgewicht in kg:</label>
+                <input type="number" step="0.1" name="goal_weight" value="{{ profile.goal_weight if profile else '' }}">
+            </div>
+        </div>
+    </section>
 
-    <label>Ernährungsform:</label>
-    <select name="diet_type">
-        <option value="normal" {% if profile and profile.diet_type == "normal" %}selected{% endif %}>Normal</option>
-        <option value="vegetarian" {% if profile and profile.diet_type == "vegetarian" %}selected{% endif %}>Vegetarisch</option>
-        <option value="vegan" {% if profile and profile.diet_type == "vegan" %}selected{% endif %}>Vegan</option>
-    </select>
+    <section class="form-card">
+        <h3>Ernährung</h3>
 
-    <label>Allergien:</label>
-    <textarea name="allergies">{{ profile.allergies if profile else '' }}</textarea>
+        <label>Ernährungsform:</label>
+        <select name="diet_type">
+            <option value="normal" {% if profile and profile.diet_type == "normal" %}selected{% endif %}>Normal</option>
+            <option value="vegetarian" {% if profile and profile.diet_type == "vegetarian" %}selected{% endif %}>Vegetarisch</option>
+            <option value="vegan" {% if profile and profile.diet_type == "vegan" %}selected{% endif %}>Vegan</option>
+        </select>
 
-    <label>Krankheiten:</label>
-    <textarea name="diseases">{{ profile.diseases if profile else '' }}</textarea>
+        <div class="dynamic-section">
+            <label>Allergien:</label>
+            <div id="allergies-list">
+                {% if profile and profile.allergies %}
+                    {% for item in profile.allergies.split('\n') %}
+                        <input type="text" name="allergies_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="allergies_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('allergies-list', 'allergies_item')">+ Allergie hinzufügen</button>
+        </div>
 
-    <label>Körperliche Einschränkungen:</label>
-    <textarea name="limitations">{{ profile.limitations if profile else '' }}</textarea>
+        <div class="dynamic-section">
+            <label>Krankheiten:</label>
+            <div id="diseases-list">
+                {% if profile and profile.diseases %}
+                    {% for item in profile.diseases.split('\n') %}
+                        <input type="text" name="diseases_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="diseases_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('diseases-list', 'diseases_item')">+ Krankheit hinzufügen</button>
+        </div>
 
-    <label>Lebensmittel, die du gerne isst:</label>
-    <textarea name="liked_foods">{{ profile.liked_foods if profile else '' }}</textarea>
+        <div class="dynamic-section">
+            <label>Körperliche Einschränkungen:</label>
+            <div id="limitations-list">
+                {% if profile and profile.limitations %}
+                    {% for item in profile.limitations.split('\n') %}
+                        <input type="text" name="limitations_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="limitations_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('limitations-list', 'limitations_item')">+ Einschränkung hinzufügen</button>
+        </div>
 
-    <label>Lebensmittel, die du nicht magst:</label>
-    <textarea name="disliked_foods">{{ profile.disliked_foods if profile else '' }}</textarea>
+        <div class="dynamic-section">
+            <label>Lebensmittel, die du gerne isst:</label>
+            <div id="liked-foods-list">
+                {% if profile and profile.liked_foods %}
+                    {% for item in profile.liked_foods.split('\n') %}
+                        <input type="text" name="liked_foods_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="liked_foods_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('liked-foods-list', 'liked_foods_item')">+ Lebensmittel hinzufügen</button>
+        </div>
 
-    <h3>Training</h3>
+        <div class="dynamic-section">
+            <label>Lebensmittel, die du nicht magst:</label>
+            <div id="disliked-foods-list">
+                {% if profile and profile.disliked_foods %}
+                    {% for item in profile.disliked_foods.split('\n') %}
+                        <input type="text" name="disliked_foods_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="disliked_foods_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('disliked-foods-list', 'disliked_foods_item')">+ Lebensmittel hinzufügen</button>
+        </div>
+    </section>
 
-    <label>Fitnesslevel:</label>
-    <select name="fitness_level">
-        <option value="beginner" {% if profile and profile.fitness_level == "beginner" %}selected{% endif %}>Anfänger</option>
-        <option value="intermediate" {% if profile and profile.fitness_level == "intermediate" %}selected{% endif %}>Mittel</option>
-        <option value="advanced" {% if profile and profile.fitness_level == "advanced" %}selected{% endif %}>Profi</option>
-    </select>
+    <section class="form-card">
+        <h3>Training</h3>
 
-    <label>Trainingstage pro Woche:</label>
-    <input type="number" name="training_days" min="0" max="7" value="{{ profile.training_days if profile else '' }}">
+        <label>Fitnesslevel:</label>
+        <select name="fitness_level">
+            <option value="beginner" {% if profile and profile.fitness_level == "beginner" %}selected{% endif %}>Anfänger</option>
+            <option value="intermediate" {% if profile and profile.fitness_level == "intermediate" %}selected{% endif %}>Mittel</option>
+            <option value="advanced" {% if profile and profile.fitness_level == "advanced" %}selected{% endif %}>Profi</option>
+        </select>
 
-    <label>Fitnessstudio vorhanden?</label>
-    <select name="has_gym">
-        <option value="no" {% if profile and not profile.has_gym %}selected{% endif %}>Nein</option>
-        <option value="yes" {% if profile and profile.has_gym %}selected{% endif %}>Ja</option>
-    </select>
+        <label>Trainingstage pro Woche:</label>
+        <select name="training_days">
+            {% for day in range(1, 8) %}
+                <option value="{{ day }}" {% if profile and profile.training_days == day %}selected{% endif %}>
+                    {{ day }} Tag{% if day > 1 %}e{% endif %}
+                </option>
+            {% endfor %}
+        </select>
 
-    <label>Home-Equipment:</label>
-    <textarea name="home_equipment">{{ profile.home_equipment if profile else '' }}</textarea>
+        <label>Fitnessstudio vorhanden?</label>
+        <select name="has_gym">
+            <option value="no" {% if profile and not profile.has_gym %}selected{% endif %}>Nein</option>
+            <option value="yes" {% if profile and profile.has_gym %}selected{% endif %}>Ja</option>
+        </select>
+
+        <div class="dynamic-section">
+            <label>Home-Equipment:</label>
+            <div id="home-equipment-list">
+                {% if profile and profile.home_equipment %}
+                    {% for item in profile.home_equipment.split('\n') %}
+                        <input type="text" name="home_equipment_item" value="{{ item }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="home_equipment_item">
+                {% endif %}
+            </div>
+            <button type="button" onclick="addField('home-equipment-list', 'home_equipment_item')">+ Equipment hinzufügen</button>
+        </div>
+    </section>
 
     <button type="submit">Profil speichern</button>
 </form>
+
+<script>
+function addField(containerId, inputName) {
+    const container = document.getElementById(containerId);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = inputName;
+    container.appendChild(input);
+}
+</script>
 {% endblock %}

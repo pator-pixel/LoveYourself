@@ -20,18 +20,27 @@ nav a {
 }
 
 main {
-    max-width: 800px;
+    max-width: 900px;
     margin: 40px auto;
     background: white;
     padding: 30px;
     border-radius: 12px;
 }
 
-input, select, button {
+h2, h3 {
+    color: #d94f76;
+}
+
+input, select, textarea, button {
     display: block;
-    margin: 10px 0 20px;
+    margin: 8px 0 18px;
     padding: 10px;
     width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 90px;
 }
 
 button, .button {
@@ -42,10 +51,65 @@ button, .button {
     border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover, .button:hover {
+    background: #f36f96;
 }
 
 .message-box {
     background: #ffe0ea;
     padding: 20px;
     border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.form-card {
+    background: #fff7fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #ffd0de;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-grid input,
+.form-grid select {
+    width: 100%;
+}
+
+.dynamic-section {
+    margin-top: 20px;
+}
+
+.dynamic-section button {
+    width: auto;
+    padding: 8px 14px;
+    background: #ffc2d4;
+    color: #333;
+}
+
+.dynamic-section button:hover {
+    background: #ffadc5;
+}
+
+a {
+    color: #d94f76;
+}
+
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        margin: 20px;
+        padding: 20px;
+    }
 }

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dein Plan vom {{ plan.created_at }}</h2>
+
+<div class="form-card">
+    <h3>Kalorienziel</h3>
+    <p>{{ plan.calories or "Nicht berechnet" }} kcal</p>
+</div>
+
+<div class="form-card">
+    <h3>Ernährungsplan</h3>
+    <pre>{{ plan.meal_plan }}</pre>
+</div>
+
+<div class="form-card">
+    <h3>Trainingsplan</h3>
+    <pre>{{ plan.workout_plan }}</pre>
+</div>
+
+<div class="form-card">
+    <h3>Einkaufsliste</h3>
+    <pre>{{ plan.shopping_list }}</pre>
+</div>
+
+<a class="button" href="{{ url_for('plans') }}">Zurück zu meinen Plänen</a>
+<a class="button" href="{{ url_for('dashboard') }}">Dashboard</a>
+<a class="button" href="{{ url_for('download_plan_pdf', plan_id=plan.id) }}">
+    PDF herunterladen
+</a>
+{% endblock %}

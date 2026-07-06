@@ -2,23 +2,64 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+
     <title>Love Yourself</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-<header>
-    <h1>Love Yourself</h1>
+<header class="hero-header">
+
+    <div class="logo-container">
+
+        <img src="{{ url_for('static', filename='logo.png') }}"
+             alt="Love Yourself Logo"
+             class="logo">
+
+        <div class="hero-text">
+
+            <h1>Love Yourself</h1>
+
+            <h2>Ernährung. Training. Gesundheit.</h2>
+
+            <p class="hero-quote">
+                Dein Körper kann es, überzeuge deinen Geist.
+            </p>
+
+            <p class="hero-subquote">
+                Dein zukünftiges Ich wird dir für die Entscheidung von heute danken.
+            </p>
+
+        </div>
+
+    </div>
+
     <nav>
         <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('register') }}">Register</a>
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
+
+        {% if session.get("user_id") %}
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('register') }}">Registrieren</a>
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
     </nav>
+
 </header>
 
 <main>
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
 </main>
 
 </body>

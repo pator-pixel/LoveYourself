@@ -1,11 +1,13 @@
 import random
 import string
+import os
 from datetime import date
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from models import db, User, Profile, WeightEntry
+from models import db, User, Profile, WeightEntry, Plan
+from pdf_generator import generate_plan_pdf
 
 
 app = Flask(__name__)
@@ -30,12 +32,12 @@ def is_valid_password(password):
     if len(password) < 8:
         return False
 
-    has_uppercase = any(char.isupper() for char in password)
-    has_lowercase = any(char.islower() for char in password)
-    has_digit = any(char.isdigit() for char in password)
-    has_special = any(char in string.punctuation for char in password)
-
-    return has_uppercase and has_lowercase and has_digit and has_special
+    return (
+        any(char.isupper() for char in password)
+        and any(char.islower() for char in password)
+        and any(char.isdigit() for char in password)
+        and any(char in string.punctuation for char in password)
+    )
 
 
 def generate_temporary_password():
@@ -44,17 +46,22 @@ def generate_temporary_password():
     ) + "!"
 
 
-def calculate_calories(profile):
+def calculate_calories(profile, current_weight=None):
     if not profile:
         return None, None, None
 
-    if not profile.age or not profile.height or not profile.weight or not profile.gender:
+    if not profile.age or not profile.height or not profile.gender:
+        return None, None, None
+
+    weight_for_calculation = current_weight if current_weight else profile.weight
+
+    if not weight_for_calculation:
         return None, None, None
 
     if profile.gender == "male":
-        bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5
+        bmr = 10 * weight_for_calculation + 6.25 * profile.height - 5 * profile.age + 5
     else:
-        bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161
+        bmr = 10 * weight_for_calculation + 6.25 * profile.height - 5 * profile.age - 161
 
     activity_factors = {
         "low": 1.2,
@@ -71,6 +78,51 @@ def calculate_calories(profile):
         target_calories = 1200
 
     return round(bmr), maintenance_calories, target_calories
+
+
+def build_ai_prompt(profile, target_calories):
+    return f"""
+Du bist ein hilfreicher AI-Fitness- und Ernährungscoach.
+
+Erstelle für den Nutzer:
+1. Einen 7-Tage-Ernährungsplan
+2. Frühstück, Mittagessen, Abendessen und Snacks für jeden Tag
+3. Eine sortierte Einkaufsliste nach Kategorien
+4. Einen Trainingsplan mit Krafttraining und Cardio
+5. Für jeden Trainingstag eine Alternative: Schritte-Ziel, falls keine Zeit ist
+
+Wichtiger Hinweis:
+Gib keine medizinische Diagnose. Schreibe nur:
+"Bei gesundheitlichen Einschränkungen bitte ärztlich abklären."
+
+Nutzerdaten:
+Alter: {profile.age}
+Geschlecht: {profile.gender}
+Größe: {profile.height} cm
+Startgewicht: {profile.weight} kg
+Zielgewicht: {profile.goal_weight} kg
+Aktivitätslevel: {profile.activity_level}
+Kalorienziel: {target_calories} kcal
+
+Ernährung:
+Ernährungsform: {profile.diet_type}
+Allergien: {profile.allergies}
+Krankheiten: {profile.diseases}
+Körperliche Einschränkungen: {profile.limitations}
+Lebensmittel, die der Nutzer mag: {profile.liked_foods}
+Lebensmittel, die der Nutzer nicht mag: {profile.disliked_foods}
+
+Training:
+Fitnesslevel: {profile.fitness_level}
+Trainingstage pro Woche: {profile.training_days}
+Fitnessstudio vorhanden: {"Ja" if profile.has_gym else "Nein"}
+Home-Equipment: {profile.home_equipment}
+
+Sprache:
+Deutsch.
+
+Strukturiere die Antwort übersichtlich mit Überschriften.
+"""
 
 
 @app.route("/")
@@ -92,9 +144,7 @@ def register():
             error = "Der Benutzername muss mindestens 3 Zeichen lang sein."
             return render_template("register.html", error=error)
 
-        existing_user = User.query.filter_by(username=username).first()
-
-        if existing_user:
+        if User.query.filter_by(username=username).first():
             error = "Dieser Benutzername ist bereits vergeben."
             return render_template("register.html", error=error)
 
@@ -103,10 +153,7 @@ def register():
             return render_template("register.html", error=error)
 
         if not is_valid_password(password):
-            error = (
-                "Das Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, "
-                "einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
-            )
+            error = "Das Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
             return render_template("register.html", error=error)
 
         new_user = User(
@@ -134,11 +181,7 @@ def forgot_password():
 
         if not user:
             error = "Dieser Benutzername wurde nicht gefunden."
-            return render_template(
-                "forgot_password.html",
-                error=error,
-                temporary_password=temporary_password
-            )
+            return render_template("forgot_password.html", error=error)
 
         temporary_password = generate_temporary_password()
         user.password_hash = generate_password_hash(temporary_password)
@@ -169,41 +212,22 @@ def change_password():
 
         if not check_password_hash(user.password_hash, current_password):
             error = "Das aktuelle Passwort ist falsch."
-            return render_template(
-                "change_password.html",
-                error=error,
-                success=success
-            )
+            return render_template("change_password.html", error=error)
 
         if new_password != confirm_password:
             error = "Die neuen Passwörter stimmen nicht überein."
-            return render_template(
-                "change_password.html",
-                error=error,
-                success=success
-            )
+            return render_template("change_password.html", error=error)
 
         if not is_valid_password(new_password):
-            error = (
-                "Das neue Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, "
-                "einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
-            )
-            return render_template(
-                "change_password.html",
-                error=error,
-                success=success
-            )
+            error = "Das neue Passwort erfüllt die Sicherheitsregeln nicht."
+            return render_template("change_password.html", error=error)
 
         user.password_hash = generate_password_hash(new_password)
         db.session.commit()
 
         success = "Dein Passwort wurde erfolgreich geändert."
 
-    return render_template(
-        "change_password.html",
-        error=error,
-        success=success
-    )
+    return render_template("change_password.html", error=error, success=success)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -221,7 +245,6 @@ def login():
             return redirect(url_for("dashboard"))
 
         error = "Benutzername oder Passwort ist falsch."
-        return render_template("login.html", error=error)
 
     return render_template("login.html", error=error)
 
@@ -243,27 +266,31 @@ def dashboard():
         .all()
     )
 
-    current_weight = None
-    goal_weight = None
-    remaining_weight = None
-    start_weight = None
-    lost_weight = None
-    progress_percent = None
-
-    if profile:
-        current_weight = profile.weight
-        goal_weight = profile.goal_weight
+    start_weight = profile.weight if profile else None
+    goal_weight = profile.goal_weight if profile else None
 
     if entries:
-        start_weight = entries[0].weight
-    elif current_weight:
-        start_weight = current_weight
+        current_weight = entries[-1].weight
+    else:
+        current_weight = start_weight
+
+    remaining_weight = None
+    lost_weight = None
+    weight_change_text = None
+    progress_percent = None
 
     if current_weight and goal_weight:
         remaining_weight = round(current_weight - goal_weight, 1)
 
     if start_weight and current_weight:
         lost_weight = round(start_weight - current_weight, 1)
+
+        if lost_weight > 0:
+            weight_change_text = f"{lost_weight} kg abgenommen"
+        elif lost_weight < 0:
+            weight_change_text = f"{abs(lost_weight)} kg zugenommen"
+        else:
+            weight_change_text = "Keine Veränderung"
 
     if start_weight and current_weight and goal_weight:
         total_goal = start_weight - goal_weight
@@ -273,7 +300,10 @@ def dashboard():
             progress_percent = round((current_progress / total_goal) * 100)
             progress_percent = max(0, min(progress_percent, 100))
 
-    bmr, maintenance_calories, target_calories = calculate_calories(profile)
+    bmr, maintenance_calories, target_calories = calculate_calories(
+        profile,
+        current_weight
+    )
 
     message = random.choice(LOVE_MESSAGES_DE)
 
@@ -286,12 +316,111 @@ def dashboard():
         remaining_weight=remaining_weight,
         start_weight=start_weight,
         lost_weight=lost_weight,
+        weight_change_text=weight_change_text,
         progress_percent=progress_percent,
         total_entries=len(entries),
         bmr=bmr,
         maintenance_calories=maintenance_calories,
         target_calories=target_calories
     )
+
+
+@app.route("/generate-plan-prompt")
+def generate_plan_prompt():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    profile = Profile.query.filter_by(user_id=user_id).first()
+
+    if not profile:
+        return redirect(url_for("profile"))
+
+    latest_entry = (
+        WeightEntry.query
+        .filter_by(user_id=user_id)
+        .order_by(WeightEntry.id.desc())
+        .first()
+    )
+
+    current_weight = latest_entry.weight if latest_entry else profile.weight
+
+    bmr, maintenance_calories, target_calories = calculate_calories(
+        profile,
+        current_weight
+    )
+
+    prompt = build_ai_prompt(profile, target_calories)
+
+    new_plan = Plan(
+        created_at=str(date.today()),
+        prompt=prompt,
+        generated_text="AI-Ausgabe wird später hier gespeichert.",
+        calories=target_calories,
+        user_id=user_id
+    )
+
+    db.session.add(new_plan)
+    db.session.commit()
+
+    return redirect(url_for("view_plan", plan_id=new_plan.id))
+
+
+@app.route("/plans")
+def plans():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user_plans = Plan.query.filter_by(user_id=user_id).order_by(Plan.id.desc()).all()
+
+    return render_template("plans.html", plans=user_plans)
+
+
+@app.route("/plans/<int:plan_id>")
+def view_plan(plan_id):
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    plan = Plan.query.filter_by(id=plan_id, user_id=user_id).first()
+
+    if not plan:
+        return "Plan nicht gefunden", 404
+
+    return render_template("plan.html", plan=plan)
+
+
+@app.route("/plans/<int:plan_id>/download")
+def download_plan_pdf(plan_id):
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = User.query.get(user_id)
+    profile = Profile.query.filter_by(user_id=user_id).first()
+    plan = Plan.query.filter_by(id=plan_id, user_id=user_id).first()
+
+    if not plan:
+        return "Plan nicht gefunden", 404
+
+    pdf_folder = "generated_pdfs"
+
+    if not os.path.exists(pdf_folder):
+        os.makedirs(pdf_folder)
+
+    file_path = os.path.join(
+        pdf_folder,
+        f"love_yourself_plan_{plan.id}.pdf"
+    )
+
+    generate_plan_pdf(plan, user, profile, file_path)
+
+    return send_file(file_path, as_attachment=True)
 
 
 @app.route("/profile-view")
@@ -304,11 +433,7 @@ def profile_view():
     user = User.query.get(user_id)
     profile = Profile.query.filter_by(user_id=user_id).first()
 
-    return render_template(
-        "profile_view.html",
-        user=user,
-        profile=profile
-    )
+    return render_template("profile_view.html", user=user, profile=profile)
 
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -323,20 +448,11 @@ def profile():
     error = None
 
     if request.method == "POST":
-        training_days_value = request.form.get("training_days")
+        training_days = int(request.form.get("training_days"))
 
-        if training_days_value:
-            training_days = int(training_days_value)
-            if training_days < 1 or training_days > 7:
-                error = "Trainingstage müssen zwischen 1 und 7 liegen."
-                return render_template(
-                    "profile.html",
-                    user=user,
-                    profile=profile,
-                    error=error
-                )
-        else:
-            training_days = None
+        if training_days < 1 or training_days > 7:
+            error = "Trainingstage müssen zwischen 1 und 7 liegen."
+            return render_template("profile.html", user=user, profile=profile, error=error)
 
         if profile is None:
             profile = Profile(user_id=user_id)
@@ -350,38 +466,20 @@ def profile():
         profile.activity_level = request.form.get("activity_level")
 
         profile.diet_type = request.form.get("diet_type")
-
-        profile.allergies = "\n".join(
-            item for item in request.form.getlist("allergies_item") if item.strip()
-        )
-
-        profile.diseases = "\n".join(
-            item for item in request.form.getlist("diseases_item") if item.strip()
-        )
-
-        profile.limitations = "\n".join(
-            item for item in request.form.getlist("limitations_item") if item.strip()
-        )
-
-        profile.liked_foods = "\n".join(
-            item for item in request.form.getlist("liked_foods_item") if item.strip()
-        )
-
-        profile.disliked_foods = "\n".join(
-            item for item in request.form.getlist("disliked_foods_item") if item.strip()
-        )
+        profile.allergies = "\n".join(item for item in request.form.getlist("allergies_item") if item.strip())
+        profile.diseases = "\n".join(item for item in request.form.getlist("diseases_item") if item.strip())
+        profile.limitations = "\n".join(item for item in request.form.getlist("limitations_item") if item.strip())
+        profile.liked_foods = "\n".join(item for item in request.form.getlist("liked_foods_item") if item.strip())
+        profile.disliked_foods = "\n".join(item for item in request.form.getlist("disliked_foods_item") if item.strip())
 
         profile.fitness_level = request.form.get("fitness_level")
         profile.training_days = training_days
         profile.has_gym = request.form.get("has_gym") == "yes"
-
-        profile.home_equipment = "\n".join(
-            item for item in request.form.getlist("home_equipment_item") if item.strip()
-        )
+        profile.home_equipment = "\n".join(item for item in request.form.getlist("home_equipment_item") if item.strip())
 
         db.session.commit()
 
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("profile", saved="1"))
 
     return render_template("profile.html", user=user, profile=profile, error=error)
 
@@ -393,23 +491,39 @@ def weight_tracking():
     if not user_id:
         return redirect(url_for("login"))
 
+    error = None
+
     if request.method == "POST":
         weight = request.form.get("weight")
         entry_date = request.form.get("date")
 
         if weight:
+            weight_value = float(weight)
+
+            if weight_value < 30 or weight_value > 300:
+                error = "Bitte gib ein realistisches Gewicht zwischen 30 und 300 kg ein."
+
+                entries = (
+                    WeightEntry.query
+                    .filter_by(user_id=user_id)
+                    .order_by(WeightEntry.id.desc())
+                    .all()
+                )
+
+                return render_template(
+                    "weight.html",
+                    entries=entries,
+                    today=str(date.today()),
+                    error=error
+                )
+
             new_entry = WeightEntry(
-                weight=float(weight),
+                weight=weight_value,
                 date=entry_date if entry_date else str(date.today()),
                 user_id=user_id
             )
 
             db.session.add(new_entry)
-
-            profile = Profile.query.filter_by(user_id=user_id).first()
-            if profile:
-                profile.weight = float(weight)
-
             db.session.commit()
 
         return redirect(url_for("weight_tracking"))
@@ -421,7 +535,28 @@ def weight_tracking():
         .all()
     )
 
-    return render_template("weight.html", entries=entries)
+    return render_template(
+        "weight.html",
+        entries=entries,
+        today=str(date.today()),
+        error=error
+    )
+
+
+@app.route("/weight/<int:entry_id>/delete", methods=["POST"])
+def delete_weight_entry(entry_id):
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return redirect(url_for("login"))
+
+    entry = WeightEntry.query.filter_by(id=entry_id, user_id=user_id).first()
+
+    if entry:
+        db.session.delete(entry)
+        db.session.commit()
+
+    return redirect(url_for("weight_tracking"))
 
 
 @app.route("/logout")

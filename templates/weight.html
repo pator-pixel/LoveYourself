@@ -3,15 +3,23 @@
 {% block content %}
 <h2>Gewichtstracking</h2>
 
-<form method="POST">
-    <label>Gewicht in kg:</label>
-    <input type="number" step="0.1" name="weight" required>
+{% if error %}
+<div class="message-box">
+    <p>{{ error }}</p>
+</div>
+{% endif %}
 
-    <label>Datum:</label>
-    <input type="date" name="date">
+<div class="form-card">
+    <form method="POST">
+        <label>Gewicht in kg:</label>
+        <input type="number" step="0.1" name="weight" required>
 
-    <button type="submit">Gewicht speichern</button>
-</form>
+        <label>Datum:</label>
+        <input type="date" name="date" value="{{ today }}">
+
+        <button type="submit">Gewicht speichern</button>
+    </form>
+</div>
 
 <h3>Dein Verlauf</h3>
 
@@ -20,12 +28,19 @@
     <tr>
         <th>Datum</th>
         <th>Gewicht</th>
+        <th>Aktion</th>
     </tr>
 
     {% for entry in entries %}
     <tr>
         <td>{{ entry.date }}</td>
         <td>{{ entry.weight }} kg</td>
+        <td>
+            <form method="POST"
+                  action="{{ url_for('delete_weight_entry', entry_id=entry.id) }}">
+                <button type="submit" class="delete-button">Löschen</button>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>

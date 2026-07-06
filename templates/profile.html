@@ -9,6 +9,12 @@
 </div>
 {% endif %}
 
+{% if request.args.get("saved") %}
+<div class="message-box">
+    <p>Dein Profil wurde erfolgreich gespeichert.</p>
+</div>
+{% endif %}
+
 <form method="POST">
 
     <section class="form-card">
@@ -31,18 +37,18 @@
             </div>
 
             <div>
-                <label>Größe in cm:</label>
-                <input type="number" step="0.1" name="height" value="{{ profile.height if profile else '' }}">
-            </div>
-
-            <div>
-                <label>Aktuelles Gewicht in kg:</label>
+                <label>Startgewicht in kg:</label>
                 <input type="number" step="0.1" name="weight" value="{{ profile.weight if profile else '' }}">
             </div>
 
             <div>
                 <label>Zielgewicht in kg:</label>
                 <input type="number" step="0.1" name="goal_weight" value="{{ profile.goal_weight if profile else '' }}">
+            </div>
+
+            <div>
+                <label>Größe in cm:</label>
+                <input type="number" step="0.1" name="height" value="{{ profile.height if profile else '' }}">
             </div>
 
             <div>
@@ -71,10 +77,12 @@
             <div id="allergies-list">
                 {% if profile and profile.allergies %}
                     {% for item in profile.allergies.split('\n') %}
-                        <input type="text" name="allergies_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="allergies_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="allergies_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('allergies-list', 'allergies_item')">+ Allergie hinzufügen</button>
@@ -85,10 +93,12 @@
             <div id="diseases-list">
                 {% if profile and profile.diseases %}
                     {% for item in profile.diseases.split('\n') %}
-                        <input type="text" name="diseases_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="diseases_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="diseases_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('diseases-list', 'diseases_item')">+ Krankheit hinzufügen</button>
@@ -99,10 +109,12 @@
             <div id="limitations-list">
                 {% if profile and profile.limitations %}
                     {% for item in profile.limitations.split('\n') %}
-                        <input type="text" name="limitations_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="limitations_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="limitations_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('limitations-list', 'limitations_item')">+ Einschränkung hinzufügen</button>
@@ -113,10 +125,12 @@
             <div id="liked-foods-list">
                 {% if profile and profile.liked_foods %}
                     {% for item in profile.liked_foods.split('\n') %}
-                        <input type="text" name="liked_foods_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="liked_foods_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="liked_foods_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('liked-foods-list', 'liked_foods_item')">+ Lebensmittel hinzufügen</button>
@@ -127,10 +141,12 @@
             <div id="disliked-foods-list">
                 {% if profile and profile.disliked_foods %}
                     {% for item in profile.disliked_foods.split('\n') %}
-                        <input type="text" name="disliked_foods_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="disliked_foods_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="disliked_foods_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('disliked-foods-list', 'disliked_foods_item')">+ Lebensmittel hinzufügen</button>
@@ -167,26 +183,75 @@
             <div id="home-equipment-list">
                 {% if profile and profile.home_equipment %}
                     {% for item in profile.home_equipment.split('\n') %}
-                        <input type="text" name="home_equipment_item" value="{{ item }}">
+                    <div class="field-row">
+                        <span class="saved-chip">{{ item }}</span>
+                        <input type="hidden" name="home_equipment_item" value="{{ item }}">
+                        <button type="button" class="small-delete-button" onclick="removeField(this)">Löschen</button>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <input type="text" name="home_equipment_item">
                 {% endif %}
             </div>
             <button type="button" onclick="addField('home-equipment-list', 'home_equipment_item')">+ Equipment hinzufügen</button>
         </div>
     </section>
 
-    <button type="submit">Profil speichern</button>
+    <button type="submit" class="save-button">Änderungen speichern</button>
 </form>
 
 <script>
 function addField(containerId, inputName) {
     const container = document.getElementById(containerId);
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "field-row";
+
     const input = document.createElement("input");
     input.type = "text";
-    input.name = inputName;
-    container.appendChild(input);
+    input.placeholder = "Eintrag eingeben";
+
+    const confirmButton = document.createElement("button");
+    confirmButton.type = "button";
+    confirmButton.className = "confirm-button";
+    confirmButton.innerText = "Bestätigen";
+
+    confirmButton.onclick = function() {
+        const value = input.value.trim();
+
+        if (value === "") {
+            return;
+        }
+
+        wrapper.innerHTML = "";
+
+        const chip = document.createElement("span");
+        chip.className = "saved-chip";
+        chip.innerText = value;
+
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = inputName;
+        hiddenInput.value = value;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "small-delete-button";
+        deleteButton.innerText = "Löschen";
+        deleteButton.onclick = function() {
+            wrapper.remove();
+        };
+
+        wrapper.appendChild(chip);
+        wrapper.appendChild(hiddenInput);
+        wrapper.appendChild(deleteButton);
+    };
+
+    wrapper.appendChild(input);
+    wrapper.appendChild(confirmButton);
+    container.appendChild(wrapper);
+}
+
+function removeField(button) {
+    button.parentElement.remove();
 }
 </script>
 {% endblock %}

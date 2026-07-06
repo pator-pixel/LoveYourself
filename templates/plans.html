@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Meine Pläne</h2>
+
+{% if plans %}
+    {% for plan in plans %}
+        <div class="form-card">
+            <h3>Plan vom {{ plan.created_at }}</h3>
+            <p>Kalorienziel: {{ plan.calories or "Nicht berechnet" }} kcal</p>
+            <a class="button" href="{{ url_for('view_plan', plan_id=plan.id) }}">Plan ansehen</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Du hast noch keine Pläne erstellt.</p>
+{% endif %}
+
+<a class="button" href="{{ url_for('dashboard') }}">Zurück zum Dashboard</a>
+{% endblock %}

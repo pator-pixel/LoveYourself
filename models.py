@@ -11,6 +11,7 @@ class User(db.Model):
 
     profile = db.relationship("Profile", backref="user", uselist=False)
     weight_entries = db.relationship("WeightEntry", backref="user", lazy=True)
+    plans = db.relationship("Plan", backref="user", lazy=True)
 
 
 class Profile(db.Model):
@@ -43,5 +44,17 @@ class WeightEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     weight = db.Column(db.Float, nullable=False)
     date = db.Column(db.String(20), nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+
+class Plan(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    created_at = db.Column(db.String(20), nullable=False)
+    prompt = db.Column(db.Text, nullable=False)
+    generated_text = db.Column(db.Text)
+    calories = db.Column(db.Integer)
+    feedback = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)

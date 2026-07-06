@@ -3,4 +3,5 @@ flask-sqlalchemy
 python-dotenv
 werkzeug
 reportlab
-google-generativeai
+google-genai
+reportlab

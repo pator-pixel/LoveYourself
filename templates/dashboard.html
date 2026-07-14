@@ -2,32 +2,59 @@
 
 {% block content %}
 
-<h2>Willkommen, {{ user.username }} <span class="green-heart">♥</span></h2>
+<h2>
+    Willkommen, {{ user.username }}
+    <span class="green-heart">♥</span>
+</h2>
 
-<div class="form-grid">
-    <div class="form-card">
+<div class="form-grid dashboard-grid">
+    <div class="form-card dashboard-stat">
         <h3>Startgewicht</h3>
-        <p>{% if start_weight %}{{ start_weight }} kg{% else %}Nicht angegeben{% endif %}</p>
+        <p class="stat-value">
+            {% if start_weight is not none %}
+                {{ start_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
     </div>
 
-    <div class="form-card">
+    <div class="form-card dashboard-stat">
         <h3>Aktuelles Gewicht</h3>
-        <p>{% if current_weight %}{{ current_weight }} kg{% else %}Nicht angegeben{% endif %}</p>
+        <p class="stat-value">
+            {% if current_weight is not none %}
+                {{ current_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
     </div>
 
-    <div class="form-card">
+    <div class="form-card dashboard-stat">
         <h3>Zielgewicht</h3>
-        <p>{% if goal_weight %}{{ goal_weight }} kg{% else %}Nicht angegeben{% endif %}</p>
+        <p class="stat-value">
+            {% if goal_weight is not none %}
+                {{ goal_weight }} kg
+            {% else %}
+                Nicht angegeben
+            {% endif %}
+        </p>
     </div>
 
-    <div class="form-card">
+    <div class="form-card dashboard-stat">
         <h3>Noch bis zum Ziel</h3>
-        <p>{% if remaining_weight is not none %}{{ remaining_weight }} kg{% else %}-{% endif %}</p>
+        <p class="stat-value">
+            {% if remaining_weight is not none %}
+                {{ remaining_weight }} kg
+            {% else %}
+                -
+            {% endif %}
+        </p>
     </div>
 
-    <div class="form-card">
+    <div class="form-card dashboard-stat">
         <h3>Veränderung seit Start</h3>
-        <p>
+        <p class="stat-value">
             {% if weight_change_text %}
                 {{ weight_change_text }}
             {% else %}
@@ -36,9 +63,9 @@
         </p>
     </div>
 
-    <div class="form-card">
+    <div class="form-card dashboard-stat">
         <h3>Gewichtseinträge</h3>
-        <p>{{ total_entries }}</p>
+        <p class="stat-value">{{ total_entries }}</p>
     </div>
 </div>
 
@@ -47,11 +74,18 @@
 
     {% if progress_percent is not none %}
         <p>{{ progress_percent }} % deines Zieles erreicht</p>
+
         <div class="progress-bar">
-            <div class="progress-fill" style="width: {{ progress_percent }}%;"></div>
+            <div
+                class="progress-fill"
+                style="width: {{ progress_percent }}%;"
+            ></div>
         </div>
     {% else %}
-        <p>Trage Startgewicht, aktuelles Gewicht und Zielgewicht ein, um deinen Fortschritt zu sehen.</p>
+        <p>
+            Trage Startgewicht, aktuelles Gewicht und Zielgewicht ein,
+            um deinen Fortschritt zu sehen.
+        </p>
     {% endif %}
 </div>
 
@@ -59,12 +93,32 @@
     <h3>Kalorienberechnung</h3>
 
     {% if target_calories %}
-        <p><strong>Grundumsatz:</strong> {{ bmr }} kcal</p>
-        <p><strong>Erhaltungsbedarf:</strong> {{ maintenance_calories }} kcal</p>
-        <p><strong>Empfohlenes Kalorienziel zum Abnehmen:</strong> {{ target_calories }} kcal</p>
-        <small>Diese Werte werden mit deinem aktuellen Gewicht berechnet und sind Schätzungen.</small>
+        <div class="calorie-grid">
+            <div>
+                <span>Grundumsatz</span>
+                <strong>{{ bmr }} kcal</strong>
+            </div>
+
+            <div>
+                <span>Erhaltungsbedarf</span>
+                <strong>{{ maintenance_calories }} kcal</strong>
+            </div>
+
+            <div>
+                <span>Aktuelles Kalorienziel</span>
+                <strong>{{ target_calories }} kcal</strong>
+            </div>
+        </div>
+
+        <small>
+            Die Werte werden mit deinem aktuellen Gewicht berechnet
+            und sind Schätzungen.
+        </small>
     {% else %}
-        <p>Fülle Alter, Geschlecht, Größe, Gewicht und Aktivitätslevel aus, um dein Kalorienziel zu berechnen.</p>
+        <p>
+            Fülle Alter, Geschlecht, Größe, Gewicht und Aktivitätslevel
+            aus, um dein Kalorienziel zu berechnen.
+        </p>
     {% endif %}
 </div>
 
@@ -74,10 +128,40 @@
 </div>
 
 <div class="dashboard-actions">
-    <a class="button" href="{{ url_for('profile_view') }}">Profil anzeigen</a>
-    <a class="button" href="{{ url_for('weight_tracking') }}">Gewicht tracken</a>
-    <a class="button" href="{{ url_for('change_password') }}">Passwort ändern</a>
-    <a class="button" href="{{ url_for('generate_plan_prompt') }}">AI-Plan vorbereiten</a>
+    <a
+        class="button"
+        href="{{ url_for('generate_plan') }}"
+    >
+        Neuen AI-Plan generieren
+    </a>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('plans') }}"
+    >
+        Meine Pläne
+    </a>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('profile_view') }}"
+    >
+        Profil anzeigen
+    </a>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('weight_tracking') }}"
+    >
+        Gewicht tracken
+    </a>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('change_password') }}"
+    >
+        Passwort ändern
+    </a>
 </div>
 
 {% endblock %}

@@ -1,0 +1,647 @@
+/* ============================================================
+   DASHBOARD – BEGRÜSSUNG
+   ============================================================ */
+
+.dashboard-welcome {
+    margin-bottom: 30px;
+
+    text-align: center;
+}
+
+.dashboard-welcome h2 {
+    margin:
+        0 0 5px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            42px
+        );
+
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.dashboard-welcome p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   DASHBOARD-GRID
+   ============================================================ */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 22px;
+
+    margin:
+        28px 0 32px;
+
+    align-items: stretch;
+}
+
+
+/* ============================================================
+   STATISTIK-KARTEN
+   ============================================================ */
+
+.dashboard-stat {
+    position: relative;
+
+    min-height: 235px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    padding:
+        25px 22px;
+
+    text-align: center;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.88
+        );
+
+    border:
+        1px solid
+        rgba(
+            180,
+            190,
+            178,
+            0.34
+        );
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            70,
+            81,
+            72,
+            0.11
+        );
+
+    backdrop-filter: blur(7px);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.dashboard-stat::before {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--sage-green),
+            var(--medium-green)
+        );
+
+    content: "";
+}
+
+.dashboard-stat:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(
+            111,
+            135,
+            100,
+            0.42
+        );
+
+    box-shadow:
+        0 16px 32px
+        rgba(
+            70,
+            81,
+            72,
+            0.14
+        );
+}
+
+
+/* ============================================================
+   ICONS
+   ============================================================ */
+
+.dashboard-icon,
+.stat-icon,
+.info-card-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    margin:
+        4px auto 17px;
+
+    color: var(--white);
+
+    background:
+        linear-gradient(
+            145deg,
+            #91a287,
+            #6e8265
+        );
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 7px 17px
+        rgba(
+            78,
+            99,
+            75,
+            0.16
+        );
+
+    font-size: 24px;
+    line-height: 1;
+}
+
+
+/* ============================================================
+   KARTENTEXTE
+   ============================================================ */
+
+.dashboard-stat h3 {
+    margin:
+        0 0 12px;
+
+    color: var(--text-dark);
+
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.stat-value {
+    margin:
+        0 0 4px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            26px,
+            3vw,
+            34px
+        );
+
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.dashboard-stat-note {
+    margin:
+        8px 0 0;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   INHALTSKARTEN
+   ============================================================ */
+
+.dashboard-section-card {
+    margin-top: 24px;
+    padding: 28px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.94
+        );
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.30
+        );
+
+    border-radius: 22px;
+
+    box-shadow: var(--soft-shadow);
+}
+
+.dashboard-section-card h3 {
+    margin:
+        0 0 16px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 26px;
+    font-weight: 400;
+}
+
+.dashboard-section-card > p {
+    color: var(--text-soft);
+}
+
+
+/* ============================================================
+   FORTSCHRITTSBALKEN
+   ============================================================ */
+
+.progress-bar {
+    position: relative;
+
+    width: 100%;
+    height: 22px;
+
+    margin-top: 14px;
+
+    overflow: hidden;
+
+    background: var(--beige);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.28
+        );
+
+    border-radius: 999px;
+}
+
+.progress-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--sage-green),
+            var(--dark-green)
+        );
+
+    border-radius: 999px;
+
+    transition:
+        width 0.45s ease;
+}
+
+
+/* ============================================================
+   KALORIENBERECHNUNG
+   ============================================================ */
+
+.calorie-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+}
+
+.calorie-grid div {
+    padding: 20px;
+
+    text-align: center;
+
+    background: var(--light-beige);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.28
+        );
+
+    border-radius: 18px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.calorie-grid div:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(
+            55,
+            78,
+            61,
+            0.08
+        );
+}
+
+.calorie-grid span,
+.calorie-grid strong {
+    display: block;
+}
+
+.calorie-grid span {
+    margin-bottom: 8px;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+.calorie-grid strong {
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   REMINDER
+   ============================================================ */
+
+.dashboard-reminder,
+.message-box.dashboard-reminder {
+    position: relative;
+
+    margin-top: 24px;
+
+    padding:
+        24px 26px 24px 66px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--very-light-sage),
+            var(--light-beige)
+        );
+
+    border-left:
+        6px solid
+        var(--medium-green);
+}
+
+.dashboard-reminder::before {
+    position: absolute;
+
+    top: 23px;
+    left: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    color: var(--white);
+    background: var(--medium-green);
+
+    border-radius: 50%;
+
+    content: "♡";
+
+    font-size: 15px;
+}
+
+.dashboard-reminder h3 {
+    margin:
+        0 0 7px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   AKTIONSBEREICH
+   ============================================================ */
+
+.dashboard-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 26px;
+}
+
+.dashboard-actions .button {
+    min-width: 170px;
+
+    margin: 0;
+}
+
+
+/* ============================================================
+   OPTIONALE HERVORHEBUNG
+   ============================================================ */
+
+.dashboard-stat-highlight {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(240, 244, 237, 0.98),
+            rgba(255, 255, 255, 0.95)
+        );
+
+    border-color:
+        rgba(
+            111,
+            135,
+            100,
+            0.42
+        );
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 1050px) {
+    .dashboard-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+
+/* ============================================================
+   KLEINE TABLETS
+   ============================================================ */
+
+@media (max-width: 800px) {
+    .dashboard-section-card {
+        padding: 24px;
+    }
+
+    .calorie-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 600px) {
+    .dashboard-welcome {
+        margin-bottom: 22px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+
+        gap: 17px;
+    }
+
+    .dashboard-stat {
+        min-height: 210px;
+
+        padding:
+            22px 18px;
+    }
+
+    .dashboard-icon,
+    .stat-icon,
+    .info-card-icon {
+        width: 54px;
+        height: 54px;
+
+        margin-bottom: 14px;
+
+        font-size: 21px;
+    }
+
+    .dashboard-section-card {
+        padding: 21px;
+
+        border-radius: 20px;
+    }
+
+    .dashboard-section-card h3 {
+        font-size: 23px;
+    }
+
+    .dashboard-reminder,
+    .message-box.dashboard-reminder {
+        padding:
+            22px 20px 22px 58px;
+    }
+
+    .dashboard-reminder::before {
+        top: 22px;
+        left: 19px;
+    }
+
+    .dashboard-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .dashboard-actions .button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-stat,
+    .calorie-grid div,
+    .progress-fill {
+        transition: none;
+    }
+
+    .dashboard-stat:hover,
+    .calorie-grid div:hover {
+        transform: none;
+    }
+}

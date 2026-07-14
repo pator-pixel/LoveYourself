@@ -1,0 +1,269 @@
+/* ============================================================
+   REDUZZIERTER LOVE-YOURSELF-FOOTER
+   ============================================================ */
+
+.site-footer {
+    position: relative;
+
+    margin-top: 44px;
+    padding: 32px 20px 38px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            120deg,
+            #eadbc0 0%,
+            #f1e9d8 48%,
+            #dce0ce 100%
+        );
+
+    border-top:
+        1px solid
+        rgba(145, 113, 67, 0.20);
+}
+
+
+/* Dezente obere Linie */
+
+.site-footer::before {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(151, 115, 69, 0.52),
+            rgba(90, 115, 88, 0.48),
+            transparent
+        );
+
+    content: "";
+}
+
+
+/* ============================================================
+   FOOTER-INHALT
+   ============================================================ */
+
+.simple-footer {
+    position: relative;
+
+    z-index: 1;
+
+    width:
+        min(
+            1120px,
+            100%
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 13px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+
+.simple-footer-logo {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.24s ease,
+        filter 0.24s ease;
+}
+
+.simple-footer-logo img {
+    display: block;
+
+    width: 118px;
+    max-height: 108px;
+
+    object-fit: contain;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+
+    filter:
+        drop-shadow(
+            0 4px 9px
+            rgba(69, 58, 41, 0.14)
+        );
+}
+
+.simple-footer-logo:hover {
+    transform:
+        translateY(-2px)
+        scale(1.02);
+
+    filter:
+        drop-shadow(
+            0 7px 13px
+            rgba(69, 58, 41, 0.13)
+        );
+}
+
+
+/* ============================================================
+   IMPRESSUM-LINK
+   ============================================================ */
+
+.simple-footer-link {
+    position: relative;
+
+    display: inline-block;
+
+    padding:
+        6px 10px;
+
+    color: var(--dark-green);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.4px;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+.simple-footer-link::after {
+    position: absolute;
+
+    right: 10px;
+    bottom: 2px;
+    left: 10px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--ochre-dark),
+            transparent
+        );
+
+    transform:
+        scaleX(0);
+
+    transition:
+        transform 0.22s ease;
+
+    content: "";
+}
+
+.simple-footer-link:hover {
+    color: var(--ochre-dark);
+}
+
+.simple-footer-link:hover::after {
+    transform:
+        scaleX(1);
+}
+
+
+/* ============================================================
+   STARTSEITE – HARMONISCHER ANSCHLUSS AN DEN REMINDER
+   ============================================================ */
+
+.home-page .site-footer {
+    margin-top: 38px;
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 800px) {
+    .site-footer {
+        padding:
+            29px 18px 34px;
+    }
+
+    .simple-footer-logo img {
+        width: 108px;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 600px) {
+    .site-footer {
+        margin-top: 32px;
+
+        padding:
+            26px 16px 30px;
+    }
+
+    .simple-footer {
+        gap: 10px;
+    }
+
+    .simple-footer-logo img {
+        width: 96px;
+        max-height: 90px;
+    }
+
+    .simple-footer-link {
+        font-size: 12px;
+    }
+}
+
+
+/* ============================================================
+   TOUCH-GERÄTE
+   ============================================================ */
+
+@media (hover: none) {
+    .simple-footer-logo:hover {
+        transform: none;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .simple-footer-logo,
+    .simple-footer-link,
+    .simple-footer-link::after {
+        transition: none;
+    }
+
+    .simple-footer-logo:hover {
+        transform: none;
+    }
+}

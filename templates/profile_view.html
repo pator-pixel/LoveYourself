@@ -1,45 +1,362 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Dein Profil</h2>
+
+<section class="page-heading">
+
+    <div>
+        <h2>Dein Profil</h2>
+
+        <p>
+            Diese Informationen werden bei deinen zukünftigen
+            Plänen berücksichtigt.
+        </p>
+    </div>
+
+    {% if profile %}
+    <a
+        class="button"
+        href="{{ url_for('profile') }}"
+    >
+        Profil bearbeiten
+    </a>
+    {% endif %}
+
+</section>
+
 
 {% if profile %}
 
-<div class="form-card">
+
+<!-- ===================================================== -->
+<!-- PERSÖNLICHE DATEN -->
+<!-- ===================================================== -->
+
+<section class="form-card">
+
     <h3>Persönliche Daten</h3>
-    <p><strong>Alter:</strong> {{ profile.age or "Nicht angegeben" }}</p>
-    <p><strong>Geschlecht:</strong> {{ profile.gender or "Nicht angegeben" }}</p>
-    <p><strong>Größe:</strong> {{ profile.height or "Nicht angegeben" }} cm</p>
-    <p><strong>Aktuelles Gewicht:</strong> {{ profile.weight or "Nicht angegeben" }} kg</p>
-    <p><strong>Zielgewicht:</strong> {{ profile.goal_weight or "Nicht angegeben" }} kg</p>
+
+    <div class="profile-details-grid">
+
+        <div class="profile-detail">
+            <span>Benutzername</span>
+            <strong>{{ user.username }}</strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Alter</span>
+
+            <strong>
+                {{ profile.age if profile.age is not none else "Nicht angegeben" }}
+            </strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Geschlecht</span>
+
+            <strong>
+                {% if profile.gender == "female" %}
+                    Weiblich
+                {% elif profile.gender == "male" %}
+                    Männlich
+                {% elif profile.gender == "diverse" %}
+                    Divers
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Größe</span>
+
+            <strong>
+                {% if profile.height is not none %}
+                    {{ profile.height }} cm
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Startgewicht</span>
+
+            <strong>
+                {% if profile.weight is not none %}
+                    {{ profile.weight }} kg
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Zielgewicht</span>
+
+            <strong>
+                {% if profile.goal_weight is not none %}
+                    {{ profile.goal_weight }} kg
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="profile-detail">
+            <span>Aktivitätslevel</span>
+
+            <strong>
+                {% if profile.activity_level == "low" %}
+                    Wenig aktiv
+                {% elif profile.activity_level == "medium" %}
+                    Normal aktiv
+                {% elif profile.activity_level == "high" %}
+                    Sehr aktiv
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ERNÄHRUNGSPROFIL -->
+<!-- ===================================================== -->
+
+<section class="form-card">
+
+    <h3>Ernährungsprofil</h3>
+
+    <div class="profile-details-grid">
+
+        <div class="profile-detail">
+
+            <span>Ernährungsform</span>
+
+            <strong>
+                {% if profile.diet_type == "vegetarian" %}
+                    Vegetarisch
+                {% elif profile.diet_type == "vegan" %}
+                    Vegan
+                {% elif profile.diet_type == "normal" %}
+                    Normal
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    {% set nutrition_groups = [
+        ("Allergien", profile.allergies),
+        ("Krankheiten", profile.diseases),
+        ("Körperliche Einschränkungen", profile.limitations),
+        ("Lieblingslebensmittel", profile.liked_foods),
+        ("Nicht gewünschte Lebensmittel", profile.disliked_foods),
+        ("Lieblingsgerichte", profile.favorite_meals),
+        ("Wünsche für Ernährungspläne", profile.nutrition_wishes)
+    ] %}
+
+
+    {% for heading, content in nutrition_groups %}
+
+    <div class="profile-list-section">
+
+        <h4>{{ heading }}</h4>
+
+        {% if content %}
+
+        <div class="profile-chip-list">
+
+            {% for item in content.splitlines() %}
+
+                {% if item.strip() %}
+                    <span class="saved-chip">
+                        {{ item }}
+                    </span>
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p class="empty-profile-value">
+            Keine Angaben
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- TRAININGSPROFIL -->
+<!-- ===================================================== -->
+
+<section class="form-card">
+
+    <h3>Trainingsprofil</h3>
+
+    <div class="profile-details-grid">
+
+        <div class="profile-detail">
+
+            <span>Fitnesslevel</span>
+
+            <strong>
+                {% if profile.fitness_level == "beginner" %}
+                    Anfänger
+                {% elif profile.fitness_level == "intermediate" %}
+                    Mittel
+                {% elif profile.fitness_level == "advanced" %}
+                    Fortgeschritten
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+
+        </div>
+
+        <div class="profile-detail">
+
+            <span>Trainingstage pro Woche</span>
+
+            <strong>
+                {% if profile.training_days is not none %}
+                    {{ profile.training_days }}
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+
+        </div>
+
+        <div class="profile-detail">
+
+            <span>Fitnessstudio</span>
+
+            <strong>
+                {{ "Ja" if profile.has_gym else "Nein" }}
+            </strong>
+
+        </div>
+
+        <div class="profile-detail">
+
+            <span>Bevorzugte Trainingsdauer</span>
+
+            <strong>
+                {{ profile.preferred_training_duration or "Nicht angegeben" }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    {% set training_groups = [
+        ("Home-Equipment", profile.home_equipment),
+        ("Beliebte Übungen", profile.liked_exercises),
+        ("Unbeliebte Übungen", profile.disliked_exercises),
+        ("Bevorzugte Trainingsarten", profile.preferred_training_types),
+        ("Wünsche für Fitnesspläne", profile.fitness_wishes)
+    ] %}
+
+
+    {% for heading, content in training_groups %}
+
+    <div class="profile-list-section">
+
+        <h4>{{ heading }}</h4>
+
+        {% if content %}
+
+        <div class="profile-chip-list">
+
+            {% for item in content.splitlines() %}
+
+                {% if item.strip() %}
+                    <span class="saved-chip">
+                        {{ item }}
+                    </span>
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p class="empty-profile-value">
+            Keine Angaben
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+
+<div class="profile-view-actions">
+
+    <a
+        class="button"
+        href="{{ url_for('profile') }}"
+    >
+        Profil bearbeiten
+    </a>
+
+    <a
+        class="text-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
 </div>
 
-<div class="form-card">
-    <h3>Ernährung</h3>
-    <p><strong>Ernährungsform:</strong> {{ profile.diet_type or "Nicht angegeben" }}</p>
-    <p><strong>Allergien:</strong><br>{{ profile.allergies.replace('\n', '<br>')|safe if profile.allergies else "Keine Angabe" }}</p>
-    <p><strong>Krankheiten:</strong><br>{{ profile.diseases.replace('\n', '<br>')|safe if profile.diseases else "Keine Angabe" }}</p>
-    <p><strong>Einschränkungen:</strong><br>{{ profile.limitations.replace('\n', '<br>')|safe if profile.limitations else "Keine Angabe" }}</p>
-    <p><strong>Mag ich:</strong><br>{{ profile.liked_foods.replace('\n', '<br>')|safe if profile.liked_foods else "Keine Angabe" }}</p>
-    <p><strong>Mag ich nicht:</strong><br>{{ profile.disliked_foods.replace('\n', '<br>')|safe if profile.disliked_foods else "Keine Angabe" }}</p>
-</div>
-
-<div class="form-card">
-    <h3>Training</h3>
-    <p><strong>Fitnesslevel:</strong> {{ profile.fitness_level or "Nicht angegeben" }}</p>
-    <p><strong>Trainingstage pro Woche:</strong> {{ profile.training_days or "Nicht angegeben" }}</p>
-    <p><strong>Fitnessstudio:</strong> {% if profile.has_gym %}Ja{% else %}Nein{% endif %}</p>
-    <p><strong>Home-Equipment:</strong><br>{{ profile.home_equipment.replace('\n', '<br>')|safe if profile.home_equipment else "Keine Angabe" }}</p>
-</div>
-
-<a class="button" href="{{ url_for('profile') }}">Profil bearbeiten</a>
 
 {% else %}
 
-<p>Du hast noch kein Profil erstellt.</p>
-<a class="button" href="{{ url_for('profile') }}">Profil erstellen</a>
+
+<div class="empty-state">
+
+    <div class="empty-state-symbol">🌿</div>
+
+    <h3>Dein Profil ist noch leer</h3>
+
+    <p>
+        Fülle dein Profil aus, damit Love Yourself persönliche
+        Ernährungs- und Fitnesspläne erstellen kann.
+    </p>
+
+    <a
+        class="button"
+        href="{{ url_for('profile') }}"
+    >
+        Profil erstellen
+    </a>
+
+</div>
+
 
 {% endif %}
 
-<a class="button" href="{{ url_for('dashboard') }}">Zurück zum Dashboard</a>
 {% endblock %}

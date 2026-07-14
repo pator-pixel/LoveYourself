@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin-Support
+{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">
+            Administration
+        </span>
+
+        <h2>Support verwalten</h2>
+
+        <p>
+            Hier kannst du Supportanfragen prüfen,
+            beantworten und ihren Status ändern.
+        </p>
+    </div>
+
+</section>
+
+
+{% if error %}
+
+<div class="message-box error-message">
+    <p>{{ error }}</p>
+</div>
+
+{% endif %}
+
+
+{% if success %}
+
+<div class="message-box success-message">
+    <p>{{ success }}</p>
+</div>
+
+{% endif %}
+
+
+<section class="admin-support-stats">
+
+    {% for status, count in status_counts.items() %}
+
+    <a
+        class="admin-stat-card
+        {% if selected_status == status %}
+            admin-stat-card-active
+        {% endif %}"
+        href="{{ url_for(
+            'admin_support',
+            status=status
+        ) }}"
+    >
+
+        <span>{{ status }}</span>
+        <strong>{{ count }}</strong>
+
+    </a>
+
+    {% endfor %}
+
+
+    <a
+        class="admin-stat-card
+        {% if not selected_status %}
+            admin-stat-card-active
+        {% endif %}"
+        href="{{ url_for('admin_support') }}"
+    >
+
+        <span>Alle</span>
+
+        <strong>
+            {{ status_counts.values() | sum }}
+        </strong>
+
+    </a>
+
+</section>
+
+
+{% if support_messages %}
+
+<div class="admin-ticket-list">
+
+    {% for support_message in support_messages %}
+
+    <article class="admin-ticket">
+
+        <header class="admin-ticket-header">
+
+            <div>
+
+                <div class="admin-ticket-meta">
+
+                    <span class="support-ticket-category">
+                        {{ support_message.category }}
+                    </span>
+
+                    <span
+                        class="status-badge status-{{ support_message.status | lower | replace(' ', '-') | replace('ä', 'ae') }}"
+                    >
+                        {{ support_message.status }}
+                    </span>
+
+                </div>
+
+                <h3>{{ support_message.subject }}</h3>
+
+                <p>
+                    Von
+                    <strong>
+                        {{ support_message.user.username }}
+                    </strong>
+
+                    ·
+
+                    {{ support_message.formatted_created_at }}
+                </p>
+
+            </div>
+
+            <span class="admin-ticket-id">
+                #{{ support_message.id }}
+            </span>
+
+        </header>
+
+
+        <section class="admin-original-message">
+
+            <h4>Nachricht des Nutzers</h4>
+
+            <p>{{ support_message.message }}</p>
+
+        </section>
+
+
+        <form
+            method="POST"
+            class="admin-response-form"
+        >
+
+            <input
+                type="hidden"
+                name="message_id"
+                value="{{ support_message.id }}"
+            >
+
+
+            <div class="admin-response-grid">
+
+                <div>
+
+                    <label
+                        for="status-{{ support_message.id }}"
+                    >
+                        Status
+                    </label>
+
+                    <select
+                        id="status-{{ support_message.id }}"
+                        name="status"
+                    >
+
+                        {% for status in status_values %}
+
+                        <option
+                            value="{{ status }}"
+                            {% if support_message.status == status %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ status }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="admin-response-textarea-wrapper">
+
+                    <label
+                        for="response-{{ support_message.id }}"
+                    >
+                        Antwort
+                    </label>
+
+                    <textarea
+                        id="response-{{ support_message.id }}"
+                        name="admin_response"
+                        maxlength="5000"
+                        placeholder="Antwort an den Nutzer eingeben"
+                    >{{ support_message.admin_response or '' }}</textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-response-footer">
+
+                <small>
+                    Zuletzt aktualisiert:
+                    {{ support_message.formatted_updated_at }}
+                </small>
+
+                <button type="submit">
+                    Anfrage aktualisieren
+                </button>
+
+            </div>
+
+        </form>
+
+    </article>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-state-symbol">✓</div>
+
+    <h3>Keine Anfragen gefunden</h3>
+
+    <p>
+        Für den ausgewählten Status sind derzeit
+        keine Supportanfragen vorhanden.
+    </p>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('admin_support') }}"
+    >
+        Alle Anfragen anzeigen
+    </a>
+
+</div>
+
+{% endif %}
+
+
+<div class="profile-view-actions">
+
+    <a
+        class="button back-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

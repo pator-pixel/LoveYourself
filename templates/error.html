@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ error_code }} – {{ error_title }}
+{% endblock %}
+
+{% block content %}
+
+<section class="error-page">
+
+    <span class="error-code">
+        {{ error_code }}
+    </span>
+
+    <h2>{{ error_title }}</h2>
+
+    <p>{{ error_message }}</p>
+
+
+    <div class="error-actions">
+
+        {% if is_logged_in %}
+
+        <a
+            class="button"
+            href="{{ url_for('dashboard') }}"
+        >
+            Zum Dashboard
+        </a>
+
+        {% else %}
+
+        <a
+            class="button"
+            href="{{ url_for('index') }}"
+        >
+            Zur Startseite
+        </a>
+
+        {% endif %}
+
+
+        <button
+            type="button"
+            class="secondary-button"
+            onclick="window.history.back()"
+        >
+            Zurück
+        </button>
+
+    </div>
+
+</section>
+
+{% endblock %}

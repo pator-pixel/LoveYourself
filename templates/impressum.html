@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}
+Impressum
+{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">
+            Rechtliche Informationen
+        </span>
+
+        <h2>Impressum</h2>
+
+        <p>
+            Angaben zur Verantwortlichen und Entwicklerin
+            von Love Yourself.
+        </p>
+    </div>
+
+</section>
+
+
+<div class="legal-layout">
+
+    <section class="legal-card">
+
+        <h3>Angaben zur Entwicklerin</h3>
+
+        <div class="legal-contact-block">
+
+            <strong>Patricia Nogowski</strong>
+
+            <p>
+                Entwicklerin von Love Yourself
+            </p>
+
+            <p>
+                Straße und Hausnummer<br>
+                Postleitzahl und Ort<br>
+                Deutschland
+            </p>
+
+        </div>
+
+        <p class="legal-placeholder-note">
+            Bitte ersetze Straße, Hausnummer, Postleitzahl und Ort
+            vor einer öffentlichen Veröffentlichung durch deine
+            tatsächlichen Angaben.
+        </p>
+
+    </section>
+
+
+    <section class="legal-card">
+
+        <h3>Kontakt</h3>
+
+        <dl class="legal-definition-list">
+
+            <div>
+                <dt>E-Mail</dt>
+
+                <dd>
+                    <a href="mailto:pator@gmx.net">
+                        pator@gmx.net
+                    </a>
+                </dd>
+            </div>
+
+            <div>
+                <dt>Projekt</dt>
+
+                <dd>Love Yourself</dd>
+            </div>
+
+            <div>
+                <dt>Verantwortlich</dt>
+
+                <dd>Patricia Nogowski</dd>
+            </div>
+
+        </dl>
+
+    </section>
+
+
+    <section class="legal-card">
+
+        <h3>Hinweis zum Projekt</h3>
+
+        <p>
+            Love Yourself ist eine von Patricia Nogowski
+            entwickelte Webanwendung.
+        </p>
+
+        <p>
+            Die Anwendung unterstützt Nutzerinnen und Nutzer
+            bei der Organisation persönlicher Ernährungs- und
+            Fitnessziele.
+        </p>
+
+        <p>
+            Die Inhalte der Anwendung dienen der allgemeinen
+            Information und Motivation.
+        </p>
+
+    </section>
+
+
+    <section class="legal-card legal-important-card">
+
+        <h3>Medizinischer Hinweis</h3>
+
+        <p>
+            Love Yourself ersetzt keine ärztliche Untersuchung,
+            Diagnose, Therapie oder professionelle
+            Ernährungsberatung.
+        </p>
+
+        <p>
+            Bei Krankheiten, Allergien, körperlichen
+            Einschränkungen, Schmerzen oder gesundheitlichen
+            Unsicherheiten sollte vor einer Änderung von
+            Ernährung oder Training medizinischer Rat eingeholt
+            werden.
+        </p>
+
+    </section>
+
+
+    <section class="legal-card">
+
+        <h3>Haftung für Inhalte</h3>
+
+        <p>
+            Die Inhalte dieser Anwendung werden mit Sorgfalt
+            erstellt. Eine Gewähr für Vollständigkeit,
+            Richtigkeit und Aktualität kann jedoch nicht
+            übernommen werden.
+        </p>
+
+        <p>
+            Nutzerinnen und Nutzer sind selbst dafür
+            verantwortlich, Empfehlungen an ihre persönliche
+            gesundheitliche Situation anzupassen und bei Bedarf
+            fachlichen Rat einzuholen.
+        </p>
+
+    </section>
+
+
+    <section class="legal-card">
+
+        <h3>Urheberrecht</h3>
+
+        <p>
+            Die von der Entwicklerin erstellten Inhalte,
+            Gestaltungen, Texte und Programme dieser Anwendung
+            unterliegen dem geltenden Urheberrecht.
+        </p>
+
+        <p>
+            Eine Vervielfältigung, Bearbeitung oder Verbreitung
+            außerhalb der gesetzlichen Grenzen bedarf der
+            vorherigen Zustimmung der Rechteinhaberin.
+        </p>
+
+    </section>
+
+
+    <section class="legal-card legal-full-width">
+
+        <h3>Hinweis für eine öffentliche Veröffentlichung</h3>
+
+        <p>
+            Dieses Impressum ist eine technische und gestalterische
+            Vorlage und keine Rechtsberatung.
+        </p>
+
+        <p>
+            Bevor Love Yourself öffentlich bereitgestellt wird,
+            sollten Impressum, Datenschutzerklärung,
+            Nutzungsbedingungen und der Umgang mit
+            Gesundheitsdaten sowie nutzergenerierten Inhalten
+            rechtlich geprüft werden.
+        </p>
+
+    </section>
+
+</div>
+
+
+<div class="profile-view-actions">
+
+    {% if is_logged_in %}
+
+    <a
+        class="button back-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
+    {% else %}
+
+    <a
+        class="button back-button"
+        href="{{ url_for('index') }}"
+    >
+        Zurück zur Startseite
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

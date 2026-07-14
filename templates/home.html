@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}
+Startseite – Love Yourself
+{% endblock %}
+
+{% block body_class %}
+home-page
+{% endblock %}
+
+{% block content %}
+
+<!-- ===================================================== -->
+<!-- BEGRÜSSUNG -->
+<!-- ===================================================== -->
+
+<section class="home-welcome">
+
+    {% if is_logged_in %}
+
+        <p class="home-welcome-kicker">
+            Deine persönliche Reise
+        </p>
+
+        <h2>
+            Willkommen zurück,
+            <span>{{ current_user.username }}!</span>
+        </h2>
+
+        <p class="home-welcome-text">
+            Schön, dass du wieder hier bist.
+            Gehe deinen nächsten Schritt in deinem eigenen Tempo.
+        </p>
+
+    {% else %}
+
+        <p class="home-welcome-kicker">
+            Deine persönliche Reise
+        </p>
+
+        <h2>
+            Schön, dass du hier bist!
+        </h2>
+
+        <p class="home-welcome-text">
+            Ernährung, Bewegung und Selbstfürsorge –
+            persönlich auf dich und deinen Alltag abgestimmt.
+        </p>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- BOTANISCHER TRENNER -->
+<!-- ===================================================== -->
+
+<div
+    class="home-leaf-divider"
+    aria-hidden="true"
+>
+    <img
+        src="{{ url_for(
+            'static',
+            filename='images/leaf-divider.png'
+        ) }}"
+        alt=""
+    >
+</div>
+
+
+<!-- ===================================================== -->
+<!-- SECHS BEREICHSKARTEN -->
+<!-- ===================================================== -->
+
+<section
+    class="home-areas"
+    aria-label="Bereiche von Love Yourself"
+>
+
+    <div class="home-area-grid">
+
+        <!-- ERNÄHRUNG -->
+
+        <article class="home-area-card home-card-left">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/nutrition.png'
+                    ) }}"
+                    alt="Haferflocken mit Früchten und Nüssen"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Ernährung</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Essen, das zu dir passt.
+                </p>
+
+                <p class="home-area-description">
+                    Persönliche Ernährungspläne mit passenden
+                    Mahlzeiten, Mengenangaben und deinem Kalorienziel.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- TRAINING -->
+
+        <article class="home-area-card home-card-middle">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/training.png'
+                    ) }}"
+                    alt="Frau beim Yoga in einem ruhigen Trainingsraum"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Training</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Bewegung, die dir guttut.
+                </p>
+
+                <p class="home-area-description">
+                    Trainingspläne für Zuhause oder das Fitnessstudio –
+                    abgestimmt auf dein Level und dein Equipment.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- EINKAUFSLISTE -->
+
+        <article class="home-area-card home-card-right">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/shopping.png'
+                    ) }}"
+                    alt="Einkaufsliste auf einem Klemmbrett"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Einkaufsliste</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Alles, was du brauchst.
+                </p>
+
+                <p class="home-area-description">
+                    Lebensmittel und Mengen übersichtlich
+                    und passend zu deinem Ernährungsplan.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- FORTSCHRITT -->
+
+        <article class="home-area-card home-card-left">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/progress.png'
+                    ) }}"
+                    alt="Entwicklung einer Pflanze vom Samen bis zur Blüte"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Fortschritt</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Deine Erfolge im Blick.
+                </p>
+
+                <p class="home-area-description">
+                    Jeder kleine Schritt zählt.
+                    Beobachte deine Entwicklung und sei stolz auf dich.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- SELBSTFÜRSORGE -->
+
+        <article class="home-area-card home-card-middle">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/selfcare.png'
+                    ) }}"
+                    alt="Frau bei einer ruhigen Meditation an einem Bergsee"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Selbstfürsorge</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Zeit für dich.
+                </p>
+
+                <p class="home-area-description">
+                    Achtsamkeit, Entspannung und kleine Momente
+                    nur für dich – für mehr Wohlbefinden im Alltag.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- ZUSAMMENHALT -->
+
+        <article class="home-area-card home-card-right">
+
+            <div class="home-area-image">
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/home/community.png'
+                    ) }}"
+                    alt="Mehrere Menschen legen unterstützend ihre Hände zusammen"
+                >
+            </div>
+
+            <div class="home-area-content">
+
+                <h3>Zusammenhalt</h3>
+
+                <span class="home-title-line"></span>
+
+                <p class="home-area-subtitle">
+                    Gemeinsam sind wir stärker.
+                </p>
+
+                <p class="home-area-description">
+                    Austausch, Unterstützung und echte Verbindungen,
+                    die tragen und inspirieren.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- HAUPTAKTIONEN -->
+<!-- ===================================================== -->
+
+<section class="home-actions">
+
+    {% if is_logged_in %}
+
+        <a
+            class="button primary-action"
+            href="{{ url_for('dashboard') }}"
+        >
+            Zu meinem Dashboard
+        </a>
+
+        <a
+            class="button home-secondary-action"
+            href="{{ url_for('generate_plan') }}"
+        >
+            Neuen Plan erstellen
+        </a>
+
+    {% else %}
+
+        <a
+            class="button primary-action"
+            href="{{ url_for('register') }}"
+        >
+            Meine Reise beginnen
+        </a>
+
+        <a
+            class="button home-secondary-action"
+            href="{{ url_for('login') }}"
+        >
+            Einloggen
+        </a>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- REMINDER -->
+<!-- ===================================================== -->
+
+<section class="home-reminder">
+
+    <span
+        class="home-reminder-heart"
+        aria-hidden="true"
+    >
+        ♡
+    </span>
+
+    <div class="home-reminder-content">
+
+        <h2>
+            Love Yourself
+        </h2>
+
+        <p>
+            {{ message | default(
+                "Kleine Schritte führen zu großen Veränderungen.",
+                true
+            ) }}
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

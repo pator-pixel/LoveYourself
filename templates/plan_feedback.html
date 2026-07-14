@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="form-card feedback-card">
+
+    {% if feedback_type == "nutrition" %}
+        <h2>Feedback zum Ernährungsplan</h2>
+
+        <p>
+            Dein Feedback hilft Love Yourself dabei, deine nächsten
+            Ernährungspläne immer besser an dich anzupassen.
+        </p>
+    {% else %}
+        <h2>Feedback zum Fitnessplan</h2>
+
+        <p>
+            Dein Feedback hilft Love Yourself dabei, deine nächsten
+            Trainingspläne besser auf deinen Alltag und deine Vorlieben
+            abzustimmen.
+        </p>
+    {% endif %}
+
+    {% if error %}
+        <div class="message-box">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    <form method="POST">
+
+        <fieldset class="feedback-section">
+            <legend>Wie hat dir der Plan gefallen?</legend>
+
+            <div class="rating-options">
+                {% for number in range(1, 6) %}
+                    <label class="rating-option">
+                        <input
+                            type="radio"
+                            name="rating"
+                            value="{{ number }}"
+                        >
+                        <span>{{ number }} ★</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </fieldset>
+
+        {% if feedback_type == "nutrition" %}
+
+            <fieldset class="feedback-section">
+                <legend>Was möchtest du häufiger?</legend>
+
+                <div class="chip-options">
+                    {% set nutrition_options = [
+                        "Mehr Fisch",
+                        "Mehr Hähnchen",
+                        "Mehr vegetarische Gerichte",
+                        "Mehr vegane Gerichte",
+                        "Mehr Protein",
+                        "Mehr Gemüse",
+                        "Mehr Obst",
+                        "Weniger Kohlenhydrate",
+                        "Schnelle Gerichte",
+                        "Meal Prep",
+                        "Günstige Gerichte",
+                        "Einfache Rezepte"
+                    ] %}
+
+                    {% for option in nutrition_options %}
+                        <label class="choice-chip">
+                            <input
+                                type="checkbox"
+                                name="selected_preferences"
+                                value="{{ option }}"
+                            >
+                            <span>{{ option }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <label for="liked_items">
+                Welche Zutaten haben dir besonders gefallen?
+            </label>
+
+            <textarea
+                id="liked_items"
+                name="liked_items"
+                placeholder="z. B. Paprika, Lachs, Haferflocken, Reis ..."
+            ></textarea>
+
+            <label for="favorite_meals">
+                Welche vollständigen Gerichte haben dir gefallen?
+            </label>
+
+            <textarea
+                id="favorite_meals"
+                name="favorite_meals"
+                placeholder="z. B. Gemüse-Curry, Wraps, Lachs mit Kartoffeln ..."
+            ></textarea>
+
+            <label for="disliked_items">
+                Was möchtest du zukünftig nicht mehr im Plan haben?
+            </label>
+
+            <textarea
+                id="disliked_items"
+                name="disliked_items"
+                placeholder="z. B. Käse, Pilze, Oliven ..."
+            ></textarea>
+
+            <label for="wishes">
+                Was wünschst du dir beim nächsten Ernährungsplan?
+            </label>
+
+            <textarea
+                id="wishes"
+                name="wishes"
+                placeholder="z. B. mehr Fisch, mehr warme Frühstücke oder schnellere Rezepte ..."
+            ></textarea>
+
+            <label for="comment">
+                Weitere Anmerkungen
+            </label>
+
+            <textarea
+                id="comment"
+                name="comment"
+                placeholder="Alles, was dir beim Ernährungsplan aufgefallen ist ..."
+            ></textarea>
+
+        {% else %}
+
+            <fieldset class="feedback-section">
+                <legend>Welche Trainingsarten möchtest du häufiger?</legend>
+
+                <div class="chip-options">
+                    {% set fitness_options = [
+                        "Krafttraining",
+                        "Ganzkörpertraining",
+                        "Oberkörpertraining",
+                        "Unterkörpertraining",
+                        "Bauchtraining",
+                        "Cardio",
+                        "Fahrrad",
+                        "Walking",
+                        "Yoga",
+                        "Mobility",
+                        "Dehnen",
+                        "Kurze Workouts"
+                    ] %}
+
+                    {% for option in fitness_options %}
+                        <label class="choice-chip">
+                            <input
+                                type="checkbox"
+                                name="selected_preferences"
+                                value="{{ option }}"
+                            >
+                            <span>{{ option }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <label for="liked_items">
+                Welche Übungen haben dir besonders gefallen?
+            </label>
+
+            <textarea
+                id="liked_items"
+                name="liked_items"
+                placeholder="z. B. Kniebeugen, Rudern, Beinpresse, Fahrradfahren ..."
+            ></textarea>
+
+            <label for="disliked_items">
+                Welche Übungen möchtest du zukünftig vermeiden?
+            </label>
+
+            <textarea
+                id="disliked_items"
+                name="disliked_items"
+                placeholder="z. B. Burpees, Planks, Sprints ..."
+            ></textarea>
+
+            <fieldset class="feedback-section">
+                <legend>Wann trainierst du am liebsten?</legend>
+
+                <div class="chip-options">
+                    {% set training_times = [
+                        "Morgens",
+                        "Mittags",
+                        "Nachmittags",
+                        "Abends",
+                        "Egal"
+                    ] %}
+
+                    {% for training_time in training_times %}
+                        <label class="choice-chip">
+                            <input
+                                type="radio"
+                                name="preferred_training_time"
+                                value="{{ training_time }}"
+                            >
+                            <span>{{ training_time }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <fieldset class="feedback-section">
+                <legend>Welche Trainingsdauer passt am besten?</legend>
+
+                <div class="chip-options">
+                    {% set training_durations = [
+                        "20 Minuten",
+                        "30 Minuten",
+                        "45 Minuten",
+                        "60 Minuten",
+                        "90 Minuten"
+                    ] %}
+
+                    {% for duration in training_durations %}
+                        <label class="choice-chip">
+                            <input
+                                type="radio"
+                                name="preferred_training_duration"
+                                value="{{ duration }}"
+                            >
+                            <span>{{ duration }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <label for="wishes">
+                Was wünschst du dir beim nächsten Fitnessplan?
+            </label>
+
+            <textarea
+                id="wishes"
+                name="wishes"
+                placeholder="z. B. mehr Squats, mehr Rückentraining oder kürzere Cardio-Einheiten ..."
+            ></textarea>
+
+            <label for="comment">
+                Weitere Anmerkungen
+            </label>
+
+            <textarea
+                id="comment"
+                name="comment"
+                placeholder="Alles, was dir beim Fitnessplan aufgefallen ist ..."
+            ></textarea>
+
+        {% endif %}
+
+        <div class="button-row">
+            <button type="submit">
+                Feedback speichern
+            </button>
+
+            <a
+                class="button secondary-button"
+                href="{{ url_for(
+                    'view_plan',
+                    plan_id=plan.id
+                ) }}"
+            >
+                Zurück zum Plan
+            </a>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

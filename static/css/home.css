@@ -1,0 +1,979 @@
+/* ============================================================
+   STARTSEITE – FARBEN
+   ============================================================ */
+
+:root {
+    --home-background: #f7f1e7;
+
+    --home-gradient-warm:
+        linear-gradient(
+            135deg,
+            #f4e4ca 0%,
+            #f2eadc 52%,
+            #e8e6d7 100%
+        );
+
+    --home-gradient-balanced:
+        linear-gradient(
+            135deg,
+            #eedfc8 0%,
+            #eee8d9 48%,
+            #e0e3d3 100%
+        );
+
+    --home-gradient-sage:
+        linear-gradient(
+            135deg,
+            #eadbc0 0%,
+            #e8e5d5 46%,
+            #d6ddca 100%
+        );
+
+    --home-border:
+        rgba(102, 87, 61, 0.17);
+
+    --home-shadow:
+        rgba(72, 61, 43, 0.13);
+}
+
+
+/* ============================================================
+   SEITENHINTERGRUND
+   ============================================================ */
+
+body.home-page {
+    background: var(--home-background);
+}
+
+.home-page main {
+    position: relative;
+
+    z-index: 4;
+
+    margin-top: 0;
+}
+
+
+/* ============================================================
+   HERO AUF DER STARTSEITE
+   ============================================================ */
+
+.home-page .hero-content {
+    transform: translateY(-38px);
+}
+
+.home-page .hero-main-quote {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 0.32em;
+
+    margin-bottom: 7px;
+
+    font-size:
+        clamp(
+            19px,
+            2.6vw,
+            26px
+        );
+
+    font-style: italic;
+    font-weight: 400;
+}
+
+.home-page .hero-main-quote span {
+    display: inline;
+
+    color: var(--dark-green);
+
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+.home-page .hero-overlay {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.04) 0%,
+            rgba(247, 241, 231, 0.02) 42%,
+            rgba(247, 241, 231, 0.22) 68%,
+            rgba(247, 241, 231, 0.98) 100%
+        );
+}
+
+.home-page .hero-fade {
+    height: 160px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(247, 241, 231, 0),
+            var(--home-background) 88%
+        );
+}
+
+
+/* ============================================================
+   BEGRÜSSUNG
+   ============================================================ */
+
+.home-welcome {
+    position: relative;
+
+    z-index: 6;
+
+    max-width: 850px;
+
+    margin:
+        -38px auto 0;
+
+    padding:
+        30px 24px 0;
+
+    text-align: center;
+}
+
+.home-welcome-kicker {
+    display: inline-block;
+
+    margin:
+        0 0 10px;
+
+    color: #8f7048;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.home-welcome h2 {
+    margin:
+        0 0 10px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            32px,
+            4.7vw,
+            46px
+        );
+
+    font-weight: 400;
+    line-height: 1.18;
+}
+
+.home-welcome h2 span {
+    color: #90714d;
+}
+
+.home-welcome-text {
+    max-width: 690px;
+
+    margin:
+        0 auto;
+
+    color: #70786f;
+
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+
+/* ============================================================
+   BLATTRANKE
+   ============================================================ */
+
+.home-leaf-divider {
+    width:
+        min(
+            1400px,
+            calc(100% - 20px)
+        );
+
+    height: 230px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin:
+        8px auto 24px;
+
+    overflow: hidden;
+}
+
+.home-leaf-divider img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    filter:
+        saturate(0.92)
+        brightness(0.86)
+        contrast(1.08);
+
+    opacity: 0.96;
+}
+
+
+/* ============================================================
+   KARTENBEREICH
+   ============================================================ */
+
+.home-areas {
+    position: relative;
+
+    margin-bottom: 34px;
+}
+
+.home-areas::before {
+    position: absolute;
+
+    top: -35px;
+    right: -60px;
+    bottom: -35px;
+    left: -60px;
+
+    z-index: -1;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(234, 219, 192, 0.17),
+            rgba(241, 233, 216, 0.10) 48%,
+            rgba(220, 224, 206, 0.19)
+        );
+
+    border-radius: 44px;
+
+    content: "";
+}
+
+.home-area-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+
+    align-items: stretch;
+}
+
+
+/* ============================================================
+   GEMEINSAMES KARTENDESIGN
+   ============================================================ */
+
+.home-area-card {
+    position: relative;
+
+    min-width: 0;
+    min-height: 590px;
+
+    display: grid;
+
+    grid-template-rows:
+        285px minmax(0, 1fr);
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--home-border);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 16px 38px
+        var(--home-shadow);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.home-area-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(124, 102, 67, 0.30);
+
+    box-shadow:
+        0 23px 48px
+        rgba(73, 62, 44, 0.18);
+}
+
+
+/* ============================================================
+   KARTENFARBEN – VERLAUF ÜBER JEDE REIHE
+   ============================================================ */
+
+/* Linke Karte: warmer Beginn wie beim Reminder */
+
+.home-card-left {
+    background:
+        linear-gradient(
+            135deg,
+            #eadbc0 0%,
+            #eee2cc 100%
+        );
+}
+
+
+/* Mittlere Karte: Übergangsbereich */
+
+.home-card-middle {
+    background:
+        linear-gradient(
+            135deg,
+            #eee2cc 0%,
+            #f1e9d8 48%,
+            #e7e6d6 100%
+        );
+}
+
+
+/* Rechte Karte: Übergang zum Salbeigrün */
+
+.home-card-right {
+    background:
+        linear-gradient(
+            135deg,
+            #e7e6d6 0%,
+            #dce0ce 100%
+        );
+}
+
+
+/* ============================================================
+   KARTENBILDER
+   ============================================================ */
+
+.home-area-image {
+    position: relative;
+
+    width: 100%;
+    height: 285px;
+
+    overflow: hidden;
+
+    background: #dfd7c7;
+
+    border-bottom:
+        1px solid
+        rgba(71, 78, 65, 0.18);
+}
+
+.home-area-image::after {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.01),
+            rgba(61, 65, 50, 0.05)
+        );
+
+    content: "";
+
+    pointer-events: none;
+}
+
+.home-area-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.45s ease,
+        filter 0.45s ease;
+}
+
+.home-area-card:hover
+.home-area-image img {
+    transform: scale(1.035);
+
+    filter:
+        saturate(1.03)
+        contrast(1.01);
+}
+
+
+/* ============================================================
+   KARTENTEXTE
+   ============================================================ */
+
+.home-area-content {
+    position: relative;
+
+    min-width: 0;
+
+    padding:
+        30px 29px 34px;
+
+    overflow: hidden;
+}
+
+.home-area-content h3 {
+    margin:
+        0 0 10px;
+
+    color: #294738;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            28px,
+            2.8vw,
+            37px
+        );
+
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.home-title-line {
+    display: block;
+
+    width: 45px;
+    height: 1px;
+
+    margin-bottom: 16px;
+
+    background: #7f8e71;
+}
+
+.home-card-middle
+.home-title-line {
+    background: #9b875c;
+}
+
+.home-card-right
+.home-title-line {
+    background: #677b61;
+}
+
+.home-area-subtitle {
+    margin:
+        0 0 16px;
+
+    color: #456147;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            18px,
+            2vw,
+            22px
+        );
+
+    line-height: 1.45;
+}
+
+/* Dritter Absatz bewusst größer */
+
+.home-area-description {
+    max-width: 100%;
+
+    margin: 0;
+
+    color: #4b554d;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    line-height: 1.78;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.home-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin:
+        40px 0 52px;
+}
+
+.home-actions .button {
+    width: 210px;
+    min-width: 210px;
+    min-height: 60px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 16px 26px;
+
+    border-radius: 17px;
+
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    text-align: center;
+    white-space: nowrap;
+}
+
+.home-actions .primary-action {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #71816b,
+            #526a59
+        );
+
+    border:
+        1px solid
+        #526a59;
+
+    box-shadow:
+        0 10px 24px
+        rgba(65, 86, 70, 0.22);
+}
+
+.home-actions .primary-action:hover {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #63765f,
+            #435d4d
+        );
+
+    transform: translateY(-2px);
+}
+
+.home-secondary-action {
+    color: #4d4c3e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e5cfaa,
+            #d2b889
+        );
+
+    border:
+        1px solid
+        #c3a674;
+
+    box-shadow:
+        0 10px 24px
+        rgba(139, 111, 69, 0.18);
+
+    text-decoration: none;
+}
+
+.home-secondary-action:hover {
+    color: #3d463d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dcc397,
+            #c7a970
+        );
+
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   REMINDER
+   ============================================================ */
+
+.home-reminder {
+    position: relative;
+
+    max-width: 980px;
+
+    display: grid;
+
+    grid-template-columns:
+        72px minmax(0, 1fr);
+
+    gap: 22px;
+
+    align-items: center;
+
+    margin:
+        0 auto 10px;
+
+    padding:
+        27px 34px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            120deg,
+            #eadbc0,
+            #f1e9d8 48%,
+            #dce0ce
+        );
+
+    border:
+        1px solid
+        rgba(145, 113, 67, 0.24);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 13px 32px
+        rgba(73, 62, 44, 0.11);
+}
+
+.home-reminder-heart {
+    display: flex;
+
+    width: 62px;
+    height: 62px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #977345;
+
+    background:
+        rgba(255, 255, 255, 0.44);
+
+    border:
+        1px solid
+        rgba(151, 115, 69, 0.27);
+
+    border-radius: 50%;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 31px;
+}
+
+.home-reminder-content {
+    padding-right: 72px;
+
+    text-align: center;
+}
+
+.home-reminder-content h2 {
+    margin:
+        0 0 6px;
+
+    color: #314b3d;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.home-reminder-content p {
+    margin: 0;
+
+    color: #596158;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            16px,
+            2vw,
+            20px
+        );
+
+    line-height: 1.55;
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 1080px) {
+    .home-area-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .home-areas::before {
+        right: -25px;
+        left: -25px;
+    }
+}
+
+
+/* ============================================================
+   KLEINE TABLETS
+   ============================================================ */
+
+@media (max-width: 760px) {
+    .home-page .hero-content {
+        transform: translateY(-24px);
+    }
+
+    .home-welcome {
+        margin-top: -20px;
+    }
+
+    .home-leaf-divider {
+        height: 135px;
+
+        margin-bottom: 14px;
+    }
+
+    .home-area-grid {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+    .home-area-card {
+        min-height: 0;
+
+        grid-template-rows:
+            300px auto;
+    }
+
+    .home-area-image {
+        height: 300px;
+    }
+
+    .home-area-content {
+        min-height: 245px;
+    }
+
+    .home-reminder {
+        grid-template-columns:
+            60px minmax(0, 1fr);
+
+        padding: 25px;
+    }
+
+    .home-reminder-content {
+        padding-right: 0;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 600px) {
+    .home-page .hero-content {
+        transform: translateY(-18px);
+    }
+
+    .home-page .hero-main-quote {
+        align-items: center;
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .home-welcome {
+        margin:
+            -15px auto 0;
+
+        padding:
+            21px 10px 0;
+    }
+
+    .home-welcome-kicker {
+        font-size: 10px;
+    }
+
+    .home-welcome-text {
+        font-size: 14px;
+    }
+
+    .home-leaf-divider {
+        width: 100%;
+        height: 110px;
+
+        margin:
+            0 auto 13px;
+    }
+
+    .home-area-card {
+        grid-template-rows:
+            235px auto;
+
+        border-radius: 21px;
+    }
+
+    .home-area-image {
+        height: 235px;
+    }
+
+    .home-area-content {
+        min-height: 225px;
+
+        padding:
+            25px 22px 29px;
+    }
+
+    .home-area-content h3 {
+        font-size: 30px;
+    }
+
+    .home-area-description {
+        font-size: 15px;
+    }
+
+    .home-actions {
+        align-items: stretch;
+        flex-direction: column;
+
+        margin:
+            30px 0 42px;
+    }
+
+    .home-actions .button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .home-reminder {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        padding:
+            25px 20px;
+
+        text-align: center;
+    }
+
+    .home-reminder-heart {
+        margin:
+            0 auto;
+    }
+}
+
+
+/* ============================================================
+   KLEINE SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 420px) {
+    .home-area-card {
+        grid-template-rows:
+            205px auto;
+    }
+
+    .home-area-image {
+        height: 205px;
+    }
+
+    .home-area-content h3 {
+        font-size: 27px;
+    }
+
+    .home-area-subtitle {
+        font-size: 18px;
+    }
+}
+
+
+/* ============================================================
+   TOUCH-GERÄTE
+   ============================================================ */
+
+@media (hover: none) {
+    .home-area-card:hover {
+        transform: none;
+
+        box-shadow:
+            0 16px 38px
+            var(--home-shadow);
+    }
+
+    .home-area-card:hover
+    .home-area-image img {
+        transform: none;
+    }
+
+    .home-actions .button:hover {
+        transform: none;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .home-area-card,
+    .home-area-image img,
+    .home-actions .button {
+        transition: none;
+    }
+
+    .home-area-card:hover,
+    .home-area-card:hover
+    .home-area-image img,
+    .home-actions .button:hover {
+        transform: none;
+    }
+}

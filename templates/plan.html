@@ -1,31 +1,459 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Dein Plan vom {{ plan.created_at }}</h2>
 
-<div class="form-card">
-    <h3>Kalorienziel</h3>
-    <p>{{ plan.calories or "Nicht berechnet" }} kcal</p>
+{% if request.args.get("feedback_saved") %}
+<div class="message-box">
+    <p>
+        Dein Feedback wurde gespeichert und wird bei zukünftigen
+        Plänen berücksichtigt.
+    </p>
+</div>
+{% endif %}
+
+<section class="compact-plan-header">
+    <div>
+        <h2>Deine Pläne</h2>
+        <p>
+            Erstellt am
+            {{ plan.created_at }}
+        </p>
+    </div>
+
+    <a
+        class="text-button"
+        href="{{ url_for('plans') }}"
+    >
+        Zurück zu meinen Plänen
+    </a>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ERNÄHRUNGSPLAN -->
+<!-- ===================================================== -->
+
+<section class="plan-card nutrition-plan-card">
+
+    <div class="plan-heading">
+        <div>
+            <span class="plan-label">Ernährung</span>
+            <h2>{{ plan.nutrition_title }}</h2>
+        </div>
+
+        <div class="plan-heading-actions">
+            <a
+                class="button secondary-button"
+                href="{{ url_for(
+                    'plan_feedback',
+                    plan_id=plan.id,
+                    feedback_type='nutrition'
+                ) }}"
+            >
+                Feedback geben
+            </a>
+
+            <a
+                class="button"
+                href="{{ url_for(
+                    'download_nutrition_pdf',
+                    plan_id=plan.id
+                ) }}"
+            >
+                PDF herunterladen
+            </a>
+        </div>
+    </div>
+
+    <div class="plan-summary-grid">
+
+        <div class="plan-summary-item">
+            <span>Name</span>
+            <strong>{{ user.username }}</strong>
+        </div>
+
+        <div class="plan-summary-item">
+            <span>Datum</span>
+            <strong>{{ plan.created_at }}</strong>
+        </div>
+
+        <div class="plan-summary-item">
+            <span>Aktuelles Gewicht</span>
+            <strong>
+                {% if plan.current_weight is not none %}
+                    {{ plan.current_weight }} kg
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="plan-summary-item highlight-summary">
+            <span>Kalorienziel</span>
+            <strong>
+                {% if plan.calories %}
+                    {{ plan.calories }} kcal
+                {% else %}
+                    Nicht berechnet
+                {% endif %}
+            </strong>
+        </div>
+
+    </div>
+
+    <div class="plan-safety-summary">
+
+        <div>
+            <h3>Allergien</h3>
+
+            {% if plan.allergies_snapshot %}
+                <div class="profile-chip-list">
+                    {% for item in plan.allergies_snapshot.splitlines() %}
+                        {% if item.strip() %}
+                            <span class="warning-chip">
+                                {{ item }}
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Keine Allergien angegeben.</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3>Ausgeschlossene Lebensmittel</h3>
+
+            {% if plan.excluded_foods_snapshot %}
+                <div class="profile-chip-list">
+                    {% for item in plan.excluded_foods_snapshot.splitlines() %}
+                        {% if item.strip() %}
+                            <span class="excluded-chip">
+                                {{ item }}
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Keine Lebensmittel ausgeschlossen.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {% if nutrition_days %}
+
+    <div class="table-scroll">
+        <table class="nutrition-table">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Frühstück</th>
+                    <th>Mittagessen</th>
+                    <th>Abendessen</th>
+                    <th>Snack</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for nutrition_day in nutrition_days %}
+                <tr>
+                    <td class="day-cell">
+                        Tag {{ nutrition_day.day }}
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ nutrition_day.breakfast.name }}
+                        </strong>
+
+                        <span class="meal-calories">
+                            ca. {{ nutrition_day.breakfast.calories }} kcal
+                        </span>
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ nutrition_day.lunch.name }}
+                        </strong>
+
+                        <span class="meal-calories">
+                            ca. {{ nutrition_day.lunch.calories }} kcal
+                        </span>
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ nutrition_day.dinner.name }}
+                        </strong>
+
+                        <span class="meal-calories">
+                            ca. {{ nutrition_day.dinner.calories }} kcal
+                        </span>
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ nutrition_day.snack.name }}
+                        </strong>
+
+                        <span class="meal-calories">
+                            ca. {{ nutrition_day.snack.calories }} kcal
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="message-box">
+        <p>Für diesen Plan sind keine Ernährungstage gespeichert.</p>
+    </div>
+
+    {% endif %}
+
+    <p class="medical-note">
+        Bei gesundheitlichen Einschränkungen bitte ärztlich abklären.
+        Der Plan ersetzt keine medizinische Beratung.
+    </p>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- EINKAUFSLISTE -->
+<!-- ===================================================== -->
+
+<section class="plan-card shopping-plan-card">
+
+    <div class="plan-heading">
+        <div>
+            <span class="plan-label">Einkaufen</span>
+            <h2>{{ plan.shopping_title }}</h2>
+        </div>
+
+        <a
+            class="button"
+            href="{{ url_for(
+                'download_shopping_pdf',
+                plan_id=plan.id
+            ) }}"
+        >
+            Einkaufsliste herunterladen
+        </a>
+    </div>
+
+    {% if shopping_categories %}
+
+    <div class="shopping-note">
+
+        <div class="shopping-note-top">
+            <span class="shopping-note-pin"></span>
+
+            <div>
+                <h3>Einkaufsliste</h3>
+                <p>
+                    Hake die Zutaten beim Einkaufen einfach ab.
+                </p>
+            </div>
+        </div>
+
+        <div class="shopping-grid">
+
+            {% for category in shopping_categories %}
+
+            <section class="shopping-category">
+                <h4>{{ category.category }}</h4>
+
+                <ul class="shopping-items">
+                    {% for item in category['items'] %}
+                    <li>
+                        <span class="shopping-checkbox"></span>
+                        <span>{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="message-box">
+        <p>Für diesen Plan ist keine Einkaufsliste gespeichert.</p>
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- FITNESSPLAN -->
+<!-- ===================================================== -->
+
+<section class="plan-card fitness-plan-card">
+
+    <div class="plan-heading">
+        <div>
+            <span class="plan-label">Training</span>
+            <h2>{{ plan.fitness_title }}</h2>
+        </div>
+
+        <div class="plan-heading-actions">
+            <a
+                class="button secondary-button"
+                href="{{ url_for(
+                    'plan_feedback',
+                    plan_id=plan.id,
+                    feedback_type='fitness'
+                ) }}"
+            >
+                Feedback geben
+            </a>
+
+            <a
+                class="button"
+                href="{{ url_for(
+                    'download_fitness_pdf',
+                    plan_id=plan.id
+                ) }}"
+            >
+                PDF herunterladen
+            </a>
+        </div>
+    </div>
+
+    <div class="plan-summary-grid">
+
+        <div class="plan-summary-item">
+            <span>Name</span>
+            <strong>{{ user.username }}</strong>
+        </div>
+
+        <div class="plan-summary-item">
+            <span>Datum</span>
+            <strong>{{ plan.created_at }}</strong>
+        </div>
+
+        <div class="plan-summary-item">
+            <span>Aktuelles Gewicht</span>
+            <strong>
+                {% if plan.current_weight is not none %}
+                    {{ plan.current_weight }} kg
+                {% else %}
+                    Nicht angegeben
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="plan-summary-item">
+            <span>Trainingstage</span>
+            <strong>{{ fitness_days | length }}</strong>
+        </div>
+
+    </div>
+
+    {% if fitness_days %}
+
+        {% for fitness_day in fitness_days %}
+
+        <section class="training-day-card">
+
+            <div class="training-day-heading">
+                <h3>Tag {{ fitness_day.day }}</h3>
+
+                <span>
+                    {{ fitness_day.exercises | length }}
+                    Übungen
+                </span>
+            </div>
+
+            <div class="table-scroll">
+                <table class="fitness-table">
+                    <thead>
+                        <tr>
+                            <th>Übung</th>
+                            <th>Sätze</th>
+                            <th>Wiederholungen / Dauer</th>
+                            <th>Pause</th>
+                            <th>Einfache Alternative</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for exercise in fitness_day.exercises %}
+                        <tr>
+                            <td>
+                                <strong>{{ exercise.name }}</strong>
+                            </td>
+
+                            <td>{{ exercise.sets }}</td>
+
+                            <td>{{ exercise.repetitions }}</td>
+
+                            <td>{{ exercise.pause }}</td>
+
+                            <td>{{ exercise.alternative }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="steps-alternative">
+                <span>Keine Zeit für das Training?</span>
+                <strong>{{ fitness_day.steps_alternative }}</strong>
+            </div>
+
+        </section>
+
+        {% endfor %}
+
+    {% else %}
+
+    <div class="message-box">
+        <p>Für diesen Plan sind keine Trainingstage gespeichert.</p>
+    </div>
+
+    {% endif %}
+
+    <p class="medical-note">
+        Bei gesundheitlichen Einschränkungen bitte ärztlich abklären.
+        Der Plan ersetzt keine medizinische Beratung.
+    </p>
+
+</section>
+
+
+<div class="profile-view-actions">
+    <a
+        class="button"
+        href="{{ url_for('generate_plan') }}"
+    >
+        Neuen Plan generieren
+    </a>
+
+    <a
+        class="button secondary-button"
+        href="{{ url_for('plans') }}"
+    >
+        Meine Pläne
+    </a>
+
+    <a
+        class="text-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
 </div>
 
-<div class="form-card">
-    <h3>Ernährungsplan</h3>
-    <pre>{{ plan.meal_plan }}</pre>
-</div>
-
-<div class="form-card">
-    <h3>Trainingsplan</h3>
-    <pre>{{ plan.workout_plan }}</pre>
-</div>
-
-<div class="form-card">
-    <h3>Einkaufsliste</h3>
-    <pre>{{ plan.shopping_list }}</pre>
-</div>
-
-<a class="button" href="{{ url_for('plans') }}">Zurück zu meinen Plänen</a>
-<a class="button" href="{{ url_for('dashboard') }}">Dashboard</a>
-<a class="button" href="{{ url_for('download_plan_pdf', plan_id=plan.id) }}">
-    PDF herunterladen
-</a>
 {% endblock %}

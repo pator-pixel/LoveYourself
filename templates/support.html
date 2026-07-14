@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+
+{% block title %}
+Support
+{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">
+            Wir helfen dir
+        </span>
+
+        <h2>Support</h2>
+
+        <p>
+            Beschreibe dein Anliegen möglichst genau.
+            Deine Nachricht wird gespeichert und kann im
+            Adminbereich bearbeitet werden.
+        </p>
+    </div>
+
+</section>
+
+
+{% if request.args.get("sent") %}
+
+<div class="message-box success-message">
+
+    <p>
+        Deine Supportanfrage wurde erfolgreich übermittelt.
+        Du findest sie weiter unten in deiner Übersicht.
+    </p>
+
+</div>
+
+{% endif %}
+
+
+{% if error %}
+
+<div class="message-box error-message">
+
+    <p>{{ error }}</p>
+
+</div>
+
+{% endif %}
+
+
+<div class="support-layout">
+
+    <section class="support-form-card">
+
+        <div class="support-card-heading">
+
+            <span class="support-heading-icon">✉</span>
+
+            <div>
+                <h3>Neue Supportanfrage</h3>
+
+                <p>
+                    Bitte teile keine Passwörter,
+                    API-Schlüssel oder sensiblen medizinischen
+                    Dokumente über dieses Formular.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form method="POST">
+
+            <label for="subject">
+                Betreff
+            </label>
+
+            <input
+                id="subject"
+                type="text"
+                name="subject"
+                maxlength="180"
+                placeholder="Kurze Zusammenfassung deines Anliegens"
+                value="{{ request.form.get('subject', '') }}"
+                required
+            >
+
+
+            <label for="category">
+                Kategorie
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="">
+                    Bitte wählen
+                </option>
+
+                {% for category in categories %}
+
+                <option
+                    value="{{ category }}"
+                    {% if request.form.get('category') == category %}
+                        selected
+                    {% endif %}
+                >
+                    {{ category }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <label for="message">
+                Nachricht
+            </label>
+
+            <textarea
+                id="message"
+                name="message"
+                maxlength="5000"
+                placeholder="Was ist passiert? Was hast du erwartet? Was wurde stattdessen angezeigt?"
+                required
+            >{{ request.form.get('message', '') }}</textarea>
+
+
+            <div class="form-help-box">
+
+                <strong>
+                    Bei technischen Problemen hilfreich:
+                </strong>
+
+                <ul>
+                    <li>Welche Seite hast du geöffnet?</li>
+                    <li>Welchen Button hast du angeklickt?</li>
+                    <li>Welche Fehlermeldung wurde angezeigt?</li>
+                </ul>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-action"
+            >
+                Supportanfrage senden
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <aside class="support-info-card">
+
+        <span class="eyebrow">
+            Gut zu wissen
+        </span>
+
+        <h3>Was passiert danach?</h3>
+
+        <div class="support-process-step">
+
+            <span>1</span>
+
+            <div>
+                <strong>Nachricht wird gespeichert</strong>
+
+                <p>
+                    Deine Anfrage erscheint direkt in deiner
+                    persönlichen Übersicht.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="support-process-step">
+
+            <span>2</span>
+
+            <div>
+                <strong>Anfrage wird geprüft</strong>
+
+                <p>
+                    Der Status wechselt von „Offen“ zu
+                    „In Bearbeitung“.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="support-process-step">
+
+            <span>3</span>
+
+            <div>
+                <strong>Antwort wird angezeigt</strong>
+
+                <p>
+                    Eine Adminantwort erscheint direkt unter
+                    deiner ursprünglichen Nachricht.
+                </p>
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<section class="support-history">
+
+    <div class="section-heading-row">
+
+        <div>
+            <span class="eyebrow">
+                Deine Nachrichten
+            </span>
+
+            <h3>Bisherige Supportanfragen</h3>
+        </div>
+
+        <span class="support-count">
+            {{ own_messages | length }}
+        </span>
+
+    </div>
+
+
+    {% if own_messages %}
+
+    <div class="support-ticket-list">
+
+        {% for support_message in own_messages %}
+
+        <article class="support-ticket">
+
+            <div class="support-ticket-header">
+
+                <div>
+
+                    <span class="support-ticket-category">
+                        {{ support_message.category }}
+                    </span>
+
+                    <h4>{{ support_message.subject }}</h4>
+
+                    <p>
+                        Erstellt am
+                        {{ support_message.formatted_created_at }}
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="status-badge status-{{ support_message.status | lower | replace(' ', '-') | replace('ä', 'ae') }}"
+                >
+                    {{ support_message.status }}
+                </span>
+
+            </div>
+
+
+            <div class="support-ticket-message">
+
+                <strong>Deine Nachricht</strong>
+
+                <p>{{ support_message.message }}</p>
+
+            </div>
+
+
+            {% if support_message.admin_response %}
+
+            <div class="support-admin-response">
+
+                <div class="support-admin-response-heading">
+
+                    <span>♡</span>
+
+                    <strong>
+                        Antwort von Love Yourself
+                    </strong>
+
+                </div>
+
+                <p>
+                    {{ support_message.admin_response }}
+                </p>
+
+                <small>
+                    Aktualisiert am
+                    {{ support_message.formatted_updated_at }}
+                </small>
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state compact-empty-state">
+
+        <div class="empty-state-symbol">✉</div>
+
+        <h3>Noch keine Supportanfragen</h3>
+
+        <p>
+            Sobald du eine Nachricht sendest,
+            erscheint sie an dieser Stelle.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<div class="profile-view-actions">
+
+    <a
+        class="button back-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,884 @@
+/* ============================================================
+   SUPPORT – GRUNDLAYOUT
+   ============================================================ */
+
+.support-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(260px, 0.65fr);
+
+    gap: 25px;
+
+    align-items: start;
+
+    margin-bottom: 35px;
+}
+
+
+/* ============================================================
+   SUPPORT-KARTEN
+   ============================================================ */
+
+.support-form-card,
+.support-info-card,
+.support-history {
+    padding: 30px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.30
+        );
+
+    border-radius: 26px;
+
+    box-shadow: var(--soft-shadow);
+}
+
+.support-form-card,
+.support-info-card {
+    margin: 0;
+}
+
+
+/* ============================================================
+   FORMULARÜBERSCHRIFT
+   ============================================================ */
+
+.support-card-heading {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.support-card-heading h3,
+.support-card-heading p {
+    margin: 0;
+}
+
+.support-card-heading h3 {
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.support-card-heading p {
+    margin-top: 5px;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.support-heading-icon {
+    display: flex;
+
+    width: 50px;
+    height: 50px;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    color: var(--dark-green);
+    background:
+        linear-gradient(
+            145deg,
+            var(--light-sage),
+            var(--very-light-sage)
+        );
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.45
+        );
+
+    border-radius: 17px;
+
+    font-size: 22px;
+}
+
+
+/* ============================================================
+   INFO-KARTE
+   ============================================================ */
+
+.support-info-card {
+    position: sticky;
+
+    top: 25px;
+
+    background:
+        linear-gradient(
+            150deg,
+            var(--beige),
+            var(--very-light-sage)
+        );
+}
+
+.support-info-card h3 {
+    margin:
+        10px 0 23px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   ABLAUF-SCHRITTE
+   ============================================================ */
+
+.support-process-step {
+    display: grid;
+
+    grid-template-columns:
+        40px minmax(0, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+.support-process-step:last-child {
+    margin-bottom: 0;
+}
+
+.support-process-step > span {
+    display: flex;
+
+    width: 37px;
+    height: 37px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--white);
+    background:
+        linear-gradient(
+            145deg,
+            var(--medium-green),
+            var(--dark-green)
+        );
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 6px 14px
+        rgba(
+            58,
+            90,
+            64,
+            0.15
+        );
+
+    font-weight: 700;
+}
+
+.support-process-step strong {
+    color: var(--dark-green);
+
+    font-size: 13px;
+}
+
+.support-process-step p {
+    margin:
+        4px 0 0;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   SUPPORT-VERLAUF
+   ============================================================ */
+
+.support-history {
+    margin-bottom: 30px;
+}
+
+.section-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+.section-heading-row h3 {
+    margin:
+        8px 0 0;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.support-count {
+    display: flex;
+
+    width: 48px;
+    height: 48px;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    color: var(--white);
+    background:
+        linear-gradient(
+            145deg,
+            var(--medium-green),
+            var(--dark-green)
+        );
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 7px 16px
+        rgba(
+            58,
+            90,
+            64,
+            0.16
+        );
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   SUPPORT-TICKETS
+   ============================================================ */
+
+.support-ticket-list,
+.admin-ticket-list {
+    display: grid;
+
+    gap: 20px;
+}
+
+.support-ticket {
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--light-beige),
+            rgba(255, 255, 255, 0.96)
+        );
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.38
+        );
+
+    border-radius: 22px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.support-ticket:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(
+            55,
+            78,
+            61,
+            0.09
+        );
+}
+
+.support-ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 18px;
+}
+
+.support-ticket-header h4 {
+    margin:
+        8px 0 4px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.support-ticket-header p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+}
+
+.support-ticket-category {
+    display: inline-block;
+
+    padding:
+        5px 10px;
+
+    color: var(--dark-green);
+    background: var(--light-sage);
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   STATUS-BADGES
+   ============================================================ */
+
+.status-badge {
+    display: inline-block;
+
+    padding:
+        7px 12px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-offen {
+    color: #76551d;
+    background: #f9e7b8;
+}
+
+.status-in-bearbeitung {
+    color: #315a70;
+    background: #d9edf5;
+}
+
+.status-beantwortet {
+    color: #356339;
+    background: #ddefd8;
+}
+
+.status-geschlossen {
+    color: #605f60;
+    background: #e8e8e8;
+}
+
+
+/* ============================================================
+   NACHRICHT DES NUTZERS
+   ============================================================ */
+
+.support-ticket-message {
+    padding: 17px;
+
+    background: var(--white);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.24
+        );
+
+    border-radius: 16px;
+}
+
+.support-ticket-message strong {
+    color: var(--dark-green);
+
+    font-size: 13px;
+}
+
+.support-ticket-message p {
+    margin:
+        8px 0 0;
+
+    color: var(--text-dark);
+
+    white-space: pre-wrap;
+}
+
+
+/* ============================================================
+   ADMIN-ANTWORT
+   ============================================================ */
+
+.support-admin-response {
+    margin-top: 16px;
+
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--light-sage),
+            var(--very-light-sage)
+        );
+
+    border-left:
+        5px solid
+        var(--dark-green);
+
+    border-radius:
+        0 17px 17px 0;
+}
+
+.support-admin-response-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.support-admin-response-heading span {
+    color: var(--dark-green);
+
+    font-size: 18px;
+}
+
+.support-admin-response-heading strong {
+    color: var(--dark-green);
+
+    font-size: 13px;
+}
+
+.support-admin-response p {
+    margin:
+        9px 0;
+
+    white-space: pre-wrap;
+}
+
+.support-admin-response small {
+    display: block;
+
+    margin-top: 10px;
+}
+
+
+/* ============================================================
+   ADMIN-SUPPORT – STATISTIK
+   ============================================================ */
+
+.admin-support-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0, 1fr)
+        );
+
+    gap: 15px;
+
+    margin-bottom: 28px;
+}
+
+.admin-stat-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 17px;
+
+    color: var(--text-dark);
+    background: var(--white);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.4
+        );
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(
+            55,
+            78,
+            61,
+            0.08
+        );
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-stat-card span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-stat-card strong {
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.admin-stat-card:hover,
+.admin-stat-card-active {
+    color: var(--white);
+    background: var(--dark-green);
+
+    transform: translateY(-2px);
+}
+
+.admin-stat-card:hover strong,
+.admin-stat-card-active strong {
+    color: var(--white);
+}
+
+
+/* ============================================================
+   ADMIN-TICKETS
+   ============================================================ */
+
+.admin-ticket {
+    padding: 28px;
+
+    background: var(--white);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.30
+        );
+
+    border-radius: 24px;
+
+    box-shadow: var(--soft-shadow);
+}
+
+.admin-ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.admin-ticket-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.admin-ticket-header h3 {
+    margin:
+        12px 0 5px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.admin-ticket-header p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 13px;
+}
+
+.admin-ticket-id {
+    color: var(--text-light);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   URSPRÜNGLICHE NACHRICHT
+   ============================================================ */
+
+.admin-original-message {
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    background: var(--light-beige);
+
+    border:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.28
+        );
+
+    border-radius: 18px;
+}
+
+.admin-original-message h4 {
+    margin:
+        0 0 8px;
+
+    color: var(--dark-green);
+}
+
+.admin-original-message p {
+    margin: 0;
+
+    white-space: pre-wrap;
+}
+
+
+/* ============================================================
+   ADMIN-ANTWORTFORMULAR
+   ============================================================ */
+
+.admin-response-form {
+    padding-top: 21px;
+
+    border-top:
+        1px solid
+        rgba(
+            163,
+            177,
+            138,
+            0.35
+        );
+}
+
+.admin-response-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 0.38fr)
+        minmax(0, 1fr);
+
+    gap: 20px;
+}
+
+.admin-response-textarea-wrapper textarea {
+    min-height: 150px;
+}
+
+.admin-response-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.admin-response-footer button {
+    margin: 0;
+}
+
+
+/* ============================================================
+   LEERZUSTAND
+   ============================================================ */
+
+.support-history .empty-state,
+.admin-ticket-list + .empty-state {
+    margin-top: 10px;
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 1050px) {
+    .admin-support-stats {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+
+/* ============================================================
+   KLEINE TABLETS
+   ============================================================ */
+
+@media (max-width: 900px) {
+    .support-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .support-info-card {
+        position: static;
+    }
+
+    .admin-response-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 700px) {
+    .admin-support-stats {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .support-ticket-header,
+    .admin-ticket-header,
+    .section-heading-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+    .support-form-card,
+    .support-info-card,
+    .support-history,
+    .admin-ticket {
+        padding: 21px;
+
+        border-radius: 22px;
+    }
+
+    .support-card-heading {
+        align-items: center;
+    }
+
+    .support-heading-icon {
+        width: 45px;
+        height: 45px;
+
+        font-size: 20px;
+    }
+
+    .admin-support-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-response-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-response-footer button {
+        width: 100%;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .support-ticket,
+    .admin-stat-card {
+        transition: none;
+    }
+
+    .support-ticket:hover,
+    .admin-stat-card:hover {
+        transform: none;
+    }
+}

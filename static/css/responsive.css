@@ -1,0 +1,526 @@
+/* ============================================================
+   GROSSE TABLETS UND KLEINERE DESKTOPS
+   ============================================================ */
+
+@media (max-width: 1100px) {
+    main {
+        width:
+            min(
+                1180px,
+                calc(100% - 32px)
+            );
+    }
+
+    .page-heading,
+    .compact-plan-header {
+        gap: 20px;
+    }
+
+    .landing-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .profile-details-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .about-principles-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .shopping-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .admin-support-stats {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 900px) {
+    main {
+        margin-top: 28px;
+    }
+
+    .page-heading,
+    .compact-plan-header,
+    .plan-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .support-layout,
+    .about-intro-card,
+    .legal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .support-info-card {
+        position: static;
+    }
+
+    .legal-full-width {
+        grid-column: auto;
+    }
+
+    .plan-summary-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .plan-safety-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-response-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-section-heading {
+        grid-template-columns:
+            64px minmax(0, 1fr);
+
+        gap: 16px;
+    }
+
+    .profile-section-icon {
+        width: 60px;
+        height: 60px;
+
+        font-size: 25px;
+    }
+}
+
+
+/* ============================================================
+   KLEINE TABLETS
+   ============================================================ */
+
+@media (max-width: 760px) {
+    .landing-grid,
+    .dashboard-grid,
+    .about-story-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calorie-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-list-card {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-list-date {
+        width: 100%;
+    }
+
+    .plan-list-actions {
+        grid-column: auto;
+
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .shopping-grid {
+        grid-template-columns: 1fr;
+
+        padding-left: 0;
+    }
+
+    .shopping-note::before {
+        display: none;
+    }
+
+    .shopping-note-top {
+        padding-left: 0;
+    }
+
+    .support-ticket-header,
+    .admin-ticket-header,
+    .section-heading-row,
+    .training-day-heading,
+    .steps-alternative {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-support-stats {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .site-footer-content {
+        flex-direction: column;
+    }
+
+    .footer-links {
+        align-items: flex-start;
+    }
+
+    .download-menu-content {
+        position: static;
+
+        width: 100%;
+
+        margin-top: 8px;
+
+        box-shadow: none;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 600px) {
+    main {
+        width:
+            min(
+                1180px,
+                calc(100% - 24px)
+            );
+
+        margin-top: 24px;
+
+        padding-bottom: 45px;
+    }
+
+    .page-heading,
+    .compact-plan-header {
+        margin-bottom: 24px;
+    }
+
+    .page-heading h2,
+    .compact-plan-header h2 {
+        font-size:
+            clamp(
+                27px,
+                8vw,
+                36px
+            );
+    }
+
+    .form-grid,
+    .profile-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field-full,
+    .form-field-half {
+        grid-column: auto;
+    }
+
+    .landing-card,
+    .form-card,
+    .message-box,
+    .plan-card,
+    .plan-list-card,
+    .feedback-card,
+    .empty-state,
+    .support-form-card,
+    .support-info-card,
+    .support-history,
+    .legal-card,
+    .admin-ticket,
+    .about-intro-card,
+    .about-story-card,
+    .about-principles,
+    .about-closing-card,
+    .error-page {
+        padding: 21px;
+
+        border-radius: 22px;
+    }
+
+    .profile-section {
+        padding:
+            0 17px 22px;
+
+        border-radius: 24px;
+    }
+
+    .profile-section-heading {
+        grid-template-columns: 1fr;
+
+        margin:
+            0 -17px 23px;
+
+        padding:
+            25px 20px 22px;
+
+        text-align: center;
+    }
+
+    .profile-section-icon {
+        margin:
+            0 auto;
+    }
+
+    .profile-subsection,
+    .dynamic-section,
+    .preference-section,
+    .feedback-section {
+        padding: 18px;
+
+        border-radius: 20px;
+    }
+
+    .dynamic-section-heading {
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+    .add-item-button {
+        width: 100%;
+    }
+
+    .field-row,
+    .saved-field-row,
+    .editing-field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .saved-value-wrapper .saved-chip {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .field-row-actions {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        width: 100%;
+    }
+
+    .field-row-actions button {
+        width: 100%;
+    }
+
+    .profile-form-actions,
+    .profile-view-actions,
+    .button-row,
+    .dashboard-actions,
+    .plan-heading-actions,
+    .error-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .profile-form-actions,
+    .profile-view-actions {
+        position: static;
+
+        padding: 17px;
+    }
+
+    .profile-form-actions .button,
+    .profile-form-actions button,
+    .profile-view-actions .button,
+    .profile-view-actions button,
+    .button-row .button,
+    .button-row button,
+    .dashboard-actions .button,
+    .plan-heading-actions .button,
+    .error-actions .button,
+    .error-actions button {
+        width: 100%;
+
+        min-width: 0;
+
+        margin: 0;
+    }
+
+    .plan-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .shopping-note {
+        padding: 21px;
+    }
+
+    .about-principles-grid,
+    .admin-support-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .legal-definition-list > div {
+        grid-template-columns: 1fr;
+
+        gap: 4px;
+    }
+
+    .admin-response-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-response-footer button {
+        width: 100%;
+    }
+
+    .site-footer {
+        padding:
+            32px 18px;
+    }
+}
+
+
+/* ============================================================
+   KLEINE SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 480px) {
+    main {
+        width:
+            calc(100% - 18px);
+    }
+
+    .eyebrow {
+        padding:
+            5px 10px;
+
+        font-size: 10px;
+    }
+
+    .form-card,
+    .plan-card,
+    .feedback-card,
+    .support-form-card,
+    .support-info-card,
+    .support-history,
+    .admin-ticket,
+    .legal-card,
+    .about-intro-card,
+    .about-story-card,
+    .about-principles,
+    .about-closing-card {
+        padding: 18px;
+    }
+
+    .profile-section-heading h3 {
+        font-size: 28px;
+    }
+
+    .dashboard-stat {
+        min-height: 200px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+    }
+
+    .support-card-heading {
+        flex-direction: column;
+    }
+
+    .support-heading-icon {
+        margin-bottom: 4px;
+    }
+
+    .about-intro-text {
+        text-align: center;
+    }
+
+    .about-intro-text blockquote {
+        text-align: left;
+    }
+
+    .about-closing-card .button {
+        width: 100%;
+    }
+
+    .site-footer {
+        margin-top: 35px;
+
+        padding:
+            28px 15px;
+    }
+}
+
+
+/* ============================================================
+   TOUCH-GERÄTE
+   ============================================================ */
+
+@media (hover: none) {
+    .dashboard-stat:hover,
+    .profile-detail:hover,
+    .support-ticket:hover,
+    .about-story-card:hover,
+    .about-principle:hover,
+    .about-portrait:hover,
+    .calorie-grid div:hover {
+        transform: none;
+
+        box-shadow: var(--soft-shadow);
+    }
+
+    .sidebar-link:hover {
+        transform: none;
+    }
+
+    .footer-links a:hover {
+        transform: none;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+}

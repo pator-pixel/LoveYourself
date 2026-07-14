@@ -1,0 +1,427 @@
+/* ============================================================
+   BERGSEE-HEADER
+   ============================================================ */
+
+.hero-header {
+    position: relative;
+
+    min-height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: var(--beige);
+}
+
+
+/* ============================================================
+   HINTERGRUNDBILD
+   ============================================================ */
+
+.hero-background {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        url("../images/mountain-lake-header.png");
+
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    transform: scale(1.02);
+
+    filter:
+        saturate(0.82)
+        brightness(0.95)
+        contrast(0.97);
+}
+
+
+/* ============================================================
+   HELLE ÜBERLAGERUNG
+   ============================================================ */
+
+.hero-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(250, 247, 242, 0.01) 42%,
+            rgba(250, 247, 242, 0.15) 70%,
+            rgba(250, 247, 242, 0.96) 100%
+        );
+}
+
+
+/* ============================================================
+   WEICHER ÜBERGANG ZUM INHALT
+   ============================================================ */
+
+.hero-fade {
+    position: absolute;
+
+    right: 0;
+    bottom: -1px;
+    left: 0;
+
+    height: 145px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(250, 247, 242, 0),
+            var(--light-beige)
+        );
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   INHALT
+   ============================================================ */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    width:
+        min(
+            860px,
+            calc(100% - 40px)
+        );
+
+    padding:
+        36px 20px 92px;
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+
+.hero-logo-link {
+    display: inline-block;
+
+    text-decoration: none;
+}
+
+.hero-logo {
+    width: 205px;
+    max-height: 175px;
+
+    object-fit: contain;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+
+    filter:
+        drop-shadow(
+            0 3px 7px
+            rgba(255, 255, 255, 0.66)
+        )
+        drop-shadow(
+            0 6px 14px
+            rgba(47, 69, 59, 0.24)
+        );
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.hero-logo-link:hover .hero-logo {
+    transform:
+        translateY(-2px)
+        scale(1.015);
+
+    filter:
+        drop-shadow(
+            0 4px 9px
+            rgba(255, 255, 255, 0.74)
+        )
+        drop-shadow(
+            0 9px 19px
+            rgba(47, 69, 59, 0.26)
+        );
+}
+
+
+/* ============================================================
+   HERO-TEXTE
+   ============================================================ */
+
+.hero-text {
+    margin-top: 8px;
+}
+
+.hero-text h1 {
+    margin:
+        0 0 9px;
+
+    color: var(--dark-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            34px,
+            5.6vw,
+            52px
+        );
+
+    font-weight: 400;
+
+    letter-spacing: 1.8px;
+
+    line-height: 1.15;
+
+    text-shadow:
+        0 1px 10px
+        rgba(255, 255, 255, 0.9);
+}
+
+
+/* ============================================================
+   HAUPTSPRUCH
+   ============================================================ */
+
+.hero-main-quote {
+    max-width: 680px;
+
+    margin:
+        0 auto 6px;
+
+    color: var(--text-dark);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            19px,
+            2.8vw,
+            27px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.42;
+
+    text-shadow:
+        0 1px 9px
+        rgba(255, 255, 255, 0.94);
+}
+
+.hero-main-quote span {
+    display: block;
+
+    color: var(--dark-green);
+
+    font-style: italic;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   ZWEITER SPRUCH
+   ============================================================ */
+
+.hero-subquote {
+    max-width: 690px;
+
+    margin:
+        0 auto;
+
+    color: #765f45;
+
+    font-size:
+        clamp(
+            13px,
+            1.8vw,
+            16px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.65;
+
+    text-shadow:
+        0 1px 8px
+        rgba(255, 255, 255, 0.95);
+}
+
+
+/* ============================================================
+   GROSSE BILDSCHIRME
+   ============================================================ */
+
+@media (min-width: 1450px) {
+    .hero-header {
+        min-height: 525px;
+    }
+
+    .hero-content {
+        padding-top: 30px;
+    }
+
+    .hero-logo {
+        width: 220px;
+    }
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 900px) {
+    .hero-header {
+        min-height: 455px;
+    }
+
+    .hero-content {
+        padding:
+            46px 18px 86px;
+    }
+
+    .hero-logo {
+        width: 180px;
+        max-height: 155px;
+    }
+}
+
+
+/* ============================================================
+   KLEINE TABLETS
+   ============================================================ */
+
+@media (max-width: 700px) {
+    .hero-header {
+        min-height: 420px;
+    }
+
+    .hero-background {
+        background-position:
+            center center;
+    }
+
+    .hero-content {
+        width:
+            min(
+                100%,
+                calc(100% - 24px)
+            );
+
+        padding:
+            48px 12px 78px;
+    }
+
+    .hero-logo {
+        width: 165px;
+        max-height: 140px;
+    }
+
+    .hero-text {
+        margin-top: 6px;
+    }
+
+    .hero-text h1 {
+        letter-spacing: 1.2px;
+    }
+
+    .hero-fade {
+        height: 130px;
+    }
+}
+
+
+/* ============================================================
+   SMARTPHONES
+   ============================================================ */
+
+@media (max-width: 480px) {
+    .hero-header {
+        min-height: 390px;
+    }
+
+    .hero-content {
+        padding:
+            45px 10px 72px;
+    }
+
+    .hero-logo {
+        width: 145px;
+        max-height: 125px;
+    }
+
+    .hero-text h1 {
+        margin-bottom: 8px;
+
+        font-size:
+            clamp(
+                31px,
+                10vw,
+                40px
+            );
+    }
+
+    .hero-main-quote {
+        font-size:
+            clamp(
+                18px,
+                6vw,
+                22px
+            );
+    }
+
+    .hero-subquote {
+        max-width: 330px;
+
+        font-size: 13px;
+
+        line-height: 1.55;
+    }
+
+    .hero-fade {
+        height: 118px;
+    }
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-logo {
+        transition: none;
+    }
+
+    .hero-logo-link:hover .hero-logo {
+        transform: none;
+    }
+}

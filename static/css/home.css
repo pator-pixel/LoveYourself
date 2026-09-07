@@ -56,6 +56,7 @@ body.home-page {
 
 /* ============================================================
    HERO AUF DER STARTSEITE
+   BLEIBT BEWUSST UNVERÄNDERT
    ============================================================ */
 
 .home-page .hero-content {
@@ -129,10 +130,10 @@ body.home-page {
     max-width: 850px;
 
     margin:
-        -38px auto 0;
+        -55px auto 0;
 
     padding:
-        30px 24px 0;
+        12px 24px 0;
 
     text-align: center;
 }
@@ -145,7 +146,12 @@ body.home-page {
 
     color: #8f7048;
 
-    font-size: 12px;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
     font-weight: 700;
 
     letter-spacing: 1.5px;
@@ -154,23 +160,23 @@ body.home-page {
 
 .home-welcome h2 {
     margin:
-        0 0 10px;
+        0 0 12px;
 
     color: var(--dark-green);
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
     font-size:
         clamp(
-            32px,
+            34px,
             4.7vw,
-            46px
+            48px
         );
 
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.18;
 }
 
@@ -179,15 +185,22 @@ body.home-page {
 }
 
 .home-welcome-text {
-    max-width: 690px;
+    max-width: 720px;
 
     margin:
         0 auto;
 
-    color: #70786f;
+    color: #626c64;
 
-    font-size: 15px;
-    line-height: 1.75;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 18px;
+    font-weight: 400;
+
+    line-height: 1.7;
 }
 
 
@@ -326,10 +339,8 @@ body.home-page {
 
 
 /* ============================================================
-   KARTENFARBEN – VERLAUF ÜBER JEDE REIHE
+   KARTENFARBEN
    ============================================================ */
-
-/* Linke Karte: warmer Beginn wie beim Reminder */
 
 .home-card-left {
     background:
@@ -340,9 +351,6 @@ body.home-page {
         );
 }
 
-
-/* Mittlere Karte: Übergangsbereich */
-
 .home-card-middle {
     background:
         linear-gradient(
@@ -352,9 +360,6 @@ body.home-page {
             #e7e6d6 100%
         );
 }
-
-
-/* Rechte Karte: Übergang zum Salbeigrün */
 
 .home-card-right {
     background:
@@ -435,40 +440,40 @@ body.home-page {
     min-width: 0;
 
     padding:
-        30px 29px 34px;
+        31px 30px 36px;
 
     overflow: hidden;
 }
 
 .home-area-content h3 {
     margin:
-        0 0 10px;
+        0 0 12px;
 
     color: #294738;
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
     font-size:
         clamp(
-            28px,
-            2.8vw,
-            37px
+            32px,
+            3vw,
+            42px
         );
 
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.15;
 }
 
 .home-title-line {
     display: block;
 
-    width: 45px;
+    width: 48px;
     height: 1px;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 
     background: #7f8e71;
 }
@@ -485,26 +490,25 @@ body.home-page {
 
 .home-area-subtitle {
     margin:
-        0 0 16px;
+        0 0 18px;
 
     color: #456147;
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
     font-size:
         clamp(
-            18px,
+            20px,
             2vw,
-            22px
+            24px
         );
 
+    font-weight: 500;
     line-height: 1.45;
 }
-
-/* Dritter Absatz bewusst größer */
 
 .home-area-description {
     max-width: 100%;
@@ -513,10 +517,15 @@ body.home-page {
 
     color: #4b554d;
 
-    font-size: 15px;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 20px;
     font-weight: 400;
 
-    line-height: 1.78;
+    line-height: 1.65;
 }
 
 
@@ -538,91 +547,143 @@ body.home-page {
 }
 
 .home-actions .button {
-    width: 210px;
-    min-width: 210px;
-    min-height: 60px;
+    width: 230px;
+    min-width: 230px;
+    min-height: 56px;
 
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
+    box-sizing: border-box;
+
     margin: 0;
-    padding: 16px 26px;
+
+    padding:
+        14px 22px;
+
+    color: #405247;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eadbc0 0%,
+            #e6dfcf 48%,
+            #dce2d5 100%
+        );
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.20);
 
     border-radius: 17px;
 
-    font-size: 20px;
+    box-shadow:
+        0 8px 20px
+        rgba(72, 61, 43, 0.11);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 17px;
     font-weight: 600;
     line-height: 1.2;
 
     text-align: center;
+    text-decoration: none;
+
     white-space: nowrap;
+
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
 }
+
+
+/* ============================================================
+   ERSTER BUTTON
+   ============================================================ */
 
 .home-actions .primary-action {
-    color: #ffffff;
+    color: #405247;
 
     background:
         linear-gradient(
             135deg,
-            #71816b,
-            #526a59
+            #eadbc0 0%,
+            #e6dfcf 48%,
+            #dce2d5 100%
         );
 
     border:
         1px solid
-        #526a59;
+        rgba(102, 87, 61, 0.20);
 
     box-shadow:
-        0 10px 24px
-        rgba(65, 86, 70, 0.22);
+        0 8px 20px
+        rgba(72, 61, 43, 0.11);
 }
 
-.home-actions .primary-action:hover {
-    color: #ffffff;
 
-    background:
-        linear-gradient(
-            135deg,
-            #63765f,
-            #435d4d
-        );
-
-    transform: translateY(-2px);
-}
+/* ============================================================
+   ZWEITER BUTTON
+   ============================================================ */
 
 .home-secondary-action {
-    color: #4d4c3e;
+    color: #405247;
 
     background:
         linear-gradient(
             135deg,
-            #e5cfaa,
-            #d2b889
+            #eadbc0 0%,
+            #e6dfcf 48%,
+            #dce2d5 100%
         );
 
     border:
         1px solid
-        #c3a674;
+        rgba(102, 87, 61, 0.20);
 
     box-shadow:
-        0 10px 24px
-        rgba(139, 111, 69, 0.18);
+        0 8px 20px
+        rgba(72, 61, 43, 0.11);
 
     text-decoration: none;
 }
 
-.home-secondary-action:hover {
-    color: #3d463d;
+
+/* ============================================================
+   BUTTON HOVER
+   ============================================================ */
+
+.home-actions .primary-action:hover,
+.home-secondary-action:hover,
+.home-actions .button:hover {
+    color: #314b3d;
 
     background:
         linear-gradient(
             135deg,
-            #dcc397,
-            #c7a970
+            #e2d1b7 0%,
+            #dedbca 48%,
+            #d2dccf 100%
         );
 
-    transform: translateY(-2px);
+    border-color:
+        rgba(79, 107, 85, 0.27);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(72, 61, 43, 0.15);
 }
 
 
@@ -692,9 +753,9 @@ body.home-page {
     border-radius: 50%;
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
     font-size: 31px;
 }
@@ -707,17 +768,17 @@ body.home-page {
 
 .home-reminder-content h2 {
     margin:
-        0 0 6px;
+        0 0 8px;
 
     color: #314b3d;
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 27px;
+    font-weight: 600;
 }
 
 .home-reminder-content p {
@@ -726,17 +787,18 @@ body.home-page {
     color: #596158;
 
     font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Montserrat",
+        Arial,
+        sans-serif;
 
     font-size:
         clamp(
-            16px,
+            18px,
             2vw,
-            20px
+            21px
         );
 
+    font-weight: 400;
     line-height: 1.55;
 }
 
@@ -746,6 +808,7 @@ body.home-page {
    ============================================================ */
 
 @media (max-width: 1080px) {
+
     .home-area-grid {
         grid-template-columns:
             repeat(
@@ -758,6 +821,7 @@ body.home-page {
         right: -25px;
         left: -25px;
     }
+
 }
 
 
@@ -766,6 +830,7 @@ body.home-page {
    ============================================================ */
 
 @media (max-width: 760px) {
+
     .home-page .hero-content {
         transform: translateY(-24px);
     }
@@ -811,6 +876,7 @@ body.home-page {
     .home-reminder-content {
         padding-right: 0;
     }
+
 }
 
 
@@ -819,6 +885,7 @@ body.home-page {
    ============================================================ */
 
 @media (max-width: 600px) {
+
     .home-page .hero-content {
         transform: translateY(-18px);
     }
@@ -839,11 +906,11 @@ body.home-page {
     }
 
     .home-welcome-kicker {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .home-welcome-text {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .home-leaf-divider {
@@ -876,8 +943,12 @@ body.home-page {
         font-size: 30px;
     }
 
+    .home-area-subtitle {
+        font-size: 19px;
+    }
+
     .home-area-description {
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .home-actions {
@@ -891,6 +962,8 @@ body.home-page {
     .home-actions .button {
         width: 100%;
         min-width: 0;
+
+        min-height: 56px;
     }
 
     .home-reminder {
@@ -908,6 +981,7 @@ body.home-page {
         margin:
             0 auto;
     }
+
 }
 
 
@@ -916,6 +990,7 @@ body.home-page {
    ============================================================ */
 
 @media (max-width: 420px) {
+
     .home-area-card {
         grid-template-rows:
             205px auto;
@@ -932,6 +1007,11 @@ body.home-page {
     .home-area-subtitle {
         font-size: 18px;
     }
+
+    .home-area-description {
+        font-size: 16px;
+    }
+
 }
 
 
@@ -940,6 +1020,7 @@ body.home-page {
    ============================================================ */
 
 @media (hover: none) {
+
     .home-area-card:hover {
         transform: none;
 
@@ -956,6 +1037,7 @@ body.home-page {
     .home-actions .button:hover {
         transform: none;
     }
+
 }
 
 
@@ -964,6 +1046,7 @@ body.home-page {
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
+
     .home-area-card,
     .home-area-image img,
     .home-actions .button {
@@ -976,4 +1059,5 @@ body.home-page {
     .home-actions .button:hover {
         transform: none;
     }
+
 }

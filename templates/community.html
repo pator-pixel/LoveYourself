@@ -1,0 +1,848 @@
+{% extends "base.html" %}
+
+{% block title %}
+Unsere gemeinsame Reise – Love Yourself
+{% endblock %}
+
+{% block body_class %}
+community-page
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ===================================================== -->
+<!-- HERO -->
+<!-- ===================================================== -->
+
+<section class="community-hero">
+
+    <div class="community-hero-content">
+
+        <h1>
+            Unsere gemeinsame Reise
+        </h1>
+
+        <p>
+            Hier ist Platz für echte Schritte,
+            kleine Erfolge, schwierige Tage und Gedanken,
+            die Mut machen.
+
+            Wir müssen nicht perfekt sein –
+            wir dürfen gemeinsam wachsen.
+        </p>
+
+    </div>
+
+
+    <div class="community-hero-note">
+
+        <span class="community-heart">
+            ♡
+        </span>
+
+        <p>
+            Teile nur das,
+            womit du dich wohlfühlst.
+
+            Wertschätzung steht hier
+            an erster Stelle.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- COMMUNITY LAYOUT -->
+<!-- ===================================================== -->
+
+<section class="community-layout">
+
+
+    <!-- ================================================= -->
+    <!-- LINKE SEITE -->
+    <!-- ================================================= -->
+
+    <aside class="community-sidebar-card">
+
+        <h2>
+            Dein Platz in der Community
+        </h2>
+
+        <p>
+            Erfolge dürfen gefeiert werden.
+            Herausforderungen dürfen ausgesprochen werden.
+
+            Und manchmal hilft schon das Gefühl,
+            mit einem Gedanken nicht allein zu sein.
+        </p>
+
+
+        <div class="community-values">
+
+
+            <!-- RESPEKTVOLL -->
+
+            <div>
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    Respektvoll
+                </strong>
+
+                <p>
+                    Wir begegnen uns ohne Bewertung
+                    und ohne Druck.
+                </p>
+
+            </div>
+
+
+            <!-- EHRLICH -->
+
+            <div>
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    Ehrlich
+                </strong>
+
+                <p>
+                    Auch kleine Schritte und schwierige
+                    Tage gehören dazu.
+                </p>
+
+            </div>
+
+
+            <!-- GEMEINSAM -->
+
+            <div>
+
+                <span>
+                    03
+                </span>
+
+                <strong>
+                    Gemeinsam
+                </strong>
+
+                <p>
+                    Wir motivieren,
+                    statt miteinander zu vergleichen.
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================= -->
+    <!-- RECHTE SEITE -->
+    <!-- ================================================= -->
+
+    <div class="community-main">
+
+
+        <!-- ================================================= -->
+        <!-- BEITRAG ERSTELLEN -->
+        <!-- ================================================= -->
+
+        {% if is_logged_in %}
+
+        <section class="community-create-card">
+
+
+            <div class="community-section-heading">
+
+                <div>
+
+                    <h2>
+                        Was möchtest du heute teilen?
+                    </h2>
+
+                    <p>
+                        Ein Gedanke, ein Erfolg,
+                        ein Foto oder etwas,
+                        das dich gerade beschäftigt.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if error %}
+
+            <div class="community-error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            <form
+                class="community-form"
+                method="POST"
+                enctype="multipart/form-data"
+                action="{{ url_for('community.create_post') }}"
+            >
+
+
+                <div class="community-form-row">
+
+
+                    <div class="community-field community-field-wide">
+
+                        <label for="community-title">
+                            Titel
+                        </label>
+
+                        <input
+                            id="community-title"
+                            type="text"
+                            name="title"
+                            maxlength="120"
+                            placeholder="Worum geht es in deinem Beitrag?"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="community-field">
+
+                        <label for="community-category">
+                            Kategorie
+                        </label>
+
+                        <select
+                            id="community-category"
+                            name="category"
+                        >
+
+                            <option value="Erfolg">
+                                Erfolg
+                            </option>
+
+                            <option value="Motivation">
+                                Motivation
+                            </option>
+
+                            <option
+                                value="Gedanke"
+                                selected
+                            >
+                                Gedanke
+                            </option>
+
+                            <option value="Herausforderung">
+                                Herausforderung
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="community-field">
+
+                    <label for="community-content">
+
+                        Dein Beitrag
+
+                        <span class="community-optional">
+                            optional bei einem Foto
+                        </span>
+
+                    </label>
+
+                    <textarea
+                        id="community-content"
+                        name="content"
+                        rows="6"
+                        maxlength="2000"
+                        placeholder="Schreib auf, was du mit der Community teilen möchtest ..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="community-field">
+
+                    <label for="community-image">
+
+                        Foto hinzufügen
+
+                        <span class="community-optional">
+                            optional
+                        </span>
+
+                    </label>
+
+
+                    <div class="community-file-field">
+
+                        <input
+                            id="community-image"
+                            type="file"
+                            name="image"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                        >
+
+                        <p>
+                            JPG, PNG oder WEBP · maximal 5 MB
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="community-form-footer">
+
+                    <span>
+                        Maximal 2.000 Zeichen
+                    </span>
+
+                    <button
+                        class="community-primary-button"
+                        type="submit"
+                    >
+                        Beitrag teilen
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        {% else %}
+
+
+        <section class="community-login-card">
+
+            <div>
+
+                <h2>
+                    Du möchtest etwas teilen?
+                </h2>
+
+                <p>
+                    Logge dich ein oder erstelle ein Konto,
+                    um Teil unserer gemeinsamen Reise zu werden.
+                </p>
+
+            </div>
+
+
+            <div class="community-login-actions">
+
+                <a
+                    class="community-primary-button"
+                    href="{{ url_for('auth.login') }}"
+                >
+                    Einloggen
+                </a>
+
+                <a
+                    class="community-secondary-button"
+                    href="{{ url_for('auth.register') }}"
+                >
+                    Registrieren
+                </a>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- COMMUNITY FEED -->
+        <!-- ================================================= -->
+
+        <section class="community-feed">
+
+
+            <div class="community-feed-heading">
+
+                <div>
+
+                    <h2>
+                        Gemeinsam unterwegs
+                    </h2>
+
+                    <p>
+                        Gedanken, Bilder und Momente
+                        aus unserer Community.
+                    </p>
+
+                </div>
+
+
+                <span class="community-post-count">
+
+                    {{ posts|length }}
+
+                    {% if posts|length == 1 %}
+
+                        Beitrag
+
+                    {% else %}
+
+                        Beiträge
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            {% if posts %}
+
+
+            <div class="community-post-list">
+
+
+                {% for post in posts %}
+
+
+                <!-- ========================================= -->
+                <!-- EINZELNER BEITRAG -->
+                <!--
+                    Die ID ist wichtig.
+
+                    Dadurch kann Flask nach Likes,
+                    Kommentaren und dem Löschen eines
+                    Kommentars wieder genau zu diesem
+                    Beitrag zurückspringen.
+                -->
+                <!-- ========================================= -->
+
+                <article
+                    class="community-post-card"
+                    id="post-{{ post.id }}"
+                >
+
+
+                    <div class="community-post-topline">
+
+                        <span class="community-category">
+                            {{ post.category }}
+                        </span>
+
+                        <span class="community-date">
+                            {{ post.formatted_created_at }}
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        {{ post.title }}
+                    </h3>
+
+
+                    {% if post.content %}
+
+                    <p class="community-post-content">
+                        {{ post.content }}
+                    </p>
+
+                    {% endif %}
+
+
+                    {% if post.image %}
+
+                    <div class="community-post-image-wrapper">
+
+                        <img
+                            class="community-post-image"
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/community/' ~ post.image.filename
+                            ) }}"
+                            alt="Bild zum Beitrag {{ post.title }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <div class="community-post-footer">
+
+
+                        <div class="community-author">
+
+                            <span class="community-avatar">
+
+                                {{ post.author.username[:1]|upper }}
+
+                            </span>
+
+
+                            <div>
+
+                                <span>
+                                    geteilt von
+                                </span>
+
+                                <strong>
+                                    {{ post.author.username }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="community-post-actions">
+
+
+                            {% if is_logged_in %}
+
+
+                            <!-- LIKE / UNLIKE -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'community.toggle_like',
+                                    post_id=post.id
+                                ) }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        community-like-button
+                                        {% if post.id in liked_post_ids %}
+                                            is-liked
+                                        {% endif %}
+                                    "
+                                    aria-label="Beitrag unterstützen"
+                                >
+
+                                    <span>
+                                        ♡
+                                    </span>
+
+                                    {{ post.likes|length }}
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- BEITRAG LÖSCHEN -->
+
+                            {% if current_user.id == post.user_id %}
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'community.delete_post',
+                                    post_id=post.id
+                                ) }}"
+                                onsubmit="
+                                    return confirm(
+                                        'Möchtest du diesen Beitrag wirklich löschen?'
+                                    );
+                                "
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="community-delete-button"
+                                >
+                                    Löschen
+                                </button>
+
+                            </form>
+
+                            {% endif %}
+
+
+                            {% else %}
+
+                            <span class="community-like-count">
+
+                                ♡ {{ post.likes|length }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- KOMMENTARE -->
+                    <!-- ================================================= -->
+
+                    <section class="community-comments">
+
+
+                        <div class="community-comments-heading">
+
+                            <h4>
+                                Kommentare
+                            </h4>
+
+
+                            <span>
+
+                                {{ post.comments|length }}
+
+                                {% if post.comments|length == 1 %}
+
+                                    Kommentar
+
+                                {% else %}
+
+                                    Kommentare
+
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+
+                        {% if post.comments %}
+
+                        <div class="community-comment-list">
+
+
+                            {% for comment in post.comments %}
+
+
+                            <article class="community-comment">
+
+
+                                <div class="community-comment-header">
+
+
+                                    <div class="community-comment-author">
+
+                                        <span class="community-comment-avatar">
+
+                                            {{ comment.author.username[:1]|upper }}
+
+                                        </span>
+
+
+                                        <div>
+
+                                            <strong>
+                                                {{ comment.author.username }}
+                                            </strong>
+
+                                            <span>
+                                                {{ comment.formatted_created_at }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {% if (
+                                        is_logged_in
+                                        and current_user.id == comment.user_id
+                                    ) %}
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'community.delete_comment',
+                                            comment_id=comment.id
+                                        ) }}"
+                                        onsubmit="
+                                            return confirm(
+                                                'Möchtest du diesen Kommentar wirklich löschen?'
+                                            );
+                                        "
+                                    >
+
+                                        <button
+                                            class="community-comment-delete"
+                                            type="submit"
+                                        >
+                                            Löschen
+                                        </button>
+
+                                    </form>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if comment.content %}
+
+                                <p class="community-comment-text">
+                                    {{ comment.content }}
+                                </p>
+
+                                {% endif %}
+
+
+                                {% if comment.image_filename %}
+
+                                <div class="community-comment-image-wrapper">
+
+                                    <img
+                                        class="community-comment-image"
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='uploads/community/' ~ comment.image_filename
+                                        ) }}"
+                                        alt="Bild im Kommentar"
+                                        loading="lazy"
+                                    >
+
+                                </div>
+
+                                {% endif %}
+
+                            </article>
+
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- ============================================= -->
+                        <!-- KOMMENTAR SCHREIBEN -->
+                        <!-- ============================================= -->
+
+                        {% if is_logged_in %}
+
+                        <form
+                            class="community-comment-form"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            action="{{ url_for(
+                                'community.create_comment',
+                                post_id=post.id
+                            ) }}"
+                        >
+
+
+                            <textarea
+                                name="content"
+                                rows="3"
+                                maxlength="1000"
+                                placeholder="Schreibe einen Kommentar ..."
+                            ></textarea>
+
+
+                            <div class="community-comment-form-bottom">
+
+
+                                <label class="community-comment-image-button">
+
+                                    <span>
+                                        📷 Foto hinzufügen
+                                    </span>
+
+                                    <input
+                                        type="file"
+                                        name="image"
+                                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                    >
+
+                                </label>
+
+
+                                <button
+                                    type="submit"
+                                    class="community-comment-submit"
+                                >
+                                    Kommentieren
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        {% else %}
+
+                        <p class="community-comment-login-hint">
+
+                            <a href="{{ url_for('auth.login') }}">
+                                Logge dich ein
+                            </a>
+
+                            , um einen Kommentar zu schreiben.
+
+                        </p>
+
+                        {% endif %}
+
+                    </section>
+
+                </article>
+
+
+                {% endfor %}
+
+            </div>
+
+
+            {% else %}
+
+            <div class="community-empty-state">
+
+                <span>
+                    ♡
+                </span>
+
+                <h3>
+                    Hier beginnt unsere gemeinsame Reise.
+                </h3>
+
+                <p>
+                    Noch wurde kein Beitrag geteilt.
+                    Vielleicht möchtest du den ersten Schritt machen?
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

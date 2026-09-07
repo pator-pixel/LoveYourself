@@ -4,30 +4,13 @@
 Profil bearbeiten
 {% endblock %}
 
+{% block body_class %}
+profile-page
+{% endblock %}
+
 {% block content %}
 
-<section class="page-heading profile-page-heading">
-    <div>
-        <span class="eyebrow">
-            Deine Angaben
-        </span>
 
-        <h2>Dein Profil</h2>
-
-        <p>
-            Deine Angaben helfen Love Yourself dabei,
-            Ernährungs- und Fitnesspläne zu erstellen,
-            die besser zu dir passen.
-        </p>
-    </div>
-
-    <a
-        class="button secondary-button"
-        href="{{ url_for('profile_view') }}"
-    >
-        Profil anzeigen
-    </a>
-</section>
 
 
 {% if error %}
@@ -245,9 +228,6 @@ Profil bearbeiten
                     placeholder="z. B. 90"
                 >
 
-                <small>
-                    Dieses Gewicht bleibt dein Startwert.
-                </small>
             </div>
 
 
@@ -483,19 +463,29 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Krankheiten -->
+
+
+        <!-- ================================================= -->
+        <!-- KRANKHEITEN -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Krankheiten</h4>
+
+                    <h4>
+                        Krankheiten
+                    </h4>
 
                     <p>
                         Diese Angaben helfen dabei,
                         Hinweise vorsichtiger zu formulieren.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -508,6 +498,7 @@ Profil bearbeiten
                 >
                     + Krankheit hinzufügen
                 </button>
+
             </div>
 
 
@@ -528,6 +519,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -537,6 +529,7 @@ Profil bearbeiten
                                     name="diseases_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -573,19 +566,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Körperliche Einschränkungen -->
+        <!-- ================================================= -->
+        <!-- KÖRPERLICHE EINSCHRÄNKUNGEN -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Körperliche Einschränkungen</h4>
+
+                    <h4>
+                        Körperliche Einschränkungen
+                    </h4>
 
                     <p>
                         Zum Beispiel Knieprobleme,
                         Rückenbeschwerden oder eingeschränkte Beweglichkeit.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -598,6 +599,7 @@ Profil bearbeiten
                 >
                     + Einschränkung hinzufügen
                 </button>
+
             </div>
 
 
@@ -618,6 +620,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -627,6 +630,7 @@ Profil bearbeiten
                                     name="limitations_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -663,19 +667,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Beliebte Lebensmittel -->
+        <!-- ================================================= -->
+        <!-- BELIEBTE LEBENSMITTEL -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Lebensmittel, die du gerne isst</h4>
+
+                    <h4>
+                        Lebensmittel, die du gerne isst
+                    </h4>
 
                     <p>
                         Diese Lebensmittel dürfen häufiger
                         in deinen Plänen vorkommen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -688,6 +700,7 @@ Profil bearbeiten
                 >
                     + Lebensmittel hinzufügen
                 </button>
+
             </div>
 
 
@@ -708,6 +721,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -717,6 +731,7 @@ Profil bearbeiten
                                     name="liked_foods_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -753,19 +768,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Nicht gewünschte Lebensmittel -->
+        <!-- ================================================= -->
+        <!-- NICHT GEWÜNSCHTE LEBENSMITTEL -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Lebensmittel, die du nicht magst</h4>
+
+                    <h4>
+                        Lebensmittel, die du nicht magst
+                    </h4>
 
                     <p>
                         Diese Lebensmittel werden aus deinen
                         Ernährungsplänen ausgeschlossen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -778,10 +801,10 @@ Profil bearbeiten
                 >
                     + Lebensmittel hinzufügen
                 </button>
+
             </div>
 
-
-            <div
+                        <div
                 id="disliked-foods-list"
                 class="dynamic-items-list"
             >
@@ -798,6 +821,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -807,6 +831,7 @@ Profil bearbeiten
                                     name="disliked_foods_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -843,19 +868,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Lieblingsgerichte -->
+        <!-- ================================================= -->
+        <!-- LIEBLINGSGERICHTE -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Lieblingsgerichte</h4>
+
+                    <h4>
+                        Lieblingsgerichte
+                    </h4>
 
                     <p>
                         Lieblingsgerichte können in passender
                         Form in zukünftige Pläne einfließen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -868,6 +901,7 @@ Profil bearbeiten
                 >
                     + Lieblingsgericht hinzufügen
                 </button>
+
             </div>
 
 
@@ -888,6 +922,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -897,6 +932,7 @@ Profil bearbeiten
                                     name="favorite_meals_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -933,7 +969,9 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Ernährungswünsche -->
+        <!-- ================================================= -->
+        <!-- ERNÄHRUNGSWÜNSCHE -->
+        <!-- ================================================= -->
 
         <fieldset class="preference-section">
 
@@ -962,7 +1000,9 @@ Profil bearbeiten
                         {% endif %}
                     >
 
-                    <span>{{ option }}</span>
+                    <span>
+                        {{ option }}
+                    </span>
 
                 </label>
 
@@ -1002,36 +1042,52 @@ Profil bearbeiten
             </span>
 
             <div>
+
                 <span class="profile-section-kicker">
                     Abschnitt 3
                 </span>
 
-                <h3>Training</h3>
+                <h3>
+                    Training
+                </h3>
 
                 <p>
                     Dein Trainingsplan richtet sich nach Fitnesslevel,
                     Equipment, Vorlieben und Einschränkungen.
                 </p>
+
             </div>
 
         </div>
 
 
+        <!-- ================================================= -->
+        <!-- TRAININGSGRUNDLAGEN -->
+        <!-- ================================================= -->
+
         <div class="profile-subsection">
 
             <div class="profile-subsection-heading">
-                <h4>Trainingsgrundlagen</h4>
+
+                <h4>
+                    Trainingsgrundlagen
+                </h4>
 
                 <p>
                     Lege fest, wie häufig und wie lange du
                     ungefähr trainieren möchtest.
                 </p>
+
             </div>
 
 
             <div class="form-grid">
 
+
+                <!-- FITNESSLEVEL -->
+
                 <div class="form-field">
+
                     <label for="fitness_level">
                         Fitnesslevel
                     </label>
@@ -1040,6 +1096,7 @@ Profil bearbeiten
                         id="fitness_level"
                         name="fitness_level"
                     >
+
                         <option
                             value="beginner"
                             {% if profile and profile.fitness_level == "beginner" %}
@@ -1066,11 +1123,16 @@ Profil bearbeiten
                         >
                             Fortgeschritten
                         </option>
+
                     </select>
+
                 </div>
 
 
+                <!-- TRAININGSTAGE -->
+
                 <div class="form-field">
+
                     <label for="training_days">
                         Trainingstage pro Woche
                     </label>
@@ -1095,10 +1157,14 @@ Profil bearbeiten
                         {% endfor %}
 
                     </select>
+
                 </div>
 
 
+                <!-- FITNESSSTUDIO -->
+
                 <div class="form-field">
+
                     <label for="has_gym">
                         Fitnessstudio vorhanden?
                     </label>
@@ -1107,6 +1173,7 @@ Profil bearbeiten
                         id="has_gym"
                         name="has_gym"
                     >
+
                         <option
                             value="no"
                             {% if profile and not profile.has_gym %}
@@ -1124,11 +1191,16 @@ Profil bearbeiten
                         >
                             Ja
                         </option>
+
                     </select>
+
                 </div>
 
 
+                <!-- TRAININGSDAUER -->
+
                 <div class="form-field">
+
                     <label for="preferred_training_duration">
                         Bevorzugte Trainingsdauer
                     </label>
@@ -1137,30 +1209,58 @@ Profil bearbeiten
                         id="preferred_training_duration"
                         name="preferred_training_duration"
                     >
+
                         <option value="">
-                            Keine Angabe
+                            Bitte wählen
                         </option>
 
-                        {% for option in [
-                            "20 Minuten",
-                            "30 Minuten",
-                            "45 Minuten",
-                            "60 Minuten",
-                            "90 Minuten"
-                        ] %}
-
                         <option
-                            value="{{ option }}"
-                            {% if profile and profile.preferred_training_duration == option %}
+                            value="20"
+                            {% if profile and profile.preferred_training_duration == 20 %}
                                 selected
                             {% endif %}
                         >
-                            {{ option }}
+                            ca. 20 Minuten
                         </option>
 
-                        {% endfor %}
+                        <option
+                            value="30"
+                            {% if profile and profile.preferred_training_duration == 30 %}
+                                selected
+                            {% endif %}
+                        >
+                            ca. 30 Minuten
+                        </option>
+
+                        <option
+                            value="45"
+                            {% if profile and profile.preferred_training_duration == 45 %}
+                                selected
+                            {% endif %}
+                        >
+                            ca. 45 Minuten
+                        </option>
+
+                        <option
+                            value="60"
+                            {% if profile and profile.preferred_training_duration == 60 %}
+                                selected
+                            {% endif %}
+                        >
+                            ca. 60 Minuten
+                        </option>
+
+                        <option
+                            value="90"
+                            {% if profile and profile.preferred_training_duration == 90 %}
+                                selected
+                            {% endif %}
+                        >
+                            ca. 90 Minuten
+                        </option>
 
                     </select>
+
                 </div>
 
             </div>
@@ -1168,60 +1268,71 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Home Equipment -->
+        <!-- ================================================= -->
+        <!-- VERFÜGBARES EQUIPMENT -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Home-Equipment</h4>
+
+                    <h4>
+                        Verfügbares Equipment
+                    </h4>
 
                     <p>
-                        Zum Beispiel Kurzhanteln,
-                        Widerstandsbänder oder eine Trainingsmatte.
+                        Trage ein, welche Geräte oder Hilfsmittel
+                        dir für dein Training zur Verfügung stehen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
                     class="add-item-button"
                     onclick="addField(
-                        'home-equipment-list',
-                        'home_equipment_item',
+                        'equipment-list',
+                        'equipment_item',
                         'Equipment eingeben'
                     )"
                 >
                     + Equipment hinzufügen
                 </button>
+
             </div>
 
 
             <div
-                id="home-equipment-list"
+                id="equipment-list"
                 class="dynamic-items-list"
             >
 
-                {% if profile and profile.home_equipment %}
+                {% if profile and profile.equipment %}
 
-                    {% for item in profile.home_equipment.splitlines() %}
+                    {% for item in profile.equipment.splitlines() %}
 
                         {% if item.strip() %}
 
                         <div
                             class="field-row saved-field-row"
-                            data-input-name="home_equipment_item"
+                            data-input-name="equipment_item"
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
 
                                 <input
                                     type="hidden"
-                                    name="home_equipment_item"
+                                    name="equipment_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -1258,19 +1369,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Beliebte Übungen -->
+        <!-- ================================================= -->
+        <!-- BELIEBTE ÜBUNGEN -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Beliebte Übungen</h4>
+
+                    <h4>
+                        Beliebte Übungen
+                    </h4>
 
                     <p>
                         Diese Übungen können häufiger
                         in deinen Trainingsplänen erscheinen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -1283,6 +1402,7 @@ Profil bearbeiten
                 >
                     + Übung hinzufügen
                 </button>
+
             </div>
 
 
@@ -1303,6 +1423,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -1312,6 +1433,7 @@ Profil bearbeiten
                                     name="liked_exercises_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -1348,19 +1470,27 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Unbeliebte Übungen -->
+        <!-- ================================================= -->
+        <!-- UNBELIEBTE ÜBUNGEN -->
+        <!-- ================================================= -->
 
         <div class="dynamic-section">
 
             <div class="dynamic-section-heading">
+
                 <div>
-                    <h4>Unbeliebte Übungen</h4>
+
+                    <h4>
+                        Unbeliebte Übungen
+                    </h4>
 
                     <p>
                         Diese Übungen sollen möglichst
                         nicht in deinen Plänen vorkommen.
                     </p>
+
                 </div>
+
 
                 <button
                     type="button"
@@ -1373,6 +1503,7 @@ Profil bearbeiten
                 >
                     + Übung hinzufügen
                 </button>
+
             </div>
 
 
@@ -1393,6 +1524,7 @@ Profil bearbeiten
                         >
 
                             <div class="saved-value-wrapper">
+
                                 <span class="saved-chip">
                                     {{ item }}
                                 </span>
@@ -1402,6 +1534,7 @@ Profil bearbeiten
                                     name="disliked_exercises_item"
                                     value="{{ item }}"
                                 >
+
                             </div>
 
 
@@ -1438,7 +1571,9 @@ Profil bearbeiten
         </div>
 
 
-        <!-- Bevorzugte Trainingsarten -->
+        <!-- ================================================= -->
+        <!-- BEVORZUGTE TRAININGSARTEN -->
+        <!-- ================================================= -->
 
         <fieldset class="preference-section">
 
@@ -1467,7 +1602,9 @@ Profil bearbeiten
                         {% endif %}
                     >
 
-                    <span>{{ option }}</span>
+                    <span>
+                        {{ option }}
+                    </span>
 
                 </label>
 
@@ -1492,7 +1629,9 @@ Profil bearbeiten
         </fieldset>
 
 
-        <!-- Fitnesswünsche -->
+        <!-- ================================================= -->
+        <!-- FITNESSWÜNSCHE -->
+        <!-- ================================================= -->
 
         <fieldset class="preference-section">
 
@@ -1521,7 +1660,9 @@ Profil bearbeiten
                         {% endif %}
                     >
 
-                    <span>{{ option }}</span>
+                    <span>
+                        {{ option }}
+                    </span>
 
                 </label>
 
@@ -1549,7 +1690,7 @@ Profil bearbeiten
 
 
     <!-- ================================================= -->
-    <!-- AKTIONEN -->
+    <!-- AKTIONEN UNTEN -->
     <!-- ================================================= -->
 
     <div class="profile-form-actions">
@@ -1587,66 +1728,145 @@ Profil bearbeiten
 {% block scripts %}
 
 <script>
+
 function createSavedField(
     wrapper,
     value,
     inputName
 ) {
-    wrapper.className = "field-row saved-field-row";
-    wrapper.dataset.inputName = inputName;
+
+    wrapper.className =
+        "field-row saved-field-row";
+
+    wrapper.dataset.inputName =
+        inputName;
 
     wrapper.innerHTML = "";
 
-    const valueWrapper = document.createElement("div");
-    valueWrapper.className = "saved-value-wrapper";
 
-    const chip = document.createElement("span");
-    chip.className = "saved-chip";
-    chip.textContent = value;
+    const valueWrapper =
+        document.createElement(
+            "div"
+        );
 
-    const hiddenInput = document.createElement("input");
-    hiddenInput.type = "hidden";
-    hiddenInput.name = inputName;
-    hiddenInput.value = value;
-
-    valueWrapper.appendChild(chip);
-    valueWrapper.appendChild(hiddenInput);
+    valueWrapper.className =
+        "saved-value-wrapper";
 
 
-    const actionWrapper = document.createElement("div");
-    actionWrapper.className = "field-row-actions";
+    const chip =
+        document.createElement(
+            "span"
+        );
 
-    const editButton = document.createElement("button");
-    editButton.type = "button";
-    editButton.className = "edit-button";
-    editButton.textContent = "Bearbeiten";
+    chip.className =
+        "saved-chip";
+
+    chip.textContent =
+        value;
+
+
+    const hiddenInput =
+        document.createElement(
+            "input"
+        );
+
+    hiddenInput.type =
+        "hidden";
+
+    hiddenInput.name =
+        inputName;
+
+    hiddenInput.value =
+        value;
+
+
+    valueWrapper.appendChild(
+        chip
+    );
+
+    valueWrapper.appendChild(
+        hiddenInput
+    );
+
+
+    const actionWrapper =
+        document.createElement(
+            "div"
+        );
+
+    actionWrapper.className =
+        "field-row-actions";
+
+
+    const editButton =
+        document.createElement(
+            "button"
+        );
+
+    editButton.type =
+        "button";
+
+    editButton.className =
+        "edit-button";
+
+    editButton.textContent =
+        "Bearbeiten";
+
 
     editButton.addEventListener(
         "click",
         function () {
-            editField(editButton);
+
+            editField(
+                editButton
+            );
+
         }
     );
 
 
-    const deleteButton = document.createElement("button");
-    deleteButton.type = "button";
-    deleteButton.className = "small-delete-button";
-    deleteButton.textContent = "Löschen";
+    const deleteButton =
+        document.createElement(
+            "button"
+        );
+
+    deleteButton.type =
+        "button";
+
+    deleteButton.className =
+        "small-delete-button";
+
+    deleteButton.textContent =
+        "Löschen";
+
 
     deleteButton.addEventListener(
         "click",
         function () {
+
             wrapper.remove();
+
         }
     );
 
 
-    actionWrapper.appendChild(editButton);
-    actionWrapper.appendChild(deleteButton);
+    actionWrapper.appendChild(
+        editButton
+    );
 
-    wrapper.appendChild(valueWrapper);
-    wrapper.appendChild(actionWrapper);
+    actionWrapper.appendChild(
+        deleteButton
+    );
+
+
+    wrapper.appendChild(
+        valueWrapper
+    );
+
+    wrapper.appendChild(
+        actionWrapper
+    );
+
 }
 
 
@@ -1655,55 +1875,113 @@ function addField(
     inputName,
     placeholderText
 ) {
-    const container = document.getElementById(
-        containerId
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+    wrapper.className =
+        "field-row editing-field-row";
+
+    wrapper.dataset.inputName =
+        inputName;
+
+
+    const inputWrapper =
+        document.createElement(
+            "div"
+        );
+
+    inputWrapper.className =
+        "edit-input-wrapper";
+
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+    input.type =
+        "text";
+
+    input.placeholder =
+        placeholderText;
+
+    input.autocomplete =
+        "off";
+
+
+    inputWrapper.appendChild(
+        input
     );
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "field-row editing-field-row";
-    wrapper.dataset.inputName = inputName;
+
+    const actionWrapper =
+        document.createElement(
+            "div"
+        );
+
+    actionWrapper.className =
+        "field-row-actions";
 
 
-    const inputWrapper = document.createElement("div");
-    inputWrapper.className = "edit-input-wrapper";
+    const saveButton =
+        document.createElement(
+            "button"
+        );
 
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = placeholderText;
-    input.autocomplete = "off";
+    saveButton.type =
+        "button";
 
-    inputWrapper.appendChild(input);
+    saveButton.className =
+        "confirm-button";
 
+    saveButton.textContent =
+        "Speichern";
 
-    const actionWrapper = document.createElement("div");
-    actionWrapper.className = "field-row-actions";
-
-    const saveButton = document.createElement("button");
-    saveButton.type = "button";
-    saveButton.className = "confirm-button";
-    saveButton.textContent = "Speichern";
 
     saveButton.addEventListener(
         "click",
         function () {
+
             saveNewField(
                 wrapper,
                 input,
                 inputName
             );
+
         }
     );
 
 
-    const cancelButton = document.createElement("button");
-    cancelButton.type = "button";
-    cancelButton.className = "cancel-edit-button";
-    cancelButton.textContent = "Abbrechen";
+    const cancelButton =
+        document.createElement(
+            "button"
+        );
+
+    cancelButton.type =
+        "button";
+
+    cancelButton.className =
+        "cancel-edit-button";
+
+    cancelButton.textContent =
+        "Abbrechen";
+
 
     cancelButton.addEventListener(
         "click",
         function () {
+
             wrapper.remove();
+
         }
     );
 
@@ -1711,7 +1989,11 @@ function addField(
     input.addEventListener(
         "keydown",
         function (event) {
-            if (event.key === "Enter") {
+
+            if (
+                event.key === "Enter"
+            ) {
+
                 event.preventDefault();
 
                 saveNewField(
@@ -1719,24 +2001,48 @@ function addField(
                     input,
                     inputName
                 );
+
             }
 
-            if (event.key === "Escape") {
+
+            if (
+                event.key === "Escape"
+            ) {
+
                 wrapper.remove();
+
             }
+
         }
     );
 
 
-    actionWrapper.appendChild(saveButton);
-    actionWrapper.appendChild(cancelButton);
 
-    wrapper.appendChild(inputWrapper);
-    wrapper.appendChild(actionWrapper);
+    actionWrapper.appendChild(
+        saveButton
+    );
 
-    container.appendChild(wrapper);
+    actionWrapper.appendChild(
+        cancelButton
+    );
+
+
+    wrapper.appendChild(
+        inputWrapper
+    );
+
+    wrapper.appendChild(
+        actionWrapper
+    );
+
+
+    container.appendChild(
+        wrapper
+    );
+
 
     input.focus();
+
 }
 
 
@@ -1745,156 +2051,336 @@ function saveNewField(
     input,
     inputName
 ) {
-    const value = input.value.trim();
+
+    const value =
+        input.value.trim();
+
 
     if (!value) {
+
         input.focus();
+
         return;
+
     }
+
 
     createSavedField(
         wrapper,
         value,
         inputName
     );
+
 }
 
 
-function editField(button) {
-    const wrapper = button.closest(".field-row");
+function editField(
+    button
+) {
+
+    const wrapper =
+        button.closest(
+            ".field-row"
+        );
+
 
     if (!wrapper) {
         return;
     }
 
-    const hiddenInput = wrapper.querySelector(
-        "input[type='hidden']"
-    );
+
+    const hiddenInput =
+        wrapper.querySelector(
+            'input[type="hidden"]'
+        );
+
 
     if (!hiddenInput) {
         return;
     }
 
-    const originalValue = hiddenInput.value;
-    const inputName = hiddenInput.name;
 
-    wrapper.className = "field-row editing-field-row";
+    const inputName =
+        wrapper.dataset.inputName
+        || hiddenInput.name;
+
+
+    const currentValue =
+        hiddenInput.value;
+
+
+    wrapper.className =
+        "field-row editing-field-row";
+
+
     wrapper.innerHTML = "";
 
 
-    const inputWrapper = document.createElement("div");
-    inputWrapper.className = "edit-input-wrapper";
+    const inputWrapper =
+        document.createElement(
+            "div"
+        );
 
-    const editInput = document.createElement("input");
-    editInput.type = "text";
-    editInput.value = originalValue;
-    editInput.autocomplete = "off";
-
-    inputWrapper.appendChild(editInput);
+    inputWrapper.className =
+        "edit-input-wrapper";
 
 
-    const actionWrapper = document.createElement("div");
-    actionWrapper.className = "field-row-actions";
+    const input =
+        document.createElement(
+            "input"
+        );
 
-    const saveButton = document.createElement("button");
-    saveButton.type = "button";
-    saveButton.className = "confirm-button";
-    saveButton.textContent = "Speichern";
+    input.type =
+        "text";
+
+    input.value =
+        currentValue;
+
+    input.autocomplete =
+        "off";
+
+
+    inputWrapper.appendChild(
+        input
+    );
+
+
+    const actionWrapper =
+        document.createElement(
+            "div"
+        );
+
+    actionWrapper.className =
+        "field-row-actions";
+
+
+    const saveButton =
+        document.createElement(
+            "button"
+        );
+
+    saveButton.type =
+        "button";
+
+    saveButton.className =
+        "confirm-button";
+
+    saveButton.textContent =
+        "Speichern";
+
 
     saveButton.addEventListener(
         "click",
         function () {
-            saveEditedField(
+
+            const newValue =
+                input.value.trim();
+
+
+            if (!newValue) {
+
+                input.focus();
+
+                return;
+
+            }
+
+
+            createSavedField(
                 wrapper,
-                editInput,
-                inputName,
-                originalValue
+                newValue,
+                inputName
             );
+
         }
     );
 
 
-    const cancelButton = document.createElement("button");
-    cancelButton.type = "button";
-    cancelButton.className = "cancel-edit-button";
-    cancelButton.textContent = "Abbrechen";
+    const cancelButton =
+        document.createElement(
+            "button"
+        );
+
+    cancelButton.type =
+        "button";
+
+    cancelButton.className =
+        "cancel-edit-button";
+
+    cancelButton.textContent =
+        "Abbrechen";
+
 
     cancelButton.addEventListener(
         "click",
         function () {
+
             createSavedField(
                 wrapper,
-                originalValue,
+                currentValue,
                 inputName
             );
+
         }
     );
 
 
-    editInput.addEventListener(
+    input.addEventListener(
         "keydown",
         function (event) {
-            if (event.key === "Enter") {
+
+            if (
+                event.key === "Enter"
+            ) {
+
                 event.preventDefault();
 
-                saveEditedField(
-                    wrapper,
-                    editInput,
-                    inputName,
-                    originalValue
-                );
+                saveButton.click();
+
             }
 
-            if (event.key === "Escape") {
+
+            if (
+                event.key === "Escape"
+            ) {
+
                 createSavedField(
                     wrapper,
-                    originalValue,
+                    currentValue,
                     inputName
                 );
+
             }
+
         }
     );
 
 
-    actionWrapper.appendChild(saveButton);
-    actionWrapper.appendChild(cancelButton);
-
-    wrapper.appendChild(inputWrapper);
-    wrapper.appendChild(actionWrapper);
-
-    editInput.focus();
-    editInput.select();
-}
-
-
-function saveEditedField(
-    wrapper,
-    editInput,
-    inputName,
-    originalValue
-) {
-    const newValue = editInput.value.trim();
-
-    if (!newValue) {
-        editInput.focus();
-        return;
-    }
-
-    createSavedField(
-        wrapper,
-        newValue,
-        inputName
+    actionWrapper.appendChild(
+        saveButton
     );
+
+    actionWrapper.appendChild(
+        cancelButton
+    );
+
+
+    wrapper.appendChild(
+        inputWrapper
+    );
+
+    wrapper.appendChild(
+        actionWrapper
+    );
+
+
+    input.focus();
+
+    input.select();
+
 }
 
 
-function removeField(button) {
-    const wrapper = button.closest(".field-row");
+function removeField(
+    button
+) {
+
+    const wrapper =
+        button.closest(
+            ".field-row"
+        );
+
 
     if (wrapper) {
+
         wrapper.remove();
+
     }
+
 }
+
+
+/* ============================================================
+   PROFILFORMULAR
+   Vor dem Absenden offene Eingabefelder sichern
+   ============================================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const profileForm =
+            document.querySelector(
+                ".profile-form"
+            );
+
+
+        if (!profileForm) {
+            return;
+        }
+
+
+        profileForm.addEventListener(
+            "submit",
+            function () {
+
+                const editingRows =
+                    profileForm.querySelectorAll(
+                        ".editing-field-row"
+                    );
+
+
+                editingRows.forEach(
+                    function (row) {
+
+                        const input =
+                            row.querySelector(
+                                'input[type="text"]'
+                            );
+
+
+                        if (!input) {
+                            return;
+                        }
+
+
+                        const value =
+                            input.value.trim();
+
+
+                        if (!value) {
+
+                            row.remove();
+
+                            return;
+
+                        }
+
+
+                        const inputName =
+                            row.dataset.inputName;
+
+
+                        if (!inputName) {
+                            return;
+                        }
+
+
+                        createSavedField(
+                            row,
+                            value,
+                            inputName
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
 </script>
 
 {% endblock %}

@@ -1,171 +1,517 @@
 {% extends "base.html" %}
 
+{% block title %}
+Meine Pläne | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+plans-page
+{% endblock %}
+
 {% block content %}
 
-<section class="page-heading">
+
+<!-- ===================================================== -->
+<!-- SEITENKOPF -->
+<!-- ===================================================== -->
+
+<section class="plans-page-heading">
+
     <div>
-        <h2>Meine Pläne</h2>
+
+        <span class="plans-kicker">
+            Deine persönliche Reise
+        </span>
+
+        <h1>
+            Meine Pläne
+        </h1>
 
         <p>
-            Hier findest du alle bisher erstellten Ernährungs- und
-            Fitnesspläne sowie die dazugehörigen Einkaufslisten.
+            Hier findest du deine Ernährungspläne mit den
+            dazugehörigen Einkaufslisten sowie deine
+            Fitnesspläne – übersichtlich voneinander getrennt.
         </p>
+
     </div>
 
-    <a
-        class="button"
-        href="{{ url_for('generate_plan') }}"
-    >
-        Neuen Plan generieren
-    </a>
+
 </section>
 
-{% if plans %}
 
-<div class="plans-list">
+<!-- ===================================================== -->
+<!-- ERNÄHRUNGSPLÄNE -->
+<!-- ===================================================== -->
 
-    {% for plan in plans %}
+<section class="plans-category-section">
 
-    <section class="plan-list-card">
+    <div class="plans-category-heading">
 
-        <div class="plan-list-date">
-            <span>Erstellt am</span>
-            <strong>{{ plan.created_at }}</strong>
-        </div>
+        <div>
 
-        <div class="plan-list-content">
+            <span class="plans-category-icon">
+                🥗
+            </span>
 
-            <div class="plan-list-title">
-                <span class="plan-list-icon">🥗</span>
+            <div>
 
-                <div>
-                    <h3>{{ plan.nutrition_title }}</h3>
+                <span class="plans-category-label">
+                    Ernährung
+                </span>
 
-                    <p>
-                        {% if plan.calories %}
-                            Kalorienziel: {{ plan.calories }} kcal
-                        {% else %}
-                            Kalorienziel nicht berechnet
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
+                <h2>
+                    Meine Ernährungspläne
+                </h2>
 
-            <div class="plan-list-title">
-                <span class="plan-list-icon">🏋️</span>
+                <p>
+                    Deine persönlichen 7-Tage-Ernährungspläne
+                    inklusive passender Einkaufsliste.
+                </p>
 
-                <div>
-                    <h3>{{ plan.fitness_title }}</h3>
-
-                    <p>
-                        Aktuelles Gewicht:
-                        {% if plan.current_weight is not none %}
-                            {{ plan.current_weight }} kg
-                        {% else %}
-                            nicht angegeben
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="plan-list-title">
-                <span class="plan-list-icon">🛒</span>
-
-                <div>
-                    <h3>{{ plan.shopping_title }}</h3>
-                    <p>Passend zum Ernährungsplan</p>
-                </div>
             </div>
 
         </div>
 
-        <div class="plan-list-actions">
 
-            <a
-                class="button"
-                href="{{ url_for(
-                    'view_plan',
-                    plan_id=plan.id
-                ) }}"
-            >
-                Plan ansehen
-            </a>
+        <a
+            class="plans-category-create-button"
+            href="{{ url_for('plans_routes.generate_nutrition_plan') }}"
+        >
+            Ernährungsplan erstellen
+        </a>
 
-            <details class="download-menu">
-                <summary>PDFs herunterladen</summary>
+    </div>
 
-                <div class="download-menu-content">
 
-                    <a
-                        href="{{ url_for(
-                            'download_nutrition_pdf',
-                            plan_id=plan.id
-                        ) }}"
-                    >
-                        Ernährungsplan
-                    </a>
+    {% if nutrition_plans %}
 
-                    <a
-                        href="{{ url_for(
-                            'download_fitness_pdf',
-                            plan_id=plan.id
-                        ) }}"
-                    >
-                        Fitnessplan
-                    </a>
+    <div class="plans-list">
 
-                    <a
-                        href="{{ url_for(
-                            'download_shopping_pdf',
-                            plan_id=plan.id
-                        ) }}"
-                    >
-                        Einkaufsliste
-                    </a>
+        {% for plan in nutrition_plans %}
+
+        <section class="plan-list-card">
+
+
+            <!-- ============================================= -->
+            <!-- DATUM -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-date">
+
+                <span>
+                    Erstellt am
+                </span>
+
+                <strong>
+                    {{ plan.created_at }}
+                </strong>
+
+            </div>
+
+
+            <!-- ============================================= -->
+            <!-- PLAN-INHALT -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-content">
+
+
+                <div class="plan-list-title">
+
+                    <span class="plan-list-icon">
+                        🥗
+                    </span>
+
+                    <div>
+
+                        <span class="plan-list-label">
+                            Ernährungsplan
+                        </span>
+
+                        <h3>
+                            {{ plan.nutrition_title }}
+                        </h3>
+
+                        <p>
+
+                            {% if plan.calories %}
+
+                                Kalorienziel:
+                                {{ plan.calories }} kcal
+
+                            {% else %}
+
+                                Kalorienziel nicht berechnet
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
 
                 </div>
-            </details>
+
+
+                <div class="plan-list-title">
+
+                    <span class="plan-list-icon">
+                        🛒
+                    </span>
+
+                    <div>
+
+                        <span class="plan-list-label">
+                            Einkaufsliste
+                        </span>
+
+                        <h3>
+                            {{ plan.shopping_title }}
+                        </h3>
+
+                        <p>
+                            Automatisch passend zu deinem
+                            Ernährungsplan erstellt.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================= -->
+            <!-- AKTIONEN -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-actions">
+
+                <a
+                    class="plan-view-button"
+                    href="{{ url_for(
+                        'plans_routes.view_plan',
+                        plan_id=plan.id
+                    ) }}"
+                >
+                    Plan ansehen
+                </a>
+
+
+                <details class="download-menu">
+
+                    <summary>
+                        PDFs herunterladen
+                    </summary>
+
+
+                    <div class="download-menu-content">
+
+                        <a
+                            href="{{ url_for(
+                                'plans_routes.download_nutrition_pdf',
+                                plan_id=plan.id
+                            ) }}"
+                        >
+                            Ernährungsplan
+                        </a>
+
+
+                        <a
+                            href="{{ url_for(
+                                'plans_routes.download_shopping_pdf',
+                                plan_id=plan.id
+                            ) }}"
+                        >
+                            Einkaufsliste
+                        </a>
+
+                    </div>
+
+                </details>
+
+
+                <form
+                    class="plan-delete-form"
+                    method="POST"
+                    action="{{ url_for(
+                        'plans_routes.delete_plan',
+                        plan_id=plan.id
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Möchtest du diesen Ernährungsplan wirklich dauerhaft löschen?'
+                    );"
+                >
+                    <button
+                        class="plan-delete-button"
+                        type="submit"
+                    >
+                        Plan löschen
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="plans-category-empty">
+
+        <span>
+            🥗
+        </span>
+
+        <h3>
+            Noch kein Ernährungsplan vorhanden
+        </h3>
+
+        <p>
+            Erstelle deinen ersten persönlichen
+            Ernährungsplan inklusive Einkaufsliste.
+        </p>
+
+        <a
+            class="plans-main-button"
+            href="{{ url_for(
+                'plans_routes.generate_nutrition_plan'
+            ) }}"
+        >
+            Ernährungsplan erstellen
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- FITNESSPLÄNE -->
+<!-- ===================================================== -->
+
+<section class="plans-category-section">
+
+    <div class="plans-category-heading">
+
+        <div>
+
+            <span class="plans-category-icon">
+                🏋️
+            </span>
+
+            <div>
+
+                <span class="plans-category-label">
+                    Training
+                </span>
+
+                <h2>
+                    Meine Fitnesspläne
+                </h2>
+
+                <p>
+                    Deine persönlichen Trainingspläne passend
+                    zu deinem Fitnesslevel, deinen Trainingstagen
+                    und deinen Vorlieben.
+                </p>
+
+            </div>
 
         </div>
 
-    </section>
 
-    {% endfor %}
+        <a
+            class="plans-category-create-button"
+            href="{{ url_for(
+                'plans_routes.generate_fitness_plan'
+            ) }}"
+        >
+            Fitnessplan erstellen
+        </a>
 
-</div>
+    </div>
 
-{% else %}
 
-<div class="empty-state">
+    {% if fitness_plans %}
 
-    <div class="empty-state-symbol">🌱</div>
+    <div class="plans-list">
 
-    <h3>Noch keine Pläne vorhanden</h3>
+        {% for plan in fitness_plans %}
 
-    <p>
-        Erstelle deinen ersten persönlichen Ernährungs- und Fitnessplan.
-    </p>
+        <section class="plan-list-card">
+
+
+            <!-- ============================================= -->
+            <!-- DATUM -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-date">
+
+                <span>
+                    Erstellt am
+                </span>
+
+                <strong>
+                    {{ plan.created_at }}
+                </strong>
+
+            </div>
+
+
+            <!-- ============================================= -->
+            <!-- PLAN-INHALT -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-content">
+
+                <div class="plan-list-title">
+
+                    <span class="plan-list-icon">
+                        🏋️
+                    </span>
+
+                    <div>
+
+                        <span class="plan-list-label">
+                            Fitnessplan
+                        </span>
+
+                        <h3>
+                            {{ plan.fitness_title }}
+                        </h3>
+
+                        <p>
+
+                            Aktuelles Gewicht:
+
+                            {% if plan.current_weight is not none %}
+
+                                {{ plan.current_weight }} kg
+
+                            {% else %}
+
+                                nicht angegeben
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================= -->
+            <!-- AKTIONEN -->
+            <!-- ============================================= -->
+
+            <div class="plan-list-actions">
+
+                <a
+                    class="plan-view-button"
+                    href="{{ url_for(
+                        'plans_routes.view_plan',
+                        plan_id=plan.id
+                    ) }}"
+                >
+                    Plan ansehen
+                </a>
+
+
+                <a
+                    class="plan-download-button"
+                    href="{{ url_for(
+                        'plans_routes.download_fitness_pdf',
+                        plan_id=plan.id
+                    ) }}"
+                >
+                    Fitnessplan als PDF
+                </a>
+
+
+                <form
+                    class="plan-delete-form"
+                    method="POST"
+                    action="{{ url_for(
+                        'plans_routes.delete_plan',
+                        plan_id=plan.id
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Möchtest du diesen Fitnessplan wirklich dauerhaft löschen?'
+                    );"
+                >
+                    <button
+                        class="plan-delete-button"
+                        type="submit"
+                    >
+                        Plan löschen
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="plans-category-empty">
+
+        <span>
+            🏋️
+        </span>
+
+        <h3>
+            Noch kein Fitnessplan vorhanden
+        </h3>
+
+        <p>
+            Erstelle deinen ersten persönlichen Fitnessplan
+            passend zu deinen Trainingszielen.
+        </p>
+
+        <a
+            class="plans-main-button"
+            href="{{ url_for(
+                'plans_routes.generate_fitness_plan'
+            ) }}"
+        >
+            Fitnessplan erstellen
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ZURÜCK -->
+<!-- ===================================================== -->
+
+<div class="plans-bottom-actions">
 
     <a
-        class="button"
-        href="{{ url_for('generate_plan') }}"
-    >
-        Ersten Plan generieren
-    </a>
-
-</div>
-
-{% endif %}
-
-<div class="profile-view-actions">
-
-    <a
-        class="text-button"
+        class="plans-back-button"
         href="{{ url_for('dashboard') }}"
     >
         Zurück zum Dashboard
     </a>
 
 </div>
+
 
 {% endblock %}

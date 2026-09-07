@@ -1,0 +1,997 @@
+/* ============================================================
+   GEWICHTSTRACKING – LOVE YOURSELF
+   ============================================================ */
+
+body.weight-page {
+    background: #f7f1e7;
+}
+
+.weight-page main {
+    position: relative;
+
+    z-index: 4;
+
+    margin-top: 0;
+}
+
+
+/* ============================================================
+   HERO – BLEIBT UNVERÄNDERT
+   ============================================================ */
+
+.weight-page .hero-content {
+    transform: translateY(-38px);
+}
+
+.weight-page .hero-main-quote {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 0.32em;
+
+    margin-bottom: 7px;
+
+    font-size:
+        clamp(
+            19px,
+            2.6vw,
+            26px
+        );
+
+    font-style: italic;
+    font-weight: 400;
+}
+
+.weight-page .hero-main-quote span {
+    display: inline;
+
+    color: var(--dark-green);
+
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+.weight-page .hero-overlay {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.04) 0%,
+            rgba(247, 241, 231, 0.02) 42%,
+            rgba(247, 241, 231, 0.22) 68%,
+            rgba(247, 241, 231, 0.98) 100%
+        );
+}
+
+.weight-page .hero-fade {
+    height: 160px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(247, 241, 231, 0),
+            #f7f1e7 88%
+        );
+}
+
+
+/* ============================================================
+   SEITENÜBERSCHRIFT
+   ============================================================ */
+
+.weight-page-heading {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        -38px auto 38px;
+
+    text-align: left;
+}
+
+.weight-kicker {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #8f7048;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+.weight-page-heading h1 {
+    margin:
+        0 0 13px;
+
+    color: #294738;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            50px
+        );
+
+    font-weight: 600;
+    line-height: 1.15;
+}
+
+.weight-page-heading p {
+    max-width: 760px;
+
+    margin: 0;
+
+    color: #596158;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   FEHLERMELDUNG
+   ============================================================ */
+
+.weight-message-box {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    box-sizing: border-box;
+
+    margin:
+        0 auto 24px;
+
+    padding:
+        17px 19px;
+
+    color: #765149;
+    background: #f8e9e4;
+
+    border:
+        1px solid
+        rgba(
+            178,
+            112,
+            95,
+            0.25
+        );
+
+    border-radius: 16px;
+}
+
+.weight-message-box p {
+    margin: 0;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   KARTEN
+   ============================================================ */
+
+.weight-card {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    box-sizing: border-box;
+
+    margin:
+        0 auto 28px;
+
+    padding:
+        32px 34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(234, 219, 192, 0.72) 0%,
+            rgba(238, 232, 217, 0.78) 50%,
+            rgba(224, 227, 211, 0.76) 100%
+        );
+
+    border:
+        1px solid
+        rgba(
+            102,
+            87,
+            61,
+            0.16
+        );
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 14px 32px
+        rgba(
+            72,
+            61,
+            43,
+            0.11
+        );
+}
+
+.weight-history-card {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(232, 229, 213, 0.78) 0%,
+            rgba(226, 228, 213, 0.82) 50%,
+            rgba(214, 221, 202, 0.80) 100%
+        );
+}
+
+
+/* ============================================================
+   KARTENÜBERSCHRIFT
+   ============================================================ */
+
+.weight-card-heading {
+    display: block;
+
+    margin-bottom: 28px;
+
+    text-align: left;
+}
+
+.weight-card-number {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #8f7048;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.weight-card-heading h2 {
+    margin:
+        0 0 8px;
+
+    color: #294738;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 31px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.weight-card-heading p {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: #667068;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+
+/* ============================================================
+   FORMULAR
+   ============================================================ */
+
+.weight-form {
+    width: 100%;
+}
+
+.weight-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 30px;
+
+    max-width: 760px;
+
+    margin-bottom: 26px;
+}
+
+.weight-field {
+    width: 100%;
+}
+
+.weight-field label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #314b3d;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.weight-field input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding:
+        16px 17px;
+
+    color: #36423a;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.86
+        );
+
+    border:
+        1px solid
+        rgba(
+            111,
+            125,
+            101,
+            0.30
+        );
+
+    border-radius: 14px;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 17px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.weight-field input:hover {
+    border-color:
+        rgba(
+            79,
+            107,
+            85,
+            0.47
+        );
+}
+
+.weight-field input:focus {
+    outline: none;
+
+    background: #ffffff;
+
+    border-color: #6f8764;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            111,
+            135,
+            100,
+            0.11
+        );
+}
+
+.weight-field small {
+    display: block;
+
+    margin-top: 9px;
+
+    color: #737b74;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+
+/* ============================================================
+   FORMULAR-AKTION
+   ============================================================ */
+
+.weight-form-action {
+    display: flex;
+
+    justify-content: flex-start;
+
+    margin-top: 4px;
+}
+
+
+/* ============================================================
+   SPEICHERN BUTTON
+   ============================================================ */
+
+.weight-save-button {
+    min-width: 220px;
+    min-height: 54px;
+
+    padding:
+        0 24px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f6b55,
+            #657b62
+        );
+
+    border:
+        1px solid
+        #4f6b55;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(
+            49,
+            75,
+            61,
+            0.17
+        );
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.weight-save-button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #3f5946,
+            #566d55
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 24px
+        rgba(
+            49,
+            75,
+            61,
+            0.22
+        );
+}
+
+
+/* ============================================================
+   TABELLE
+   ============================================================ */
+
+.weight-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid
+        rgba(
+            102,
+            87,
+            61,
+            0.13
+        );
+
+    border-radius: 18px;
+}
+
+.weight-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.46
+        );
+}
+
+.weight-table th,
+.weight-table td {
+    padding:
+        19px
+        22px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid
+        rgba(
+            102,
+            87,
+            61,
+            0.12
+        );
+}
+
+.weight-table th {
+    color: #405247;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.38
+        );
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.weight-table td {
+    color: #596158;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 17px;
+}
+
+.weight-table td strong {
+    color: #294738;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.weight-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.weight-table tbody tr {
+    transition:
+        background 0.2s ease;
+}
+
+.weight-table tbody tr:hover {
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.36
+        );
+}
+
+
+/* ============================================================
+   LÖSCHEN BUTTON
+   ============================================================ */
+
+.weight-table form {
+    margin: 0;
+}
+
+.weight-delete-button {
+    min-height: 40px;
+
+    padding:
+        0 16px;
+
+    color: #865d55;
+
+    background: #f5e8e3;
+
+    border:
+        1px solid
+        rgba(
+            138,
+            93,
+            84,
+            0.18
+        );
+
+    border-radius: 13px;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.weight-delete-button:hover {
+    background: #eedbd5;
+}
+
+
+/* ============================================================
+   LEERER ZUSTAND
+   ============================================================ */
+
+.weight-empty-state {
+    padding:
+        42px
+        20px;
+
+    text-align: center;
+}
+
+.weight-empty-symbol {
+    display: flex;
+
+    width: 62px;
+    height: 62px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin:
+        0 auto 17px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.46
+        );
+
+    border-radius: 50%;
+
+    font-size: 30px;
+}
+
+.weight-empty-state h3 {
+    margin:
+        0 0 10px;
+
+    color: #294738;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.weight-empty-state p {
+    max-width: 540px;
+
+    margin: 0 auto;
+
+    color: #667068;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   UNTERE AKTION
+   ============================================================ */
+
+.weight-actions {
+    display: flex;
+
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    justify-content: flex-start;
+
+    margin:
+        8px auto 60px;
+}
+
+.weight-back-button {
+    display: inline-flex;
+
+    min-width: 220px;
+    min-height: 52px;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding:
+        0 22px;
+
+    color: #405247;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eadbc0,
+            #e2e5d8
+        );
+
+    border:
+        1px solid
+        rgba(
+            102,
+            87,
+            61,
+            0.20
+        );
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(
+            72,
+            61,
+            43,
+            0.10
+        );
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    text-align: center;
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.weight-back-button:hover {
+    color: #314b3d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e1d2ba,
+            #d8dfd2
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 22px
+        rgba(
+            72,
+            61,
+            43,
+            0.13
+        );
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 760px) {
+
+    .weight-page .hero-content {
+        transform: translateY(-24px);
+    }
+
+    .weight-form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+}
+
+
+/* ============================================================
+   SMARTPHONE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .weight-page .hero-content {
+        transform: translateY(-18px);
+    }
+
+    .weight-page .hero-main-quote {
+        align-items: center;
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .weight-page-heading {
+        width:
+            calc(100% - 24px);
+
+        margin:
+            -15px auto 30px;
+    }
+
+    .weight-page-heading h1 {
+        font-size: 34px;
+    }
+
+    .weight-page-heading p {
+        font-size: 17px;
+    }
+
+    .weight-card {
+        width:
+            calc(100% - 24px);
+
+        padding:
+            24px 22px;
+
+        border-radius: 21px;
+    }
+
+    .weight-card-heading h2 {
+        font-size: 27px;
+    }
+
+    .weight-card-heading p {
+        font-size: 17px;
+    }
+
+    .weight-field label {
+        font-size: 17px;
+    }
+
+    .weight-field input {
+        font-size: 16px;
+    }
+
+    .weight-save-button,
+    .weight-back-button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .weight-table th,
+    .weight-table td {
+        padding:
+            15px
+            14px;
+    }
+
+    .weight-actions {
+        width:
+            calc(100% - 24px);
+    }
+
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATIONEN
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .weight-field input,
+    .weight-save-button,
+    .weight-back-button,
+    .weight-table tbody tr {
+        transition: none;
+    }
+
+    .weight-save-button:hover,
+    .weight-back-button:hover {
+        transform: none;
+    }
+
+}

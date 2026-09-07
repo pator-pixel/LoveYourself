@@ -1,48 +1,244 @@
 {% extends "base.html" %}
 
+{% block title %}
+Registrieren | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+register-page
+{% endblock %}
+
 {% block content %}
-<h2>Register</h2>
 
-{% if error %}
-<div class="message-box">
-    <p>{{ error }}</p>
-</div>
-{% endif %}
+<section class="register-section">
 
-<form method="POST">
+    <div class="register-wrapper">
 
-    <label>Username:</label>
-    <input type="text" name="username" required>
+        <!-- ========================================= -->
+        <!-- LINKE SEITE -->
+        <!-- ========================================= -->
 
-    <label>Password:</label>
-    <input type="password" name="password" required>
+        <div class="register-intro">
 
-    <label>Confirm Password:</label>
-    <input type="password" name="confirm_password" required>
+            <div class="register-intro-content">
 
-    <small>
-        Passwort muss enthalten:
-        <ul>
-            <li>mindestens 8 Zeichen</li>
-            <li>einen Großbuchstaben</li>
-            <li>einen Kleinbuchstaben</li>
-            <li>eine Zahl</li>
-            <li>ein Sonderzeichen</li>
-        </ul>
-    </small>
+                <h2>
+                    Deine Reise beginnt hier.
+                </h2>
 
-    <label>Language:</label>
-    <select name="language">
-        <option value="de">Deutsch</option>
-        <option value="en">English</option>
-    </select>
+                <p class="register-intro-text">
+                    Erstelle dein persönliches Konto und mache
+                    Love Yourself zu deinem Begleiter auf dem Weg
+                    zu mehr Wohlbefinden, Bewegung und einer
+                    Ernährung, die wirklich zu dir passt.
+                </p>
 
-    <button type="submit">Register</button>
+                <div class="register-benefits">
 
-</form>
+                    <div class="register-benefit">
 
-<a href="{{ url_for('login') }}">
-    Bereits registriert? Jetzt einloggen
-</a>
+                        <div class="register-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Persönlich</strong>
+
+                            <span>
+                                Pläne, die sich an deine Bedürfnisse
+                                und Ziele anpassen.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-benefit">
+
+                        <div class="register-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Einfach</strong>
+
+                            <span>
+                                Alles an einem Ort – übersichtlich
+                                und ohne unnötigen Druck.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-benefit">
+
+                        <div class="register-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Für dich</strong>
+
+                            <span>
+                                Dein Fortschritt. Dein Tempo.
+                                Deine Reise.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- RECHTE SEITE / FORMULAR -->
+        <!-- ========================================= -->
+
+        <div class="register-form-card">
+
+            <div class="register-form-heading">
+
+                <h1>Registrieren</h1>
+
+                <p>
+                    Erstelle dein Love Yourself Konto.
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+            <div class="register-error-message">
+
+                <span class="register-error-icon">
+                    !
+                </span>
+
+                <p>{{ error }}</p>
+
+            </div>
+
+            {% endif %}
+
+
+            <form
+                method="POST"
+                class="register-form"
+            >
+
+                <!-- Benutzername -->
+
+                <div class="register-field">
+
+                    <label for="username">
+                        Benutzername
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Dein Benutzername"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Passwort -->
+
+                <div class="register-field">
+
+                    <label for="password">
+                        Passwort
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Dein Passwort"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Passwort bestätigen -->
+
+                <div class="register-field">
+
+                    <label for="confirm_password">
+                        Passwort bestätigen
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Passwort wiederholen"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Passwortanforderungen -->
+
+                <div class="register-password-info">
+
+                    <p>
+                        Dein Passwort muss enthalten:
+                    </p>
+
+                    <ul>
+                        <li>mindestens 8 Zeichen</li>
+                        <li>einen Großbuchstaben</li>
+                        <li>einen Kleinbuchstaben</li>
+                        <li>eine Zahl</li>
+                        <li>ein Sonderzeichen</li>
+                    </ul>
+
+                </div>
+
+
+                <!-- Button -->
+
+                <button
+                    type="submit"
+                    class="register-submit-button"
+                >
+                    Konto erstellen
+                </button>
+
+            </form>
+
+
+            <div class="register-login">
+
+                <span>
+                    Du hast bereits ein Konto?
+                </span>
+
+                <a href="{{ url_for('auth.login') }}">
+                    Jetzt einloggen
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

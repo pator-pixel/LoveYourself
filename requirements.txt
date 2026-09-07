@@ -5,3 +5,6 @@ werkzeug
 reportlab
 google-genai
 reportlab
+Werkzeug
+pytest
+pytest-cov

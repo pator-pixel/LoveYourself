@@ -1,167 +1,527 @@
 {% extends "base.html" %}
 
+{% block title %}
+Dashboard – Love Yourself
+{% endblock %}
+
+{% block body_class %}
+dashboard-page
+{% endblock %}
+
 {% block content %}
 
-<h2>
-    Willkommen, {{ user.username }}
-    <span class="green-heart">♥</span>
-</h2>
 
-<div class="form-grid dashboard-grid">
-    <div class="form-card dashboard-stat">
-        <h3>Startgewicht</h3>
-        <p class="stat-value">
-            {% if start_weight is not none %}
-                {{ start_weight }} kg
-            {% else %}
-                Nicht angegeben
-            {% endif %}
-        </p>
+<!-- ===================================================== -->
+<!-- BEGRÜSSUNG -->
+<!-- ===================================================== -->
+
+<section class="dashboard-welcome">
+
+    <h1>
+        Willkommen, {{ user.username }}
+        <span>♡</span>
+    </h1>
+
+    <p class="dashboard-welcome-text">
+        Hier findest du deinen aktuellen Fortschritt,
+        deine wichtigsten Werte und den nächsten Schritt
+        auf deiner persönlichen Reise.
+    </p>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- GEWICHTSÜBERSICHT -->
+<!-- ===================================================== -->
+
+<section class="dashboard-stats-section">
+
+    <div class="dashboard-section-heading">
+
+        <div>
+
+            <h2>
+                Deine Entwicklung
+            </h2>
+
+            <p>
+                Dein Fortschritt auf einen Blick.
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="form-card dashboard-stat">
-        <h3>Aktuelles Gewicht</h3>
-        <p class="stat-value">
-            {% if current_weight is not none %}
-                {{ current_weight }} kg
-            {% else %}
-                Nicht angegeben
-            {% endif %}
-        </p>
+
+    <div class="dashboard-grid">
+
+
+        <!-- STARTGEWICHT -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                01
+            </span>
+
+            <h3>
+                Startgewicht
+            </h3>
+
+            <p class="stat-value">
+
+                {% if start_weight is not none %}
+
+                    {{ start_weight }} kg
+
+                {% else %}
+
+                    Nicht angegeben
+
+                {% endif %}
+
+            </p>
+
+        </article>
+
+
+        <!-- AKTUELLES GEWICHT -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                02
+            </span>
+
+            <h3>
+                Aktuelles Gewicht
+            </h3>
+
+            <p class="stat-value">
+
+                {% if current_weight is not none %}
+
+                    {{ current_weight }} kg
+
+                {% else %}
+
+                    Nicht angegeben
+
+                {% endif %}
+
+            </p>
+
+        </article>
+
+
+        <!-- ZIELGEWICHT -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                03
+            </span>
+
+            <h3>
+                Zielgewicht
+            </h3>
+
+            <p class="stat-value">
+
+                {% if goal_weight is not none %}
+
+                    {{ goal_weight }} kg
+
+                {% else %}
+
+                    Nicht angegeben
+
+                {% endif %}
+
+            </p>
+
+        </article>
+
+
+        <!-- NOCH BIS ZUM ZIEL -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                04
+            </span>
+
+            <h3>
+                Noch bis zum Ziel
+            </h3>
+
+            <p class="stat-value">
+
+                {% if remaining_weight is not none %}
+
+                    {{ remaining_weight }} kg
+
+                {% else %}
+
+                    –
+
+                {% endif %}
+
+            </p>
+
+        </article>
+
+
+        <!-- VERÄNDERUNG -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                05
+            </span>
+
+            <h3>
+                Veränderung seit Start
+            </h3>
+
+            <p class="stat-value">
+
+                {% if weight_change_text %}
+
+                    {{ weight_change_text }}
+
+                {% else %}
+
+                    –
+
+                {% endif %}
+
+            </p>
+
+        </article>
+
+
+        <!-- EINTRÄGE -->
+
+        <article class="dashboard-stat">
+
+            <span class="dashboard-stat-number">
+                06
+            </span>
+
+            <h3>
+                Gewichtseinträge
+            </h3>
+
+            <p class="stat-value">
+                {{ total_entries }}
+            </p>
+
+        </article>
+
     </div>
 
-    <div class="form-card dashboard-stat">
-        <h3>Zielgewicht</h3>
-        <p class="stat-value">
-            {% if goal_weight is not none %}
-                {{ goal_weight }} kg
-            {% else %}
-                Nicht angegeben
-            {% endif %}
-        </p>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- FORTSCHRITT -->
+<!-- ===================================================== -->
+
+<section class="dashboard-section-card dashboard-progress-card">
+
+    <div class="dashboard-card-heading">
+
+        <div>
+
+            <h2>
+                Dein Fortschritt
+            </h2>
+
+            <p>
+                Jeder Schritt zählt.
+            </p>
+
+        </div>
+
+
+        {% if progress_percent is not none %}
+
+        <span class="dashboard-progress-number">
+            {{ progress_percent }} %
+        </span>
+
+        {% endif %}
+
     </div>
 
-    <div class="form-card dashboard-stat">
-        <h3>Noch bis zum Ziel</h3>
-        <p class="stat-value">
-            {% if remaining_weight is not none %}
-                {{ remaining_weight }} kg
-            {% else %}
-                -
-            {% endif %}
-        </p>
-    </div>
-
-    <div class="form-card dashboard-stat">
-        <h3>Veränderung seit Start</h3>
-        <p class="stat-value">
-            {% if weight_change_text %}
-                {{ weight_change_text }}
-            {% else %}
-                -
-            {% endif %}
-        </p>
-    </div>
-
-    <div class="form-card dashboard-stat">
-        <h3>Gewichtseinträge</h3>
-        <p class="stat-value">{{ total_entries }}</p>
-    </div>
-</div>
-
-<div class="form-card">
-    <h3>Dein Fortschritt</h3>
 
     {% if progress_percent is not none %}
-        <p>{{ progress_percent }} % deines Zieles erreicht</p>
 
-        <div class="progress-bar">
+        <p class="dashboard-card-text">
+            Du hast bereits
+            <strong>{{ progress_percent }} %</strong>
+            deines Zieles erreicht.
+        </p>
+
+
+        <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="{{ progress_percent }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+        >
+
             <div
                 class="progress-fill"
                 style="width: {{ progress_percent }}%;"
             ></div>
-        </div>
-    {% else %}
-        <p>
-            Trage Startgewicht, aktuelles Gewicht und Zielgewicht ein,
-            um deinen Fortschritt zu sehen.
-        </p>
-    {% endif %}
-</div>
 
-<div class="form-card">
-    <h3>Kalorienberechnung</h3>
+        </div>
+
+    {% else %}
+
+        <p class="dashboard-card-text">
+            Trage dein Startgewicht, dein aktuelles Gewicht
+            und dein Zielgewicht ein, um deinen Fortschritt
+            hier sehen zu können.
+        </p>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- KALORIEN -->
+<!-- ===================================================== -->
+
+<section class="dashboard-section-card">
+
+    <div class="dashboard-card-heading">
+
+        <div>
+
+            <h2>
+                Deine Kalorienberechnung
+            </h2>
+
+            <p>
+                Eine Orientierung auf Basis deiner persönlichen Angaben.
+            </p>
+
+        </div>
+
+    </div>
+
 
     {% if target_calories %}
-        <div class="calorie-grid">
-            <div>
-                <span>Grundumsatz</span>
-                <strong>{{ bmr }} kcal</strong>
-            </div>
 
-            <div>
-                <span>Erhaltungsbedarf</span>
-                <strong>{{ maintenance_calories }} kcal</strong>
-            </div>
+    <div class="calorie-grid">
 
-            <div>
-                <span>Aktuelles Kalorienziel</span>
-                <strong>{{ target_calories }} kcal</strong>
-            </div>
+
+        <div class="calorie-card">
+
+            <span>
+                Grundumsatz
+            </span>
+
+            <strong>
+                {{ bmr }} kcal
+            </strong>
+
+            <p>
+                Energiebedarf deines Körpers in Ruhe.
+            </p>
+
         </div>
 
-        <small>
-            Die Werte werden mit deinem aktuellen Gewicht berechnet
-            und sind Schätzungen.
-        </small>
+
+        <div class="calorie-card">
+
+            <span>
+                Erhaltungsbedarf
+            </span>
+
+            <strong>
+                {{ maintenance_calories }} kcal
+            </strong>
+
+            <p>
+                Geschätzter Bedarf für dein aktuelles Gewicht.
+            </p>
+
+        </div>
+
+
+        <div class="calorie-card calorie-card-highlight">
+
+            <span>
+                Aktuelles Kalorienziel
+            </span>
+
+            <strong>
+                {{ target_calories }} kcal
+            </strong>
+
+            <p>
+                Dein aktuell berechneter Orientierungswert.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <p class="dashboard-calorie-note">
+        Die Werte werden mit deinem aktuellen Gewicht berechnet
+        und stellen Schätzwerte dar.
+    </p>
+
     {% else %}
-        <p>
-            Fülle Alter, Geschlecht, Größe, Gewicht und Aktivitätslevel
-            aus, um dein Kalorienziel zu berechnen.
-        </p>
+
+    <p class="dashboard-card-text">
+        Fülle Alter, Geschlecht, Größe, Gewicht und Aktivitätslevel
+        in deinem Profil aus, damit dein persönliches Kalorienziel
+        berechnet werden kann.
+    </p>
+
     {% endif %}
-</div>
 
-<div class="message-box">
-    <h3>Love Yourself Reminder</h3>
-    <p>{{ message }}</p>
-</div>
+</section>
 
-<div class="dashboard-actions">
-    <a
-        class="button"
-        href="{{ url_for('generate_plan') }}"
-    >
-        Neuen AI-Plan generieren
-    </a>
 
-    <a
-        class="button secondary-button"
-        href="{{ url_for('plans') }}"
-    >
-        Meine Pläne
-    </a>
+<!-- ===================================================== -->
+<!-- LOVE YOURSELF REMINDER -->
+<!-- ===================================================== -->
 
-    <a
-        class="button secondary-button"
-        href="{{ url_for('profile_view') }}"
-    >
-        Profil anzeigen
-    </a>
+<section class="dashboard-reminder">
 
-    <a
-        class="button secondary-button"
-        href="{{ url_for('weight_tracking') }}"
-    >
-        Gewicht tracken
-    </a>
+    <div class="dashboard-reminder-heart">
+        ♡
+    </div>
 
-    <a
-        class="button secondary-button"
-        href="{{ url_for('change_password') }}"
-    >
-        Passwort ändern
-    </a>
-</div>
+    <div>
+
+        <h2>
+            Love Yourself Reminder
+        </h2>
+
+        <p>
+            {{ message }}
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- NÄCHSTER SCHRITT -->
+<!-- ===================================================== -->
+
+<section class="dashboard-actions-section">
+
+    <div class="dashboard-actions-heading">
+
+        <h2>
+            Dein nächster Schritt
+        </h2>
+
+        <p>
+            Was möchtest du als Nächstes machen?
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-actions">
+
+
+        <a
+            class="dashboard-action dashboard-action-primary"
+            href="{{ url_for('plans_routes.generate_plan') }}"
+        >
+
+            <strong>
+                Neuen Plan erstellen
+            </strong>
+
+            <span>
+                Ernährung oder Training planen
+            </span>
+
+        </a>
+
+
+        <a
+            class="dashboard-action"
+            href="{{ url_for('plans_routes.plans') }}"
+        >
+
+            <strong>
+                Meine Pläne
+            </strong>
+
+            <span>
+                Deine bisherigen Pläne ansehen
+            </span>
+
+        </a>
+
+
+        <a
+            class="dashboard-action"
+            href="{{ url_for('profile_view') }}"
+        >
+
+            <strong>
+                Profil anzeigen
+            </strong>
+
+            <span>
+                Deine persönlichen Angaben ansehen
+            </span>
+
+        </a>
+
+
+        <a
+            class="dashboard-action"
+            href="{{ url_for('weight_tracking') }}"
+        >
+
+            <strong>
+                Gewicht tracken
+            </strong>
+
+            <span>
+                Einen neuen Gewichtseintrag hinzufügen
+            </span>
+
+        </a>
+
+
+        <a
+            class="dashboard-action"
+            href="{{ url_for('change_password') }}"
+        >
+
+            <strong>
+                Passwort ändern
+            </strong>
+
+            <span>
+                Deine Kontosicherheit verwalten
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
 
 {% endblock %}

@@ -1,38 +1,65 @@
 {% extends "base.html" %}
 
 {% block title %}
-Impressum
+Impressum | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+impressum-page
 {% endblock %}
 
 {% block content %}
 
-<section class="page-heading">
 
-    <div>
-        <span class="eyebrow">
-            Rechtliche Informationen
-        </span>
+<!-- ===================================================== -->
+<!-- SEITENÜBERSCHRIFT -->
+<!-- ===================================================== -->
 
-        <h2>Impressum</h2>
+<section class="legal-page-heading">
 
-        <p>
-            Angaben zur Verantwortlichen und Entwicklerin
-            von Love Yourself.
-        </p>
-    </div>
+    <span class="legal-kicker">
+        Rechtliche Informationen
+    </span>
+
+    <h1>
+        Impressum
+    </h1>
+
+    <p>
+        Angaben zur Verantwortlichen und Entwicklerin
+        von Love Yourself.
+    </p>
 
 </section>
 
 
+<!-- ===================================================== -->
+<!-- IMPRESSUM -->
+<!-- ===================================================== -->
+
 <div class="legal-layout">
+
+
+    <!-- ================================================= -->
+    <!-- ENTWICKLERIN -->
+    <!-- ================================================= -->
 
     <section class="legal-card">
 
-        <h3>Angaben zur Entwicklerin</h3>
+        <span class="legal-card-number">
+            01
+        </span>
+
+        <h2>
+            Angaben zur Entwicklerin
+        </h2>
+
 
         <div class="legal-contact-block">
 
-            <strong>Patricia Nogowski</strong>
+            <strong>
+                Patricia Nogowski
+            </strong>
 
             <p>
                 Entwicklerin von Love Yourself
@@ -46,41 +73,73 @@ Impressum
 
         </div>
 
+
         <p class="legal-placeholder-note">
-            Bitte ersetze Straße, Hausnummer, Postleitzahl und Ort
-            vor einer öffentlichen Veröffentlichung durch deine
-            tatsächlichen Angaben.
+            Bitte ersetze Straße, Hausnummer, Postleitzahl
+            und Ort vor einer öffentlichen Veröffentlichung
+            durch deine tatsächlichen Angaben.
         </p>
 
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- KONTAKT -->
+    <!-- ================================================= -->
+
     <section class="legal-card">
 
-        <h3>Kontakt</h3>
+        <span class="legal-card-number">
+            02
+        </span>
+
+        <h2>
+            Kontakt
+        </h2>
+
 
         <dl class="legal-definition-list">
 
             <div>
-                <dt>E-Mail</dt>
+
+                <dt>
+                    E-Mail
+                </dt>
 
                 <dd>
+
                     <a href="mailto:pator@gmx.net">
                         pator@gmx.net
                     </a>
+
                 </dd>
+
             </div>
 
-            <div>
-                <dt>Projekt</dt>
 
-                <dd>Love Yourself</dd>
+            <div>
+
+                <dt>
+                    Projekt
+                </dt>
+
+                <dd>
+                    Love Yourself
+                </dd>
+
             </div>
 
-            <div>
-                <dt>Verantwortlich</dt>
 
-                <dd>Patricia Nogowski</dd>
+            <div>
+
+                <dt>
+                    Verantwortlich
+                </dt>
+
+                <dd>
+                    Patricia Nogowski
+                </dd>
+
             </div>
 
         </dl>
@@ -88,9 +147,19 @@ Impressum
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- PROJEKT -->
+    <!-- ================================================= -->
+
     <section class="legal-card">
 
-        <h3>Hinweis zum Projekt</h3>
+        <span class="legal-card-number">
+            03
+        </span>
+
+        <h2>
+            Hinweis zum Projekt
+        </h2>
 
         <p>
             Love Yourself ist eine von Patricia Nogowski
@@ -99,8 +168,8 @@ Impressum
 
         <p>
             Die Anwendung unterstützt Nutzerinnen und Nutzer
-            bei der Organisation persönlicher Ernährungs- und
-            Fitnessziele.
+            bei der Organisation persönlicher Ernährungs-
+            und Fitnessziele.
         </p>
 
         <p>
@@ -111,9 +180,19 @@ Impressum
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- MEDIZINISCHER HINWEIS -->
+    <!-- ================================================= -->
+
     <section class="legal-card legal-important-card">
 
-        <h3>Medizinischer Hinweis</h3>
+        <span class="legal-card-number">
+            04
+        </span>
+
+        <h2>
+            Medizinischer Hinweis
+        </h2>
 
         <p>
             Love Yourself ersetzt keine ärztliche Untersuchung,
@@ -125,16 +204,26 @@ Impressum
             Bei Krankheiten, Allergien, körperlichen
             Einschränkungen, Schmerzen oder gesundheitlichen
             Unsicherheiten sollte vor einer Änderung von
-            Ernährung oder Training medizinischer Rat eingeholt
-            werden.
+            Ernährung oder Training medizinischer Rat
+            eingeholt werden.
         </p>
 
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- HAFTUNG -->
+    <!-- ================================================= -->
+
     <section class="legal-card">
 
-        <h3>Haftung für Inhalte</h3>
+        <span class="legal-card-number">
+            05
+        </span>
+
+        <h2>
+            Haftung für Inhalte
+        </h2>
 
         <p>
             Die Inhalte dieser Anwendung werden mit Sorgfalt
@@ -153,9 +242,19 @@ Impressum
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- URHEBERRECHT -->
+    <!-- ================================================= -->
+
     <section class="legal-card">
 
-        <h3>Urheberrecht</h3>
+        <span class="legal-card-number">
+            06
+        </span>
+
+        <h2>
+            Urheberrecht
+        </h2>
 
         <p>
             Die von der Entwicklerin erstellten Inhalte,
@@ -172,13 +271,23 @@ Impressum
     </section>
 
 
+    <!-- ================================================= -->
+    <!-- ÖFFENTLICHE VERÖFFENTLICHUNG -->
+    <!-- ================================================= -->
+
     <section class="legal-card legal-full-width">
 
-        <h3>Hinweis für eine öffentliche Veröffentlichung</h3>
+        <span class="legal-card-number">
+            07
+        </span>
+
+        <h2>
+            Hinweis für eine öffentliche Veröffentlichung
+        </h2>
 
         <p>
-            Dieses Impressum ist eine technische und gestalterische
-            Vorlage und keine Rechtsberatung.
+            Dieses Impressum ist eine technische und
+            gestalterische Vorlage und keine Rechtsberatung.
         </p>
 
         <p>
@@ -194,12 +303,16 @@ Impressum
 </div>
 
 
-<div class="profile-view-actions">
+<!-- ===================================================== -->
+<!-- ZURÜCK -->
+<!-- ===================================================== -->
+
+<div class="legal-actions">
 
     {% if is_logged_in %}
 
     <a
-        class="button back-button"
+        class="legal-back-button"
         href="{{ url_for('dashboard') }}"
     >
         Zurück zum Dashboard
@@ -208,7 +321,7 @@ Impressum
     {% else %}
 
     <a
-        class="button back-button"
+        class="legal-back-button"
         href="{{ url_for('index') }}"
     >
         Zurück zur Startseite
@@ -217,5 +330,6 @@ Impressum
     {% endif %}
 
 </div>
+
 
 {% endblock %}

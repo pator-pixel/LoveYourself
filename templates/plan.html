@@ -1,226 +1,1254 @@
 {% extends "base.html" %}
 
+{% block title %}
+{% if plan.plan_type == "nutrition" %}
+Ernährungsplan | Love Yourself
+{% elif plan.plan_type == "fitness" %}
+Fitnessplan | Love Yourself
+{% else %}
+Mein Plan | Love Yourself
+{% endif %}
+{% endblock %}
+
+
+{% block body_class %}
+plan-detail-page
+{% endblock %}
+
 {% block content %}
 
+
+<!-- ===================================================== -->
+<!-- FEEDBACK GESPEICHERT -->
+<!-- ===================================================== -->
+
 {% if request.args.get("feedback_saved") %}
+
 <div class="message-box">
+
     <p>
         Dein Feedback wurde gespeichert und wird bei zukünftigen
         Plänen berücksichtigt.
     </p>
+
 </div>
+
 {% endif %}
 
+
+
+<!-- ===================================================== -->
+<!-- SEITENKOPF -->
+<!-- ===================================================== -->
+
 <section class="compact-plan-header">
+
     <div>
-        <h2>Deine Pläne</h2>
+
+        {% if plan.plan_type == "nutrition" %}
+
+        <span class="plan-label">
+            Ernährung
+        </span>
+
+        <h2>
+            Dein Ernährungsplan
+        </h2>
+
+        {% elif plan.plan_type == "fitness" %}
+
+        <span class="plan-label">
+            Training
+        </span>
+
+        <h2>
+            Dein Fitnessplan
+        </h2>
+
+        {% endif %}
+
+
         <p>
-            Erstellt am
-            {{ plan.created_at }}
+            Erstellt am {{ plan.created_at }}
         </p>
+
     </div>
 
+
     <a
-        class="text-button"
-        href="{{ url_for('plans') }}"
+        class="plan-soft-button"
+        href="{{ url_for('plans_routes.plans') }}"
     >
         Zurück zu meinen Plänen
     </a>
+
 </section>
 
 
+
+<!-- ===================================================== -->
 <!-- ===================================================== -->
 <!-- ERNÄHRUNGSPLAN -->
 <!-- ===================================================== -->
+<!-- ===================================================== -->
+
+{% if plan.plan_type == "nutrition" %}
+
 
 <section class="plan-card nutrition-plan-card">
 
+
+    <!-- ================================================= -->
+    <!-- PLAN-KOPF -->
+    <!-- ================================================= -->
+
     <div class="plan-heading">
+
         <div>
-            <span class="plan-label">Ernährung</span>
-            <h2>{{ plan.nutrition_title }}</h2>
+
+            <span class="plan-label">
+                Ernährung
+            </span>
+
+            <h2>
+                {{ plan.nutrition_title }}
+            </h2>
+
         </div>
 
+
         <div class="plan-heading-actions">
+
             <a
-                class="button secondary-button"
+                class="plan-soft-button"
                 href="{{ url_for(
-                    'plan_feedback',
+                    'plans_routes.plan_feedback',
                     plan_id=plan.id,
                     feedback_type='nutrition'
                 ) }}"
             >
-                Feedback geben
+                {% if has_plan_feedback %}
+                    Feedback ansehen & ändern
+                {% else %}
+                    Feedback geben
+                {% endif %}
             </a>
 
+
             <a
-                class="button"
+                class="plan-soft-button"
                 href="{{ url_for(
-                    'download_nutrition_pdf',
+                    'plans_routes.download_nutrition_pdf',
                     plan_id=plan.id
                 ) }}"
             >
-                PDF herunterladen
+                Ernährungsplan als PDF
             </a>
+
         </div>
+
     </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- ZUSAMMENFASSUNG -->
+    <!-- ================================================= -->
 
     <div class="plan-summary-grid">
 
-        <div class="plan-summary-item">
-            <span>Name</span>
-            <strong>{{ user.username }}</strong>
-        </div>
 
         <div class="plan-summary-item">
-            <span>Datum</span>
-            <strong>{{ plan.created_at }}</strong>
-        </div>
 
-        <div class="plan-summary-item">
-            <span>Aktuelles Gewicht</span>
+            <span>
+                Name
+            </span>
+
             <strong>
-                {% if plan.current_weight is not none %}
-                    {{ plan.current_weight }} kg
-                {% else %}
-                    Nicht angegeben
-                {% endif %}
+                {{ user.username }}
             </strong>
+
         </div>
+
+
+        <div class="plan-summary-item">
+
+            <span>
+                Datum
+            </span>
+
+            <strong>
+                {{ plan.created_at }}
+            </strong>
+
+        </div>
+
+
+        <div class="plan-summary-item">
+
+            <span>
+                Aktuelles Gewicht
+            </span>
+
+            <strong>
+
+                {% if plan.current_weight is not none %}
+
+                    {{ plan.current_weight }} kg
+
+                {% else %}
+
+                    Nicht angegeben
+
+                {% endif %}
+
+            </strong>
+
+        </div>
+
 
         <div class="plan-summary-item highlight-summary">
-            <span>Kalorienziel</span>
+
+            <span>
+                Kalorienziel
+            </span>
+
             <strong>
+
                 {% if plan.calories %}
+
                     {{ plan.calories }} kcal
+
                 {% else %}
+
                     Nicht berechnet
+
                 {% endif %}
+
             </strong>
+
         </div>
 
     </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- ALLERGIEN / AUSGESCHLOSSENE LEBENSMITTEL -->
+    <!-- ================================================= -->
 
     <div class="plan-safety-summary">
 
+
         <div>
-            <h3>Allergien</h3>
+
+            <h3>
+                Allergien
+            </h3>
+
 
             {% if plan.allergies_snapshot %}
-                <div class="profile-chip-list">
-                    {% for item in plan.allergies_snapshot.splitlines() %}
-                        {% if item.strip() %}
-                            <span class="warning-chip">
-                                {{ item }}
-                            </span>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+
+            <div class="profile-chip-list">
+
+                {% for item in plan.allergies_snapshot.splitlines() %}
+
+                    {% if item.strip() %}
+
+                    <span class="warning-chip">
+                        {{ item }}
+                    </span>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
             {% else %}
-                <p>Keine Allergien angegeben.</p>
+
+            <p>
+                Keine Allergien angegeben.
+            </p>
+
             {% endif %}
+
         </div>
 
+
         <div>
-            <h3>Ausgeschlossene Lebensmittel</h3>
+
+            <h3>
+                Ausgeschlossene Lebensmittel
+            </h3>
+
 
             {% if plan.excluded_foods_snapshot %}
-                <div class="profile-chip-list">
-                    {% for item in plan.excluded_foods_snapshot.splitlines() %}
-                        {% if item.strip() %}
-                            <span class="excluded-chip">
-                                {{ item }}
-                            </span>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+
+            <div class="profile-chip-list">
+
+                {% for item in plan.excluded_foods_snapshot.splitlines() %}
+
+                    {% if item.strip() %}
+
+                    <span class="excluded-chip">
+                        {{ item }}
+                    </span>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
             {% else %}
-                <p>Keine Lebensmittel ausgeschlossen.</p>
+
+            <p>
+                Keine Lebensmittel ausgeschlossen.
+            </p>
+
             {% endif %}
+
         </div>
 
     </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- ERNÄHRUNGSTAGE -->
+    <!-- ================================================= -->
 
     {% if nutrition_days %}
 
-    <div class="table-scroll">
-        <table class="nutrition-table">
-            <thead>
-                <tr>
-                    <th>Tag</th>
-                    <th>Frühstück</th>
-                    <th>Mittagessen</th>
-                    <th>Abendessen</th>
-                    <th>Snack</th>
-                </tr>
-            </thead>
+    <div class="nutrition-plan-days">
 
-            <tbody>
-                {% for nutrition_day in nutrition_days %}
-                <tr>
-                    <td class="day-cell">
-                        Tag {{ nutrition_day.day }}
-                    </td>
 
-                    <td>
-                        <strong>
-                            {{ nutrition_day.breakfast.name }}
-                        </strong>
+        {% for nutrition_day in nutrition_days %}
 
-                        <span class="meal-calories">
-                            ca. {{ nutrition_day.breakfast.calories }} kcal
-                        </span>
-                    </td>
 
-                    <td>
-                        <strong>
-                            {{ nutrition_day.lunch.name }}
-                        </strong>
+        <section class="nutrition-day-card">
 
-                        <span class="meal-calories">
-                            ca. {{ nutrition_day.lunch.calories }} kcal
-                        </span>
-                    </td>
 
-                    <td>
-                        <strong>
-                            {{ nutrition_day.dinner.name }}
-                        </strong>
+            <div class="nutrition-day-heading">
 
-                        <span class="meal-calories">
-                            ca. {{ nutrition_day.dinner.calories }} kcal
-                        </span>
-                    </td>
+                <span>
+                    Tag
+                </span>
 
-                    <td>
-                        <strong>
-                            {{ nutrition_day.snack.name }}
-                        </strong>
+                <h3>
+                    {{ nutrition_day.day }}
+                </h3>
 
-                        <span class="meal-calories">
-                            ca. {{ nutrition_day.snack.calories }} kcal
-                        </span>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            </div>
+
+
+
+            <div class="nutrition-meal-grid">
+
+
+                <!-- ========================================= -->
+                <!-- FRÜHSTÜCK -->
+                <!-- ========================================= -->
+
+                {% set meal = nutrition_day.breakfast %}
+                {% set meal_anchor = "meal-" ~ nutrition_day.day ~ "-breakfast" %}
+                {% set current_preference = meal_preferences.get(meal.name) %}
+
+
+                <article
+                    class="nutrition-meal-card"
+                    id="{{ meal_anchor }}"
+                >
+
+                    <span class="nutrition-meal-type">
+                        Frühstück
+                    </span>
+
+
+                    <details class="recipe-details">
+
+                        <summary>
+
+                            <strong>
+                                {{ meal.name }}
+                            </strong>
+
+                            <span class="meal-calories">
+                                ca. {{ meal.calories }} kcal
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-open">
+                                Rezept anzeigen
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-close">
+                                Rezept schließen
+                            </span>
+
+                        </summary>
+
+
+                        <div class="recipe-content">
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zutaten
+                                </h4>
+
+
+                                {% if meal.ingredients | default([]) %}
+
+                                <ul>
+
+                                    {% for ingredient in meal.ingredients %}
+
+                                    <li>
+                                        {{ ingredient }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurden noch
+                                    keine Rezeptzutaten gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zubereitung
+                                </h4>
+
+
+                                {% if meal.preparation | default([]) %}
+
+                                <ol>
+
+                                    {% for step in meal.preparation %}
+
+                                    <li>
+                                        {{ step }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ol>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurde noch
+                                    keine Zubereitung gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+
+                    <!-- ===================================== -->
+                    <!-- BEWERTUNG -->
+                    <!-- ===================================== -->
+
+                    <div class="meal-preference-area">
+
+                        <div class="meal-preference-buttons">
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="like"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-like-button
+                                        {% if current_preference == 'like' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht wieder berücksichtigen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'like'
+                                        else 'false'
+                                    }}"
+                                    title="Wieder berücksichtigen"
+                                >
+                                    👍🏻
+                                </button>
+
+                            </form>
+
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="dislike"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-dislike-button
+                                        {% if current_preference == 'dislike' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht künftig ausschließen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'dislike'
+                                        else 'false'
+                                    }}"
+                                    title="Künftig ausschließen"
+                                >
+                                    👎🏻
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- ========================================= -->
+                <!-- MITTAGESSEN -->
+                <!-- ========================================= -->
+
+                {% set meal = nutrition_day.lunch %}
+                {% set meal_anchor = "meal-" ~ nutrition_day.day ~ "-lunch" %}
+                {% set current_preference = meal_preferences.get(meal.name) %}
+
+
+                <article
+                    class="nutrition-meal-card"
+                    id="{{ meal_anchor }}"
+                >
+
+                    <span class="nutrition-meal-type">
+                        Mittagessen
+                    </span>
+
+
+                    <details class="recipe-details">
+
+                        <summary>
+
+                            <strong>
+                                {{ meal.name }}
+                            </strong>
+
+                            <span class="meal-calories">
+                                ca. {{ meal.calories }} kcal
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-open">
+                                Rezept anzeigen
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-close">
+                                Rezept schließen
+                            </span>
+
+                        </summary>
+
+
+                        <div class="recipe-content">
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zutaten
+                                </h4>
+
+
+                                {% if meal.ingredients | default([]) %}
+
+                                <ul>
+
+                                    {% for ingredient in meal.ingredients %}
+
+                                    <li>
+                                        {{ ingredient }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurden noch
+                                    keine Rezeptzutaten gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zubereitung
+                                </h4>
+
+
+                                {% if meal.preparation | default([]) %}
+
+                                <ol>
+
+                                    {% for step in meal.preparation %}
+
+                                    <li>
+                                        {{ step }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ol>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurde noch
+                                    keine Zubereitung gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+
+                    <div class="meal-preference-area">
+
+                        <div class="meal-preference-buttons">
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="like"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-like-button
+                                        {% if current_preference == 'like' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht wieder berücksichtigen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'like'
+                                        else 'false'
+                                    }}"
+                                    title="Wieder berücksichtigen"
+                                >
+                                    👍🏻
+                                </button>
+
+                            </form>
+
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="dislike"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-dislike-button
+                                        {% if current_preference == 'dislike' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht künftig ausschließen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'dislike'
+                                        else 'false'
+                                    }}"
+                                    title="Künftig ausschließen"
+                                >
+                                    👎🏻
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- ========================================= -->
+                <!-- SNACK -->
+                <!-- ========================================= -->
+
+                {% set meal = nutrition_day.snack %}
+                {% set meal_anchor = "meal-" ~ nutrition_day.day ~ "-snack" %}
+                {% set current_preference = meal_preferences.get(meal.name) %}
+
+
+                <article
+                    class="nutrition-meal-card"
+                    id="{{ meal_anchor }}"
+                >
+
+                    <span class="nutrition-meal-type">
+                        Snack
+                    </span>
+
+
+                    <details class="recipe-details">
+
+                        <summary>
+
+                            <strong>
+                                {{ meal.name }}
+                            </strong>
+
+                            <span class="meal-calories">
+                                ca. {{ meal.calories }} kcal
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-open">
+                                Rezept anzeigen
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-close">
+                                Rezept schließen
+                            </span>
+
+                        </summary>
+
+
+                        <div class="recipe-content">
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zutaten
+                                </h4>
+
+
+                                {% if meal.ingredients | default([]) %}
+
+                                <ul>
+
+                                    {% for ingredient in meal.ingredients %}
+
+                                    <li>
+                                        {{ ingredient }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurden noch
+                                    keine Rezeptzutaten gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zubereitung
+                                </h4>
+
+
+                                {% if meal.preparation | default([]) %}
+
+                                <ol>
+
+                                    {% for step in meal.preparation %}
+
+                                    <li>
+                                        {{ step }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ol>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurde noch
+                                    keine Zubereitung gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+
+                    <div class="meal-preference-area">
+
+                        <div class="meal-preference-buttons">
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="like"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-like-button
+                                        {% if current_preference == 'like' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht wieder berücksichtigen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'like'
+                                        else 'false'
+                                    }}"
+                                    title="Wieder berücksichtigen"
+                                >
+                                    👍🏻
+                                </button>
+
+                            </form>
+
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="dislike"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-dislike-button
+                                        {% if current_preference == 'dislike' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht künftig ausschließen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'dislike'
+                                        else 'false'
+                                    }}"
+                                    title="Künftig ausschließen"
+                                >
+                                    👎🏻
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- ========================================= -->
+                <!-- ABENDESSEN -->
+                <!-- ========================================= -->
+
+                {% set meal = nutrition_day.dinner %}
+                {% set meal_anchor = "meal-" ~ nutrition_day.day ~ "-dinner" %}
+                {% set current_preference = meal_preferences.get(meal.name) %}
+
+
+                <article
+                    class="nutrition-meal-card"
+                    id="{{ meal_anchor }}"
+                >
+
+                    <span class="nutrition-meal-type">
+                        Abendessen
+                    </span>
+
+
+                    <details class="recipe-details">
+
+                        <summary>
+
+                            <strong>
+                                {{ meal.name }}
+                            </strong>
+
+                            <span class="meal-calories">
+                                ca. {{ meal.calories }} kcal
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-open">
+                                Rezept anzeigen
+                            </span>
+
+                            <span class="recipe-hint recipe-hint-close">
+                                Rezept schließen
+                            </span>
+
+                        </summary>
+
+
+                        <div class="recipe-content">
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zutaten
+                                </h4>
+
+
+                                {% if meal.ingredients | default([]) %}
+
+                                <ul>
+
+                                    {% for ingredient in meal.ingredients %}
+
+                                    <li>
+                                        {{ ingredient }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurden noch
+                                    keine Rezeptzutaten gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="recipe-section">
+
+                                <h4>
+                                    Zubereitung
+                                </h4>
+
+
+                                {% if meal.preparation | default([]) %}
+
+                                <ol>
+
+                                    {% for step in meal.preparation %}
+
+                                    <li>
+                                        {{ step }}
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ol>
+
+                                {% else %}
+
+                                <p>
+                                    Für diesen älteren Plan wurde noch
+                                    keine Zubereitung gespeichert.
+                                </p>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+
+
+                    <div class="meal-preference-area">
+
+                        <div class="meal-preference-buttons">
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="like"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-like-button
+                                        {% if current_preference == 'like' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht wieder berücksichtigen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'like'
+                                        else 'false'
+                                    }}"
+                                    title="Wieder berücksichtigen"
+                                >
+                                    👍🏻
+                                </button>
+
+                            </form>
+
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'plans_routes.set_meal_preference',
+                                    plan_id=plan.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="meal_name"
+                                    value="{{ meal.name }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="preference"
+                                    value="dislike"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        meal-preference-button
+                                        meal-dislike-button
+                                        {% if current_preference == 'dislike' %}
+                                            is-active
+                                        {% endif %}
+                                    "
+                                    aria-label="Gericht künftig ausschließen"
+                                    aria-pressed="{{
+                                        'true'
+                                        if current_preference == 'dislike'
+                                        else 'false'
+                                    }}"
+                                    title="Künftig ausschließen"
+                                >
+                                    👎🏻
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        {% endfor %}
+
     </div>
+
 
     {% else %}
 
+
     <div class="message-box">
-        <p>Für diesen Plan sind keine Ernährungstage gespeichert.</p>
+
+        <p>
+            Für diesen Plan sind keine Ernährungstage gespeichert.
+        </p>
+
     </div>
+
 
     {% endif %}
 
+
+
     <p class="medical-note">
+
         Bei gesundheitlichen Einschränkungen bitte ärztlich abklären.
         Der Plan ersetzt keine medizinische Beratung.
+
     </p>
 
 </section>
+
 
 
 <!-- ===================================================== -->
@@ -229,231 +1257,1228 @@
 
 <section class="plan-card shopping-plan-card">
 
+
     <div class="plan-heading">
+
         <div>
-            <span class="plan-label">Einkaufen</span>
-            <h2>{{ plan.shopping_title }}</h2>
+
+            <span class="plan-label">
+                Einkauf
+            </span>
+
+            <h2>
+                {{ plan.shopping_title }}
+            </h2>
+
+            <p class="shopping-help-text">
+
+                Hast du etwas bereits zu Hause?
+                Klicke einfach auf die Zutat und streiche sie
+                von deinem Einkaufszettel.
+
+            </p>
+
         </div>
 
-        <a
-            class="button"
-            href="{{ url_for(
-                'download_shopping_pdf',
-                plan_id=plan.id
-            ) }}"
-        >
-            Einkaufsliste herunterladen
-        </a>
+
+        <div class="plan-heading-actions">
+
+
+            <a
+                class="plan-soft-button"
+                href="{{ url_for(
+                    'plans_routes.download_shopping_pdf',
+                    plan_id=plan.id
+                ) }}"
+            >
+                Vollständige Einkaufsliste
+            </a>
+
+
+            <button
+                type="button"
+                class="plan-soft-button"
+                id="downloadUpdatedShoppingList"
+                data-download-url="{{ url_for(
+                    'plans_routes.download_shopping_pdf',
+                    plan_id=plan.id
+                ) }}"
+            >
+                Aktualisierte Einkaufsliste
+            </button>
+
+
+        </div>
+
     </div>
+
+
 
     {% if shopping_categories %}
 
-    <div class="shopping-note">
 
-        <div class="shopping-note-top">
-            <span class="shopping-note-pin"></span>
+    <div class="shopping-paper">
 
-            <div>
-                <h3>Einkaufsliste</h3>
-                <p>
-                    Hake die Zutaten beim Einkaufen einfach ab.
-                </p>
-            </div>
+
+        <div class="shopping-paper-heading">
+
+            <span>
+                Einkaufsliste
+            </span>
+
+            <small>
+                Durchgestrichene Lebensmittel werden beim
+                aktualisierten Download weggelassen.
+            </small>
+
         </div>
+
+
 
         <div class="shopping-grid">
 
+
             {% for category in shopping_categories %}
 
+
             <section class="shopping-category">
-                <h4>{{ category.category }}</h4>
+
+
+                <h3>
+                    {{ category.category }}
+                </h3>
+
 
                 <ul class="shopping-items">
+
+
                     {% for item in category['items'] %}
-                    <li>
-                        <span class="shopping-checkbox"></span>
-                        <span>{{ item }}</span>
+
+
+                    <li
+                        class="shopping-list-item"
+                        data-shopping-item="{{ item }}"
+                    >
+
+                        <button
+                            type="button"
+                            class="shopping-item-button"
+                            aria-pressed="false"
+                        >
+                            {{ item }}
+                        </button>
+
                     </li>
+
+
                     {% endfor %}
+
+
                 </ul>
+
             </section>
 
+
             {% endfor %}
+
 
         </div>
 
     </div>
 
+
     {% else %}
 
+
     <div class="message-box">
-        <p>Für diesen Plan ist keine Einkaufsliste gespeichert.</p>
+
+        <p>
+            Für diesen Plan ist keine Einkaufsliste gespeichert.
+        </p>
+
     </div>
 
+
     {% endif %}
+
 
 </section>
 
 
+{% endif %}
+
+
+
+<!-- ===================================================== -->
 <!-- ===================================================== -->
 <!-- FITNESSPLAN -->
 <!-- ===================================================== -->
+<!-- ===================================================== -->
+
+{% if plan.plan_type == "fitness" %}
+
 
 <section class="plan-card fitness-plan-card">
 
+
     <div class="plan-heading">
+
         <div>
-            <span class="plan-label">Training</span>
-            <h2>{{ plan.fitness_title }}</h2>
+
+            <span class="plan-label">
+                Training
+            </span>
+
+            <h2>
+                {{ plan.fitness_title }}
+            </h2>
+
         </div>
 
+
         <div class="plan-heading-actions">
+
             <a
-                class="button secondary-button"
+                class="plan-soft-button"
                 href="{{ url_for(
-                    'plan_feedback',
+                    'plans_routes.plan_feedback',
                     plan_id=plan.id,
                     feedback_type='fitness'
                 ) }}"
             >
-                Feedback geben
+                {% if has_plan_feedback %}
+                    Feedback ansehen & ändern
+                {% else %}
+                    Feedback geben
+                {% endif %}
             </a>
 
+
             <a
-                class="button"
+                class="plan-soft-button"
                 href="{{ url_for(
-                    'download_fitness_pdf',
+                    'plans_routes.download_fitness_pdf',
                     plan_id=plan.id
                 ) }}"
             >
-                PDF herunterladen
+                Fitnessplan als PDF
             </a>
+
         </div>
+
     </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- FITNESS-ZUSAMMENFASSUNG -->
+    <!-- ================================================= -->
 
     <div class="plan-summary-grid">
 
         <div class="plan-summary-item">
-            <span>Name</span>
-            <strong>{{ user.username }}</strong>
-        </div>
 
-        <div class="plan-summary-item">
-            <span>Datum</span>
-            <strong>{{ plan.created_at }}</strong>
-        </div>
+            <span>
+                Name
+            </span>
 
-        <div class="plan-summary-item">
-            <span>Aktuelles Gewicht</span>
             <strong>
-                {% if plan.current_weight is not none %}
-                    {{ plan.current_weight }} kg
-                {% else %}
-                    Nicht angegeben
-                {% endif %}
+                {{ user.username }}
             </strong>
+
         </div>
 
+
         <div class="plan-summary-item">
-            <span>Trainingstage</span>
-            <strong>{{ fitness_days | length }}</strong>
+
+            <span>
+                Datum
+            </span>
+
+            <strong>
+                {{ plan.created_at }}
+            </strong>
+
+        </div>
+
+
+        <div class="plan-summary-item">
+
+            <span>
+                Aktuelles Gewicht
+            </span>
+
+            <strong>
+
+                {% if plan.current_weight is not none %}
+
+                    {{ plan.current_weight }} kg
+
+                {% else %}
+
+                    Nicht angegeben
+
+                {% endif %}
+
+            </strong>
+
+        </div>
+
+
+        <div class="plan-summary-item">
+
+            <span>
+                Trainingstage
+            </span>
+
+            <strong>
+                {{ fitness_days | length }}
+            </strong>
+
         </div>
 
     </div>
 
+
+
+    <!-- ================================================= -->
+    <!-- TRAININGSTAGE -->
+    <!-- ================================================= -->
+
     {% if fitness_days %}
+
+    <div class="fitness-plan-days">
 
         {% for fitness_day in fitness_days %}
 
         <section class="training-day-card">
 
-            <div class="training-day-heading">
-                <h3>Tag {{ fitness_day.day }}</h3>
 
-                <span>
+            <div class="training-day-heading">
+
+                <div>
+
+                    <span>
+                        Trainingstag
+                    </span>
+
+                    <h3>
+                        Tag {{ fitness_day.day }}
+                    </h3>
+
+                </div>
+
+                <strong>
                     {{ fitness_day.exercises | length }}
                     Übungen
-                </span>
+                </strong>
+
             </div>
 
+
+
             <div class="table-scroll">
+
                 <table class="fitness-table">
+
                     <thead>
                         <tr>
                             <th>Übung</th>
                             <th>Sätze</th>
                             <th>Wiederholungen / Dauer</th>
                             <th>Pause</th>
-                            <th>Einfache Alternative</th>
+                            <th>Bewertung</th>
                         </tr>
                     </thead>
 
                     <tbody>
+
                         {% for exercise in fitness_day.exercises %}
-                        <tr>
-                            <td>
-                                <strong>{{ exercise.name }}</strong>
+
+                        {% set current_preference =
+                            exercise_preferences.get(exercise.name)
+                        %}
+
+                        <tr class="fitness-exercise-row">
+
+                            <td class="fitness-exercise-name">
+
+                                <strong>
+                                    {{ exercise.name }}
+                                </strong>
+
+                                <details class="exercise-details">
+
+                                    <summary>
+                                        <span class="exercise-details-open">
+                                            Ausführung anzeigen
+                                        </span>
+                                    </summary>
+
+                                    <div class="exercise-instructions">
+
+                                        <h5>
+                                            So führst du die Übung aus
+                                        </h5>
+
+                                        {% if exercise.instructions | default("") %}
+
+                                        <p>
+                                            {{ exercise.instructions }}
+                                        </p>
+
+                                        {% elif exercise.alternative | default("") %}
+
+                                        <p>
+                                            Für diesen älteren Plan wurde noch keine
+                                            ausführliche Übungsbeschreibung gespeichert.
+                                        </p>
+
+                                        {% else %}
+
+                                        <p>
+                                            Für diesen älteren Plan wurde noch keine
+                                            Übungsbeschreibung gespeichert.
+                                        </p>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </details>
+
                             </td>
 
-                            <td>{{ exercise.sets }}</td>
+                            <td class="fitness-value-cell">
+                                {{ exercise.sets }}
+                            </td>
 
-                            <td>{{ exercise.repetitions }}</td>
+                            <td class="fitness-value-cell">
+                                {{ exercise.repetitions }}
+                            </td>
 
-                            <td>{{ exercise.pause }}</td>
+                            <td class="fitness-value-cell">
+                                {{ exercise.pause }}
+                            </td>
 
-                            <td>{{ exercise.alternative }}</td>
+                            <td class="fitness-rating-cell">
+
+                                <div class="exercise-preference-area">
+
+                                    <div class="exercise-preference-buttons">
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'plans_routes.set_exercise_preference',
+                                                plan_id=plan.id
+                                            ) }}"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="exercise_name"
+                                                value="{{ exercise.name }}"
+                                            >
+
+                                            <input
+                                                type="hidden"
+                                                name="preference"
+                                                value="like"
+                                            >
+
+                                            <button
+                                                type="submit"
+                                                class="
+                                                    exercise-preference-button
+                                                    meal-preference-button
+                                                    exercise-like-button
+                                                    meal-like-button
+                                                    {% if current_preference == 'like' %}
+                                                        is-active
+                                                    {% endif %}
+                                                "
+                                                aria-label="Übung wieder berücksichtigen"
+                                                aria-pressed="{{
+                                                    'true'
+                                                    if current_preference == 'like'
+                                                    else 'false'
+                                                }}"
+                                                title="Wieder berücksichtigen"
+                                            >
+                                                👍🏻
+                                            </button>
+                                        </form>
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'plans_routes.set_exercise_preference',
+                                                plan_id=plan.id
+                                            ) }}"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="exercise_name"
+                                                value="{{ exercise.name }}"
+                                            >
+
+                                            <input
+                                                type="hidden"
+                                                name="preference"
+                                                value="dislike"
+                                            >
+
+                                            <button
+                                                type="submit"
+                                                class="
+                                                    exercise-preference-button
+                                                    meal-preference-button
+                                                    exercise-dislike-button
+                                                    meal-dislike-button
+                                                    {% if current_preference == 'dislike' %}
+                                                        is-active
+                                                    {% endif %}
+                                                "
+                                                aria-label="Übung künftig ausschließen"
+                                                aria-pressed="{{
+                                                    'true'
+                                                    if current_preference == 'dislike'
+                                                    else 'false'
+                                                }}"
+                                                title="Künftig ausschließen"
+                                            >
+                                                👎🏻
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
                         </tr>
+
                         {% endfor %}
+
                     </tbody>
+
                 </table>
+
             </div>
+
 
             <div class="steps-alternative">
-                <span>Keine Zeit für das Training?</span>
-                <strong>{{ fitness_day.steps_alternative }}</strong>
+
+                <span>
+                    Keine Zeit für das Training?
+                </span>
+
+                <strong>
+                    {{ fitness_day.steps_alternative }}
+                </strong>
+
             </div>
+
 
         </section>
 
         {% endfor %}
 
+    </div>
+
+
     {% else %}
 
+
     <div class="message-box">
-        <p>Für diesen Plan sind keine Trainingstage gespeichert.</p>
+
+        <p>
+            Für diesen Plan sind keine Trainingstage gespeichert.
+        </p>
+
     </div>
+
 
     {% endif %}
 
+
+
     <p class="medical-note">
+
         Bei gesundheitlichen Einschränkungen bitte ärztlich abklären.
         Der Plan ersetzt keine medizinische Beratung.
+
     </p>
+
 
 </section>
 
 
-<div class="profile-view-actions">
-    <a
-        class="button"
-        href="{{ url_for('generate_plan') }}"
-    >
-        Neuen Plan generieren
-    </a>
+{% endif %}
+
+
+
+<!-- ===================================================== -->
+<!-- UNTERE AKTIONEN -->
+<!-- ===================================================== -->
+
+<div class="plan-detail-actions">
+
 
     <a
-        class="button secondary-button"
-        href="{{ url_for('plans') }}"
+        class="plan-soft-button"
+        href="{{ url_for('plans_routes.generate_plan') }}"
+    >
+        Neuen Plan erstellen
+    </a>
+
+
+    <a
+        class="plan-soft-button"
+        href="{{ url_for('plans_routes.plans') }}"
     >
         Meine Pläne
     </a>
 
+
     <a
-        class="text-button"
+        class="plan-soft-button"
         href="{{ url_for('dashboard') }}"
     >
         Zurück zum Dashboard
     </a>
+
+
 </div>
+
+
+{% endblock %}
+
+
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+{% block scripts %}
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =================================================
+           ALLE REZEPTE EINES TAGES GEMEINSAM
+           ÖFFNEN / SCHLIESSEN
+           ================================================= */
+
+        const recipeDetails =
+            document.querySelectorAll(
+                ".recipe-details"
+            );
+
+
+        recipeDetails.forEach(
+            function (details) {
+
+
+                const summary =
+                    details.querySelector(
+                        "summary"
+                    );
+
+
+                if (!summary) {
+                    return;
+                }
+
+
+                summary.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        event.preventDefault();
+
+
+                        const dayCard =
+                            details.closest(
+                                ".nutrition-day-card"
+                            );
+
+
+                        if (!dayCard) {
+                            return;
+                        }
+
+
+                        const dayRecipes =
+                            dayCard.querySelectorAll(
+                                ".recipe-details"
+                            );
+
+
+                        const shouldOpen =
+                            !details.open;
+
+
+                        dayRecipes.forEach(
+                            function (recipe) {
+
+                                recipe.open =
+                                    shouldOpen;
+
+                            }
+                        );
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /* =================================================
+           GERICHTE BEWERTEN
+           OHNE RELOAD / OHNE SPRINGEN
+           ================================================= */
+
+        const mealPreferenceForms =
+            document.querySelectorAll(
+                ".meal-preference-buttons form"
+            );
+
+
+        mealPreferenceForms.forEach(
+            function (form) {
+
+
+                form.addEventListener(
+                    "submit",
+                    async function (event) {
+
+
+                        event.preventDefault();
+
+
+                        const preferenceArea =
+                            form.closest(
+                                ".meal-preference-area"
+                            );
+
+
+                        const buttons =
+                            preferenceArea.querySelectorAll(
+                                ".meal-preference-button"
+                            );
+
+
+                        const formData =
+                            new FormData(
+                                form
+                            );
+
+
+                        try {
+
+
+                            const response =
+                                await fetch(
+                                    form.action,
+                                    {
+                                        method: "POST",
+                                        body: formData,
+                                        headers: {
+                                            "X-Requested-With":
+                                                "XMLHttpRequest"
+                                        }
+                                    }
+                                );
+
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    "Bewertung konnte nicht gespeichert werden."
+                                );
+
+                            }
+
+
+                            const result =
+                                await response.json();
+
+
+
+                            /* -----------------------------
+                               ALLE AUF NEUTRAL
+                               ----------------------------- */
+
+                            buttons.forEach(
+                                function (button) {
+
+                                    button.classList.remove(
+                                        "is-active"
+                                    );
+
+                                    button.setAttribute(
+                                        "aria-pressed",
+                                        "false"
+                                    );
+
+                                }
+                            );
+
+
+
+                            /* -----------------------------
+                               LIKE AKTIVIEREN
+                               ----------------------------- */
+
+                            if (
+                                result.preference === "like"
+                            ) {
+
+
+                                const likeButton =
+                                    preferenceArea.querySelector(
+                                        ".meal-like-button"
+                                    );
+
+
+                                if (likeButton) {
+
+                                    likeButton.classList.add(
+                                        "is-active"
+                                    );
+
+                                    likeButton.setAttribute(
+                                        "aria-pressed",
+                                        "true"
+                                    );
+
+                                }
+
+                            }
+
+
+
+                            /* -----------------------------
+                               DISLIKE AKTIVIEREN
+                               ----------------------------- */
+
+                            if (
+                                result.preference === "dislike"
+                            ) {
+
+
+                                const dislikeButton =
+                                    preferenceArea.querySelector(
+                                        ".meal-dislike-button"
+                                    );
+
+
+                                if (dislikeButton) {
+
+                                    dislikeButton.classList.add(
+                                        "is-active"
+                                    );
+
+                                    dislikeButton.setAttribute(
+                                        "aria-pressed",
+                                        "true"
+                                    );
+
+                                }
+
+                            }
+
+
+                        }
+
+                        catch (error) {
+
+
+                            console.error(
+                                error
+                            );
+
+
+                        }
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /* =================================================
+           AUSFÜHRUNGEN EINES TRAININGSTAGES GEMEINSAM
+           ÖFFNEN / SCHLIESSEN
+           ================================================= */
+
+        const exerciseDetails =
+            document.querySelectorAll(
+                ".exercise-details"
+            );
+
+
+        exerciseDetails.forEach(
+            function (details) {
+
+
+                const summary =
+                    details.querySelector(
+                        "summary"
+                    );
+
+
+                if (!summary) {
+                    return;
+                }
+
+
+                summary.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        event.preventDefault();
+
+
+                        const dayCard =
+                            details.closest(
+                                ".training-day-card"
+                            );
+
+
+                        if (!dayCard) {
+                            return;
+                        }
+
+
+                        const dayExercises =
+                            dayCard.querySelectorAll(
+                                ".exercise-details"
+                            );
+
+
+                        const shouldOpen =
+                            !details.open;
+
+
+                        dayExercises.forEach(
+                            function (exerciseDetail) {
+
+                                exerciseDetail.open =
+                                    shouldOpen;
+
+                            }
+                        );
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /* =================================================
+           ÜBUNGEN BEWERTEN
+           OHNE RELOAD / OHNE SPRINGEN
+           ================================================= */
+
+        const exercisePreferenceForms =
+            document.querySelectorAll(
+                ".exercise-preference-buttons form"
+            );
+
+
+        exercisePreferenceForms.forEach(
+            function (form) {
+
+
+                form.addEventListener(
+                    "submit",
+                    async function (event) {
+
+
+                        event.preventDefault();
+
+
+                        const preferenceArea =
+                            form.closest(
+                                ".exercise-preference-area"
+                            );
+
+
+                        if (!preferenceArea) {
+                            return;
+                        }
+
+
+                        const buttons =
+                            preferenceArea.querySelectorAll(
+                                ".exercise-preference-button"
+                            );
+
+
+                        const formData =
+                            new FormData(
+                                form
+                            );
+
+
+                        try {
+
+
+                            const response =
+                                await fetch(
+                                    form.action,
+                                    {
+                                        method: "POST",
+                                        body: formData,
+                                        headers: {
+                                            "X-Requested-With":
+                                                "XMLHttpRequest"
+                                        }
+                                    }
+                                );
+
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    "Übungsbewertung konnte nicht gespeichert werden."
+                                );
+
+                            }
+
+
+                            const result =
+                                await response.json();
+
+
+                            buttons.forEach(
+                                function (button) {
+
+                                    button.classList.remove(
+                                        "is-active"
+                                    );
+
+                                    button.setAttribute(
+                                        "aria-pressed",
+                                        "false"
+                                    );
+
+                                }
+                            );
+
+
+                            if (
+                                result.preference === "like"
+                            ) {
+
+                                const likeButton =
+                                    preferenceArea.querySelector(
+                                        ".exercise-like-button"
+                                    );
+
+
+                                if (likeButton) {
+
+                                    likeButton.classList.add(
+                                        "is-active"
+                                    );
+
+                                    likeButton.setAttribute(
+                                        "aria-pressed",
+                                        "true"
+                                    );
+
+                                }
+
+                            }
+
+
+                            if (
+                                result.preference === "dislike"
+                            ) {
+
+                                const dislikeButton =
+                                    preferenceArea.querySelector(
+                                        ".exercise-dislike-button"
+                                    );
+
+
+                                if (dislikeButton) {
+
+                                    dislikeButton.classList.add(
+                                        "is-active"
+                                    );
+
+                                    dislikeButton.setAttribute(
+                                        "aria-pressed",
+                                        "true"
+                                    );
+
+                                }
+
+                            }
+
+
+                        }
+
+                        catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+                        }
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /* =================================================
+           EINKAUFSLISTE DURCHSTREICHEN
+           ================================================= */
+
+        const shoppingItems =
+            document.querySelectorAll(
+                ".shopping-list-item"
+            );
+
+
+        shoppingItems.forEach(
+            function (item) {
+
+
+                const button =
+                    item.querySelector(
+                        ".shopping-item-button"
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+
+                        item.classList.toggle(
+                            "is-crossed"
+                        );
+
+
+                        button.setAttribute(
+                            "aria-pressed",
+                            item.classList.contains(
+                                "is-crossed"
+                            )
+                                ? "true"
+                                : "false"
+                        );
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /* =================================================
+           AKTUALISIERTE EINKAUFSLISTE
+           ================================================= */
+
+        const downloadButton =
+            document.getElementById(
+                "downloadUpdatedShoppingList"
+            );
+
+
+        if (downloadButton) {
+
+
+            downloadButton.addEventListener(
+                "click",
+                function () {
+
+
+                    const baseUrl =
+                        downloadButton.dataset.downloadUrl;
+
+
+                    const url =
+                        new URL(
+                            baseUrl,
+                            window.location.origin
+                        );
+
+
+                    const crossedItems =
+                        document.querySelectorAll(
+                            ".shopping-list-item.is-crossed"
+                        );
+
+
+                    crossedItems.forEach(
+                        function (item) {
+
+
+                            url.searchParams.append(
+                                "exclude",
+                                item.dataset.shoppingItem
+                            );
+
+
+                        }
+                    );
+
+
+                    window.location.href =
+                        url.toString();
+
+
+                }
+            );
+
+
+        }
+
+
+    }
+);
+
+</script>
+
 
 {% endblock %}

@@ -1,57 +1,214 @@
 {% extends "base.html" %}
 
+{% block title %}
+Feedback | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+feedback-page
+{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/plan_feedback.css', v='20260831-4') }}"
+>
+<style>
+    /* Button-Leiste bewusst hier im Template, damit keine ältere CSS-Regel
+       aus base.html oder dem Browser-Cache die drei Aktionen unterschiedlich darstellt. */
+    .feedback-page .feedback-actions {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+        width: 100% !important;
+        margin-top: 22px !important;
+        align-items: stretch !important;
+    }
+
+    .feedback-page .feedback-actions-main {
+        display: contents !important;
+    }
+
+    .feedback-page .feedback-actions .feedback-submit-button,
+    .feedback-page .feedback-actions .feedback-back-button,
+    .feedback-page .feedback-actions .feedback-delete-button {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+        height: 56px !important;
+        min-height: 56px !important;
+        max-height: 56px !important;
+        margin: 0 !important;
+        padding: 0 18px !important;
+        border: 1px solid #748b75 !important;
+        border-radius: 13px !important;
+        background: #e9f0e5 !important;
+        color: #405b45 !important;
+        font-family: "Montserrat", Arial, sans-serif !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        box-shadow: 0 7px 16px rgba(68, 92, 70, 0.09) !important;
+        cursor: pointer !important;
+        transition: background .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease !important;
+    }
+
+    .feedback-page .feedback-actions .feedback-submit-button:hover,
+    .feedback-page .feedback-actions .feedback-back-button:hover,
+    .feedback-page .feedback-actions .feedback-delete-button:hover {
+        background: #dfe9da !important;
+        border-color: #657d67 !important;
+        color: #354f3b !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 9px 18px rgba(68, 92, 70, 0.12) !important;
+    }
+
+    .feedback-page .feedback-actions .feedback-back-button span {
+        margin: 0 !important;
+        font-size: 17px !important;
+        line-height: 1 !important;
+        transform: none !important;
+    }
+
+    @media (max-width: 820px) {
+        .feedback-page .feedback-actions {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<section class="form-card feedback-card">
+<div class="feedback-wrapper">
 
-    {% if feedback_type == "nutrition" %}
-        <h2>Feedback zum Ernährungsplan</h2>
+    <!-- ============================================= -->
+    <!-- KOPFBEREICH -->
+    <!-- ============================================= -->
 
-        <p>
-            Dein Feedback hilft Love Yourself dabei, deine nächsten
-            Ernährungspläne immer besser an dich anzupassen.
-        </p>
-    {% else %}
-        <h2>Feedback zum Fitnessplan</h2>
+    <section class="feedback-heading">
 
-        <p>
-            Dein Feedback hilft Love Yourself dabei, deine nächsten
-            Trainingspläne besser auf deinen Alltag und deine Vorlieben
-            abzustimmen.
-        </p>
+        {% if feedback_type == "nutrition" %}
+            <span class="feedback-kicker">
+                Dein Ernährungsplan
+            </span>
+
+            <h1>Dein Feedback zählt</h1>
+
+            <p>
+                Sag uns, was dir gefallen hat und was beim nächsten
+                Ernährungsplan noch besser zu dir passen soll.
+            </p>
+        {% else %}
+            <span class="feedback-kicker">
+                Dein Fitnessplan
+            </span>
+
+            <h1>Dein Feedback zählt</h1>
+
+            <p>
+                Sag uns, welche Übungen dir gefallen haben und wie dein
+                nächster Trainingsplan noch besser zu dir passen kann.
+            </p>
+        {% endif %}
+
+    </section>
+
+
+    {% if feedback %}
+        <div class="feedback-existing-note">
+            <span>✓</span>
+            <div>
+                <strong>Dein bisheriges Feedback ist eingetragen.</strong>
+                <p>Du kannst jede Angabe ändern und anschließend neu speichern.</p>
+            </div>
+        </div>
     {% endif %}
 
     {% if error %}
-        <div class="message-box">
+        <div class="feedback-error">
+            <strong>Bitte überprüfe deine Angaben.</strong>
             <p>{{ error }}</p>
         </div>
     {% endif %}
 
-    <form method="POST">
 
-        <fieldset class="feedback-section">
-            <legend>Wie hat dir der Plan gefallen?</legend>
+    <form method="POST" class="feedback-form">
+
+        <!-- ============================================= -->
+        <!-- BEWERTUNG -->
+        <!-- ============================================= -->
+
+        <section class="feedback-card">
+
+            <div class="feedback-card-heading">
+                <span class="feedback-number">01</span>
+
+                <div>
+                    <h2>Wie hat dir dein Plan gefallen?</h2>
+                    <p>
+                        Bewerte deinen Plan von 1 bis 5 Sternen.
+                    </p>
+                </div>
+            </div>
 
             <div class="rating-options">
+
                 {% for number in range(1, 6) %}
+
                     <label class="rating-option">
+
                         <input
                             type="radio"
                             name="rating"
                             value="{{ number }}"
+                            {% if feedback and feedback.rating == number %}checked{% endif %}
                         >
-                        <span>{{ number }} ★</span>
+
+                        <span>
+                            <strong>{{ number }}</strong>
+                            <span class="rating-star">★</span>
+                        </span>
+
                     </label>
+
                 {% endfor %}
+
             </div>
-        </fieldset>
+
+        </section>
+
 
         {% if feedback_type == "nutrition" %}
 
-            <fieldset class="feedback-section">
-                <legend>Was möchtest du häufiger?</legend>
+            <!-- ========================================= -->
+            <!-- ERNÄHRUNG: WÜNSCHE -->
+            <!-- ========================================= -->
 
-                <div class="chip-options">
+            <section class="feedback-card">
+
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">02</span>
+
+                    <div>
+                        <h2>Was möchtest du häufiger?</h2>
+                        <p>
+                            Wähle alles aus, was in zukünftigen
+                            Ernährungsplänen häufiger vorkommen darf.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feedback-chip-grid">
+
                     {% set nutrition_options = [
                         "Mehr Fisch",
                         "Mehr Hähnchen",
@@ -68,74 +225,178 @@
                     ] %}
 
                     {% for option in nutrition_options %}
-                        <label class="choice-chip">
+
+                        <label class="feedback-chip">
+
                             <input
                                 type="checkbox"
                                 name="selected_preferences"
                                 value="{{ option }}"
+                                {% if option in selected_feedback_preferences %}checked{% endif %}
                             >
+
                             <span>{{ option }}</span>
+
                         </label>
+
                     {% endfor %}
+
                 </div>
-            </fieldset>
 
-            <label for="liked_items">
-                Welche Zutaten haben dir besonders gefallen?
-            </label>
+            </section>
 
-            <textarea
-                id="liked_items"
-                name="liked_items"
-                placeholder="z. B. Paprika, Lachs, Haferflocken, Reis ..."
-            ></textarea>
 
-            <label for="favorite_meals">
-                Welche vollständigen Gerichte haben dir gefallen?
-            </label>
+            <!-- ========================================= -->
+            <!-- ERNÄHRUNG: DETAILS -->
+            <!-- ========================================= -->
 
-            <textarea
-                id="favorite_meals"
-                name="favorite_meals"
-                placeholder="z. B. Gemüse-Curry, Wraps, Lachs mit Kartoffeln ..."
-            ></textarea>
+            <section class="feedback-card">
 
-            <label for="disliked_items">
-                Was möchtest du zukünftig nicht mehr im Plan haben?
-            </label>
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">03</span>
 
-            <textarea
-                id="disliked_items"
-                name="disliked_items"
-                placeholder="z. B. Käse, Pilze, Oliven ..."
-            ></textarea>
+                    <div>
+                        <h2>Was hat dir besonders gefallen?</h2>
+                        <p>
+                            Deine Angaben helfen dabei, zukünftige
+                            Pläne persönlicher zu gestalten.
+                        </p>
+                    </div>
+                </div>
 
-            <label for="wishes">
-                Was wünschst du dir beim nächsten Ernährungsplan?
-            </label>
 
-            <textarea
-                id="wishes"
-                name="wishes"
-                placeholder="z. B. mehr Fisch, mehr warme Frühstücke oder schnellere Rezepte ..."
-            ></textarea>
+                <div class="feedback-fields">
 
-            <label for="comment">
-                Weitere Anmerkungen
-            </label>
+                    <div class="feedback-field">
+                        <label for="liked_items">
+                            Lieblingszutaten
+                        </label>
 
-            <textarea
-                id="comment"
-                name="comment"
-                placeholder="Alles, was dir beim Ernährungsplan aufgefallen ist ..."
-            ></textarea>
+                        <p class="feedback-field-help">
+                            Welche Zutaten möchtest du gerne wiedersehen?
+                        </p>
+
+                        <textarea
+                            id="liked_items"
+                            name="liked_items"
+                            placeholder="z. B. Paprika, Lachs, Haferflocken, Reis ..."
+                        >{{ feedback.liked_items if feedback and feedback.liked_items else "" }}</textarea>
+                    </div>
+
+
+                    <div class="feedback-field">
+                        <label for="favorite_meals">
+                            Lieblingsgerichte
+                        </label>
+
+                        <p class="feedback-field-help">
+                            Welche vollständigen Gerichte haben dir
+                            besonders gut gefallen?
+                        </p>
+
+                        <textarea
+                            id="favorite_meals"
+                            name="favorite_meals"
+                            placeholder="z. B. Gemüse-Curry, Wraps, Lachs mit Kartoffeln ..."
+                        >{{ feedback.favorite_meals if feedback and feedback.favorite_meals else "" }}</textarea>
+                    </div>
+
+
+                    <div class="feedback-field">
+                        <label for="disliked_items">
+                            Das möchtest du vermeiden
+                        </label>
+
+                        <p class="feedback-field-help">
+                            Welche Zutaten oder Lebensmittel sollen
+                            zukünftig möglichst nicht mehr vorkommen?
+                        </p>
+
+                        <textarea
+                            id="disliked_items"
+                            name="disliked_items"
+                            placeholder="z. B. Käse, Pilze, Oliven ..."
+                        >{{ feedback.disliked_items if feedback and feedback.disliked_items else "" }}</textarea>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ========================================= -->
+            <!-- ERNÄHRUNG: ABSCHLUSS -->
+            <!-- ========================================= -->
+
+            <section class="feedback-card">
+
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">04</span>
+
+                    <div>
+                        <h2>Deine Wünsche</h2>
+                        <p>
+                            Gibt es noch etwas, das beim nächsten Plan
+                            berücksichtigt werden soll?
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="feedback-fields">
+
+                    <div class="feedback-field">
+                        <label for="wishes">
+                            Wünsche für den nächsten Ernährungsplan
+                        </label>
+
+                        <textarea
+                            id="wishes"
+                            name="wishes"
+                            placeholder="z. B. mehr Fisch, mehr warme Frühstücke oder schnellere Rezepte ..."
+                        >{{ feedback.wishes if feedback and feedback.wishes else "" }}</textarea>
+                    </div>
+
+
+                    <div class="feedback-field">
+                        <label for="comment">
+                            Weitere Anmerkungen
+                        </label>
+
+                        <textarea
+                            id="comment"
+                            name="comment"
+                            placeholder="Alles, was dir beim Ernährungsplan aufgefallen ist ..."
+                        >{{ feedback.comment if feedback and feedback.comment else "" }}</textarea>
+                    </div>
+
+                </div>
+
+            </section>
+
 
         {% else %}
 
-            <fieldset class="feedback-section">
-                <legend>Welche Trainingsarten möchtest du häufiger?</legend>
+            <!-- ========================================= -->
+            <!-- FITNESS: TRAININGSARTEN -->
+            <!-- ========================================= -->
 
-                <div class="chip-options">
+            <section class="feedback-card">
+
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">02</span>
+
+                    <div>
+                        <h2>Was möchtest du häufiger trainieren?</h2>
+                        <p>
+                            Wähle die Trainingsarten aus, die dir
+                            besonders gut gefallen.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feedback-chip-grid">
+
                     {% set fitness_options = [
                         "Krafttraining",
                         "Ganzkörpertraining",
@@ -152,67 +413,107 @@
                     ] %}
 
                     {% for option in fitness_options %}
-                        <label class="choice-chip">
+
+                        <label class="feedback-chip">
+
                             <input
                                 type="checkbox"
                                 name="selected_preferences"
                                 value="{{ option }}"
+                                {% if option in selected_feedback_preferences %}checked{% endif %}
                             >
+
                             <span>{{ option }}</span>
+
                         </label>
+
                     {% endfor %}
+
                 </div>
-            </fieldset>
 
-            <label for="liked_items">
-                Welche Übungen haben dir besonders gefallen?
-            </label>
+            </section>
 
-            <textarea
-                id="liked_items"
-                name="liked_items"
-                placeholder="z. B. Kniebeugen, Rudern, Beinpresse, Fahrradfahren ..."
-            ></textarea>
 
-            <label for="disliked_items">
-                Welche Übungen möchtest du zukünftig vermeiden?
-            </label>
+            <!-- ========================================= -->
+            <!-- FITNESS: ÜBUNGEN -->
+            <!-- ========================================= -->
 
-            <textarea
-                id="disliked_items"
-                name="disliked_items"
-                placeholder="z. B. Burpees, Planks, Sprints ..."
-            ></textarea>
+            <section class="feedback-card">
 
-            <fieldset class="feedback-section">
-                <legend>Wann trainierst du am liebsten?</legend>
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">03</span>
 
-                <div class="chip-options">
-                    {% set training_times = [
-                        "Morgens",
-                        "Mittags",
-                        "Nachmittags",
-                        "Abends",
-                        "Egal"
-                    ] %}
+                    <div>
+                        <h2>Deine Übungen</h2>
+                        <p>
+                            Sag uns, welche Übungen gut zu dir passen
+                            und welche du lieber vermeiden möchtest.
+                        </p>
+                    </div>
+                </div>
 
-                    {% for training_time in training_times %}
-                        <label class="choice-chip">
-                            <input
-                                type="radio"
-                                name="preferred_training_time"
-                                value="{{ training_time }}"
-                            >
-                            <span>{{ training_time }}</span>
+
+                <div class="feedback-fields feedback-fields-two">
+
+                    <div class="feedback-field">
+                        <label for="liked_items">
+                            Lieblingsübungen
                         </label>
-                    {% endfor %}
+
+                        <p class="feedback-field-help">
+                            Welche Übungen haben dir besonders gefallen?
+                        </p>
+
+                        <textarea
+                            id="liked_items"
+                            name="liked_items"
+                            placeholder="z. B. Kniebeugen, Rudern, Beinpresse, Fahrradfahren ..."
+                        >{{ feedback.liked_items if feedback and feedback.liked_items else "" }}</textarea>
+                    </div>
+
+
+                    <div class="feedback-field">
+                        <label for="disliked_items">
+                            Übungen vermeiden
+                        </label>
+
+                        <p class="feedback-field-help">
+                            Welche Übungen möchtest du zukünftig
+                            nicht mehr im Plan haben?
+                        </p>
+
+                        <textarea
+                            id="disliked_items"
+                            name="disliked_items"
+                            placeholder="z. B. Burpees, Planks, Sprints ..."
+                        >{{ feedback.disliked_items if feedback and feedback.disliked_items else "" }}</textarea>
+                    </div>
+
                 </div>
-            </fieldset>
 
-            <fieldset class="feedback-section">
-                <legend>Welche Trainingsdauer passt am besten?</legend>
+            </section>
 
-                <div class="chip-options">
+
+            <!-- ========================================= -->
+            <!-- FITNESS: TRAININGSDAUER -->
+            <!-- ========================================= -->
+
+            <section class="feedback-card">
+
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">04</span>
+
+                    <div>
+                        <h2>Wie lange möchtest du trainieren?</h2>
+                        <p>
+                            Wähle die Dauer, die am besten in deinen
+                            Alltag passt.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feedback-chip-grid feedback-duration-grid">
+
                     {% set training_durations = [
                         "20 Minuten",
                         "30 Minuten",
@@ -222,58 +523,126 @@
                     ] %}
 
                     {% for duration in training_durations %}
-                        <label class="choice-chip">
+
+                        <label class="feedback-chip">
+
                             <input
                                 type="radio"
                                 name="preferred_training_duration"
                                 value="{{ duration }}"
+                                {% if feedback and feedback.preferred_training_duration == duration %}checked{% endif %}
                             >
+
                             <span>{{ duration }}</span>
+
                         </label>
+
                     {% endfor %}
+
                 </div>
-            </fieldset>
 
-            <label for="wishes">
-                Was wünschst du dir beim nächsten Fitnessplan?
-            </label>
+            </section>
 
-            <textarea
-                id="wishes"
-                name="wishes"
-                placeholder="z. B. mehr Squats, mehr Rückentraining oder kürzere Cardio-Einheiten ..."
-            ></textarea>
 
-            <label for="comment">
-                Weitere Anmerkungen
-            </label>
+            <!-- ========================================= -->
+            <!-- FITNESS: ABSCHLUSS -->
+            <!-- ========================================= -->
 
-            <textarea
-                id="comment"
-                name="comment"
-                placeholder="Alles, was dir beim Fitnessplan aufgefallen ist ..."
-            ></textarea>
+            <section class="feedback-card">
+
+                <div class="feedback-card-heading">
+                    <span class="feedback-number">05</span>
+
+                    <div>
+                        <h2>Deine Wünsche</h2>
+                        <p>
+                            Teile uns mit, was beim nächsten Fitnessplan
+                            noch besser zu dir passen soll.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="feedback-fields">
+
+                    <div class="feedback-field">
+                        <label for="wishes">
+                            Wünsche für den nächsten Fitnessplan
+                        </label>
+
+                        <textarea
+                            id="wishes"
+                            name="wishes"
+                            placeholder="z. B. mehr Squats, mehr Rückentraining oder kürzere Cardio-Einheiten ..."
+                        >{{ feedback.wishes if feedback and feedback.wishes else "" }}</textarea>
+                    </div>
+
+
+                    <div class="feedback-field">
+                        <label for="comment">
+                            Weitere Anmerkungen
+                        </label>
+
+                        <textarea
+                            id="comment"
+                            name="comment"
+                            placeholder="Alles, was dir beim Fitnessplan aufgefallen ist ..."
+                        >{{ feedback.comment if feedback and feedback.comment else "" }}</textarea>
+                    </div>
+
+                </div>
+
+            </section>
 
         {% endif %}
 
-        <div class="button-row">
-            <button type="submit">
-                Feedback speichern
-            </button>
 
-            <a
-                class="button secondary-button"
-                href="{{ url_for(
-                    'view_plan',
-                    plan_id=plan.id
-                ) }}"
-            >
-                Zurück zum Plan
-            </a>
+        <!-- ============================================= -->
+        <!-- BUTTONS -->
+        <!-- ============================================= -->
+
+        <div class="feedback-actions">
+
+            <div class="feedback-actions-main">
+                <button
+                    type="submit"
+                    class="feedback-submit-button"
+                >
+                    {% if feedback %}
+                        Änderungen speichern
+                    {% else %}
+                        Feedback speichern
+                    {% endif %}
+                </button>
+
+                <a
+                    class="feedback-back-button"
+                    href="{{ url_for(
+                        'plans_routes.view_plan',
+                        plan_id=plan.id
+                    ) }}"
+                >
+                    <span aria-hidden="true">←</span>
+                    Zurück zum Plan
+                </a>
+            </div>
+
+            {% if feedback %}
+                <button
+                    type="submit"
+                    class="feedback-delete-button"
+                    name="action"
+                    value="delete"
+                    onclick="return confirm('Möchtest du dein Feedback wirklich löschen? Deine bisherigen Feedback-Angaben werden dadurch entfernt.');"
+                >
+                    Feedback löschen
+                </button>
+            {% endif %}
+
         </div>
 
     </form>
 
-</section>
+</div>
 
 {% endblock %}

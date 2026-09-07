@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+
+{% block title %}
+Neuen Plan erstellen | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+generate-plan-page
+{% endblock %}
+
+{% block content %}
+
+
+<!-- ===================================================== -->
+<!-- SEITENKOPF -->
+<!-- ===================================================== -->
+
+<section class="generate-plan-heading">
+
+    <span class="generate-plan-kicker">
+        Dein nächster Schritt
+    </span>
+
+    <h1>
+        Was möchtest du planen?
+    </h1>
+
+    <p>
+        Ernährung und Bewegung dürfen zu deinem Leben passen.
+        Entscheide selbst, welchen Bereich du heute für dich
+        planen möchtest.
+    </p>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- PLAN-AUSWAHL -->
+<!-- ===================================================== -->
+
+<section
+    class="generate-plan-grid"
+    aria-label="Planart auswählen"
+>
+
+
+    <!-- ================================================= -->
+    <!-- ERNÄHRUNG -->
+    <!-- ================================================= -->
+
+    <article class="generate-plan-card">
+
+        <div class="generate-plan-card-top">
+
+            <div
+                class="generate-plan-icon"
+                aria-hidden="true"
+            >
+                🥗
+            </div>
+
+
+            <span class="generate-plan-label">
+                Ernährung
+            </span>
+
+
+            <h2>
+                Ernährungsplan
+            </h2>
+
+
+            <p class="generate-plan-description">
+                Erstelle einen persönlichen Ernährungsplan,
+                der zu deinen Zielen, deinem Alltag und deinen
+                Vorlieben passt.
+            </p>
+
+        </div>
+
+
+        <div class="generate-plan-features">
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        7-Tage-Ernährungsplan
+                    </strong>
+
+                    <p>
+                        Mahlzeiten für eine komplette Woche.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Persönlich für dich
+                    </strong>
+
+                    <p>
+                        Kalorienziel, Vorlieben und Wünsche
+                        werden berücksichtigt.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Allergien berücksichtigt
+                    </strong>
+
+                    <p>
+                        Deine hinterlegten Allergien und
+                        ausgeschlossenen Lebensmittel fließen
+                        in die Planung ein.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Einkaufsliste inklusive
+                    </strong>
+
+                    <p>
+                        Passend zum Ernährungsplan wird direkt
+                        deine Einkaufsliste erstellt.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="generate-plan-card-action">
+
+            <a
+                class="generate-plan-button"
+                href="{{ url_for(
+                    'plans_routes.generate_nutrition_plan'
+                ) }}"
+            >
+                Ernährungsplan erstellen
+            </a>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- ================================================= -->
+    <!-- FITNESS -->
+    <!-- ================================================= -->
+
+    <article class="generate-plan-card">
+
+        <div class="generate-plan-card-top">
+
+            <div
+                class="generate-plan-icon"
+                aria-hidden="true"
+            >
+                🏋️
+            </div>
+
+
+            <span class="generate-plan-label">
+                Training
+            </span>
+
+
+            <h2>
+                Fitnessplan
+            </h2>
+
+
+            <p class="generate-plan-description">
+                Erstelle einen persönlichen Trainingsplan,
+                abgestimmt auf dein Fitnesslevel, deine Ziele
+                und deine Möglichkeiten.
+            </p>
+
+        </div>
+
+
+        <div class="generate-plan-features">
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Deine Trainingstage
+                    </strong>
+
+                    <p>
+                        Der Plan orientiert sich an deiner
+                        gewünschten Anzahl an Trainingstagen.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Passend zu deinem Level
+                    </strong>
+
+                    <p>
+                        Übungen und Umfang werden auf dein
+                        Fitnesslevel abgestimmt.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Dein Equipment
+                    </strong>
+
+                    <p>
+                        Vorhandenes Equipment und Fitnessstudio
+                        werden bei der Planung berücksichtigt.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="generate-plan-feature">
+
+                <span
+                    class="generate-plan-check"
+                    aria-hidden="true"
+                >
+                    ✓
+                </span>
+
+                <div>
+                    <strong>
+                        Deine Vorlieben
+                    </strong>
+
+                    <p>
+                        Bevorzugte Trainingsarten, Übungen und
+                        Wünsche fließen in deinen Plan ein.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="generate-plan-card-action">
+
+            <a
+                class="generate-plan-button"
+                href="{{ url_for(
+                    'plans_routes.generate_fitness_plan'
+                ) }}"
+            >
+                Fitnessplan erstellen
+            </a>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- HINWEIS -->
+<!-- ===================================================== -->
+
+<section class="generate-plan-note">
+
+    <span
+        class="generate-plan-note-icon"
+        aria-hidden="true"
+    >
+        ♡
+    </span>
+
+    <div>
+
+        <h2>
+            Du entscheidest, was du gerade brauchst.
+        </h2>
+
+        <p>
+            Du musst nicht beide Pläne gleichzeitig erstellen.
+            Ernährung und Training können unabhängig voneinander
+            geplant und jederzeit neu erstellt werden.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ZURÜCK -->
+<!-- ===================================================== -->
+
+<div class="generate-plan-actions">
+
+    <a
+        class="generate-plan-back-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
+</div>
+
+
+{% endblock %}

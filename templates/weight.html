@@ -1,52 +1,306 @@
 {% extends "base.html" %}
 
+{% block title %}
+Gewichtstracking | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+weight-page
+{% endblock %}
+
 {% block content %}
-<h2>Gewichtstracking</h2>
+
+
+<!-- ===================================================== -->
+<!-- SEITENÜBERSCHRIFT -->
+<!-- ===================================================== -->
+
+<section class="weight-page-heading">
+
+    <span class="weight-kicker">
+        Deine Entwicklung
+    </span>
+
+    <h1>
+        Gewichtstracking
+    </h1>
+
+    <p>
+        Halte deine Entwicklung fest und beobachte deinen
+        Fortschritt in deinem eigenen Tempo.
+    </p>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- FEHLERMELDUNG -->
+<!-- ===================================================== -->
 
 {% if error %}
-<div class="message-box">
-    <p>{{ error }}</p>
+
+<div class="weight-message-box">
+
+    <p>
+        {{ error }}
+    </p>
+
 </div>
+
 {% endif %}
 
-<div class="form-card">
-    <form method="POST">
-        <label>Gewicht in kg:</label>
-        <input type="number" step="0.1" name="weight" required>
 
-        <label>Datum:</label>
-        <input type="date" name="date" value="{{ today }}">
+<!-- ===================================================== -->
+<!-- NEUER GEWICHTSEINTRAG -->
+<!-- ===================================================== -->
 
-        <button type="submit">Gewicht speichern</button>
+<section class="weight-card weight-entry-card">
+
+    <div class="weight-card-heading">
+
+        <div>
+
+            <span class="weight-card-number">
+                01
+            </span>
+
+            <h2>
+                Gewicht eintragen
+            </h2>
+
+            <p>
+                Trage dein aktuelles Gewicht und das passende
+                Datum ein.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <form
+        method="POST"
+        class="weight-form"
+    >
+
+        <div class="weight-form-grid">
+
+
+            <!-- ============================================= -->
+            <!-- GEWICHT -->
+            <!-- ============================================= -->
+
+            <div class="weight-field">
+
+                <label for="weight">
+                    Gewicht in kg
+                </label>
+
+                <input
+                    type="number"
+                    id="weight"
+                    name="weight"
+                    step="0.1"
+                    min="1"
+                    placeholder="z. B. 72,5"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ============================================= -->
+            <!-- DATUM -->
+            <!-- ============================================= -->
+
+            <div class="weight-field">
+
+                <label for="date">
+                    Datum
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value="{{ today }}"
+                    max="{{ today }}"
+                    required
+                >
+
+                <small>
+                    Du kannst nur heute oder ein Datum
+                    in der Vergangenheit auswählen.
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================================= -->
+        <!-- SPEICHERN -->
+        <!-- ============================================= -->
+
+        <div class="weight-form-action">
+
+            <button
+                type="submit"
+                class="weight-save-button"
+            >
+                Gewicht speichern
+            </button>
+
+        </div>
+
     </form>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- GEWICHTSVERLAUF -->
+<!-- ===================================================== -->
+
+<section class="weight-card weight-history-card">
+
+    <div class="weight-card-heading">
+
+        <div>
+
+            <span class="weight-card-number">
+                02
+            </span>
+
+            <h2>
+                Dein Verlauf
+            </h2>
+
+            <p>
+                Hier findest du deine bisherigen
+                Gewichtseinträge.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if entries %}
+
+    <div class="weight-table-wrapper">
+
+        <table class="weight-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Datum
+                    </th>
+
+                    <th>
+                        Gewicht
+                    </th>
+
+                    <th>
+                        Aktion
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for entry in entries %}
+
+                <tr>
+
+                    <td>
+                        {{ entry.date }}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            {{ entry.weight }} kg
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_weight_entry',
+                                entry_id=entry.id
+                            ) }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="weight-delete-button"
+                            >
+                                Löschen
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+    <div class="weight-empty-state">
+
+        <span class="weight-empty-symbol">
+            🌱
+        </span>
+
+        <h3>
+            Noch keine Gewichtseinträge
+        </h3>
+
+        <p>
+            Sobald du dein Gewicht einträgst,
+            erscheint deine Entwicklung hier.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ZURÜCK -->
+<!-- ===================================================== -->
+
+<div class="weight-actions">
+
+    <a
+        class="weight-back-button"
+        href="{{ url_for('dashboard') }}"
+    >
+        Zurück zum Dashboard
+    </a>
+
 </div>
 
-<h3>Dein Verlauf</h3>
 
-{% if entries %}
-<table>
-    <tr>
-        <th>Datum</th>
-        <th>Gewicht</th>
-        <th>Aktion</th>
-    </tr>
-
-    {% for entry in entries %}
-    <tr>
-        <td>{{ entry.date }}</td>
-        <td>{{ entry.weight }} kg</td>
-        <td>
-            <form method="POST"
-                  action="{{ url_for('delete_weight_entry', entry_id=entry.id) }}">
-                <button type="submit" class="delete-button">Löschen</button>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>Noch keine Gewichtseinträge vorhanden.</p>
-{% endif %}
-
-<a class="button" href="{{ url_for('dashboard') }}">Zurück zum Dashboard</a>
 {% endblock %}

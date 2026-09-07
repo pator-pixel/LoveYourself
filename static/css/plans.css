@@ -1,48 +1,880 @@
 /* ============================================================
-   PLANSEITEN – GRUNDLAYOUT
+   LOVE YOURSELF
+   PLÄNE + PLANDETAIL
    ============================================================ */
 
-.plan-card {
-    margin-bottom: 32px;
-    padding: 30px;
+
+/* ============================================================
+   GEMEINSAME FARBEN
+   ============================================================ */
+
+:root {
+    --plans-background: #f7f1e7;
+
+    --plans-green: #294738;
+    --plans-green-medium: #60775f;
+    --plans-green-soft: #dce2d5;
+
+    --plans-gold: #8f7048;
+
+    --plans-text: #596158;
+    --plans-text-light: #737b74;
+
+    --plans-beige: #eadbc0;
+    --plans-beige-light: #eee7d8;
+
+    --plans-wine: #8f5360;
+
+    --plans-border:
+        rgba(102, 87, 61, 0.16);
+
+    --plans-shadow:
+        rgba(72, 61, 43, 0.11);
+}
+
+
+/* ============================================================
+   SEITENHINTERGRUND
+   ============================================================ */
+
+body.plans-page,
+body.plan-detail-page {
+    background: var(--plans-background);
+}
+
+
+.plans-page main,
+.plan-detail-page main {
+    position: relative;
+
+    z-index: 4;
+
+    margin-top: 0;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.plans-page .hero-content,
+.plan-detail-page .hero-content {
+    transform: translateY(-38px);
+}
+
+
+.plans-page .hero-overlay,
+.plan-detail-page .hero-overlay {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.04) 0%,
+            rgba(247, 241, 231, 0.02) 42%,
+            rgba(247, 241, 231, 0.22) 68%,
+            rgba(247, 241, 231, 0.98) 100%
+        );
+}
+
+
+.plans-page .hero-fade,
+.plan-detail-page .hero-fade {
+    height: 160px;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            0.96
+        linear-gradient(
+            to bottom,
+            rgba(247, 241, 231, 0),
+            #f7f1e7 88%
+        );
+}
+
+
+/* ============================================================
+   MEINE PLÄNE – SEITENKOPF
+   ============================================================ */
+
+.plans-page-heading {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        -40px auto 42px;
+}
+
+
+.plans-page-heading > div {
+    max-width: 760px;
+}
+
+
+.plans-kicker {
+    display: inline-block;
+
+    margin-bottom: 9px;
+
+    color: var(--plans-gold);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+
+.plans-page-heading h1 {
+    margin:
+        0 0 12px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            52px
+        );
+
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+
+.plans-page-heading p {
+    margin: 0;
+
+    color: var(--plans-text);
+
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+
+/* ============================================================
+   PLAN-KATEGORIEN
+   ============================================================ */
+
+.plans-category-section {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
+
+    box-sizing: border-box;
+
+    margin:
+        0 auto 34px;
+
+    padding: 29px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(234, 219, 192, 0.70),
+            rgba(238, 232, 216, 0.78) 48%,
+            rgba(220, 225, 210, 0.76)
         );
 
     border:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.30
+        var(--plans-border);
+
+    border-radius: 27px;
+
+    box-shadow:
+        0 14px 34px
+        rgba(72, 61, 43, 0.10);
+}
+
+
+.plans-category-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 28px;
+
+    margin-bottom: 27px;
+
+    padding-bottom: 22px;
+
+    border-bottom:
+        1px solid
+        rgba(102, 87, 61, 0.13);
+}
+
+
+.plans-category-heading > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+}
+
+
+.plans-category-icon {
+    display: flex;
+
+    width: 62px;
+    height: 62px;
+
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(255, 255, 255, 0.48);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.12);
+
+    border-radius: 50%;
+
+    font-size: 27px;
+}
+
+
+.plans-category-label,
+.plan-list-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--plans-gold);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.9px;
+
+    text-transform: uppercase;
+}
+
+
+.plans-category-heading h2 {
+    margin:
+        0 0 5px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 30px;
+    font-weight: 400;
+}
+
+
+.plans-category-heading p {
+    max-width: 620px;
+
+    margin: 0;
+
+    color: #626c64;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   PLANLISTE
+   ============================================================ */
+
+.plans-list {
+    display: grid;
+
+    gap: 20px;
+
+    width: 100%;
+}
+
+
+/* ============================================================
+   PLANLISTEN-KARTE
+   ============================================================ */
+
+.plan-list-card {
+    display: grid;
+
+    grid-template-columns:
+        145px
+        minmax(0, 1fr)
+        230px;
+
+    gap: 27px;
+
+    align-items: center;
+
+    padding: 25px;
+
+    background:
+        rgba(255, 255, 255, 0.43);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.14);
+
+    border-radius: 21px;
+
+    box-shadow:
+        0 10px 24px
+        rgba(72, 61, 43, 0.08);
+}
+
+
+.plan-list-date {
+    padding:
+        18px 13px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.47);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.12);
+
+    border-radius: 17px;
+}
+
+
+.plan-list-date span,
+.plan-list-date strong {
+    display: block;
+}
+
+
+.plan-list-date span {
+    margin-bottom: 6px;
+
+    color: var(--plans-text-light);
+
+    font-size: 13px;
+}
+
+
+.plan-list-date strong {
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 19px;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   PLANLISTE INHALT
+   ============================================================ */
+
+.plan-list-content {
+    display: grid;
+
+    gap: 16px;
+}
+
+
+.plan-list-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.plan-list-icon {
+    display: flex;
+
+    width: 47px;
+    height: 47px;
+
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(255, 255, 255, 0.48);
+
+    border-radius: 50%;
+
+    font-size: 21px;
+}
+
+
+.plan-list-title h3 {
+    margin:
+        0 0 3px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.plan-list-title p {
+    margin: 0;
+
+    color: #626c64;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   LISTEN-AKTIONEN
+   ============================================================ */
+
+.plan-list-actions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.plans-main-button,
+.plans-category-create-button,
+.plan-view-button,
+.plan-download-button,
+.plans-back-button,
+.plan-soft-button {
+    display: inline-flex;
+
+    min-width: 220px;
+    min-height: 54px;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding:
+        13px 20px;
+
+    color: #405247;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eadbc0,
+            #e6dfcf 48%,
+            #dce2d5
         );
 
-    border-radius: 28px;
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.20);
 
-    box-shadow: var(--soft-shadow);
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(72, 61, 43, 0.10);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
 }
+
+
+.plans-main-button:hover,
+.plans-category-create-button:hover,
+.plan-view-button:hover,
+.plan-download-button:hover,
+.plans-back-button:hover,
+.plan-soft-button:hover {
+    color: #314b3d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e2d1b7,
+            #dedbca 48%,
+            #d2dccf
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(72, 61, 43, 0.15);
+}
+
+
+/* ============================================================
+   PDF-MENÜ
+   ============================================================ */
+
+.download-menu {
+    position: relative;
+
+    width: 230px;
+}
+
+
+.download-menu summary {
+    min-height: 56px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding:
+        10px 17px;
+
+    color: #536359;
+
+    background:
+        rgba(255, 255, 255, 0.46);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.17);
+
+    border-radius: 15px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+
+.download-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.download-menu summary::after {
+    margin-left: 8px;
+
+    content: "⌄";
+}
+
+
+.download-menu[open] summary::after {
+    content: "⌃";
+}
+
+
+.download-menu-content {
+    position: absolute;
+
+    top:
+        calc(100% + 7px);
+
+    right: 0;
+
+    z-index: 30;
+
+    width: 230px;
+
+    overflow: hidden;
+
+    background: #f8f3e9;
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.17);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 12px 28px
+        rgba(72, 61, 43, 0.15);
+}
+
+
+.download-menu-content a {
+    display: block;
+
+    padding:
+        13px 16px;
+
+    color: #405247;
+
+    border-bottom:
+        1px solid
+        rgba(102, 87, 61, 0.10);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+}
+
+
+.download-menu-content a:last-child {
+    border-bottom: 0;
+}
+
+
+.download-menu-content a:hover {
+    background:
+        rgba(220, 226, 213, 0.72);
+}
+
+
+/* ============================================================
+   LEERE KATEGORIE
+   ============================================================ */
+
+.plans-category-empty {
+    padding:
+        34px 25px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.35);
+
+    border:
+        1px dashed
+        rgba(102, 87, 61, 0.20);
+
+    border-radius: 20px;
+}
+
+
+.plans-category-empty > span {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 30px;
+}
+
+
+.plans-category-empty h3 {
+    margin:
+        0 0 8px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+    font-weight: 400;
+}
+
+
+.plans-category-empty p {
+    max-width: 520px;
+
+    margin:
+        0 auto 21px;
+
+    color: #626c64;
+
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+
+/* ============================================================
+   UNTERE AKTIONEN – MEINE PLÄNE
+   ============================================================ */
+
+.plans-bottom-actions {
+    display: flex;
+
+    justify-content: center;
+
+    margin:
+        38px 0 70px;
+}
+
+
+/* ============================================================
+   PLANDETAIL – KOPF
+   ============================================================ */
+
+.compact-plan-header {
+    width:
+        min(
+            1100px,
+            calc(100% - 40px)
+        );
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin:
+        -40px auto 30px;
+}
+
+
+.compact-plan-header h2 {
+    margin:
+        4px 0 8px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            32px,
+            4vw,
+            42px
+        );
+
+    font-weight: 400;
+}
+
+
+.compact-plan-header p {
+    margin: 0;
+
+    color: var(--plans-text-light);
+}
+
+
+/* ============================================================
+   PLAN LABEL
+   ============================================================ */
+
+.plan-label {
+    display: inline-block;
+
+    color: var(--plans-gold);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   GROSSE PLAN-KARTEN
+   ============================================================ */
+
+.plan-card {
+    width:
+        min(
+            1100px,
+            calc(100% - 40px)
+        );
+
+    box-sizing: border-box;
+
+    margin:
+        0 auto 30px;
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(234, 219, 192, 0.74),
+            rgba(238, 232, 217, 0.80) 50%,
+            rgba(220, 225, 210, 0.80)
+        );
+
+    border:
+        1px solid
+        var(--plans-border);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 15px 36px
+        var(--plans-shadow);
+}
+
+
+/* ============================================================
+   PLAN-ÜBERSCHRIFT
+   ============================================================ */
 
 .plan-heading {
     display: flex;
-    justify-content: space-between;
+
     align-items: flex-start;
+    justify-content: space-between;
 
-    gap: 22px;
+    gap: 25px;
 
-    margin-bottom: 24px;
+    margin-bottom: 25px;
 }
+
 
 .plan-heading h2 {
     margin:
-        6px 0 0;
+        5px 0 0;
 
-    color: var(--dark-green);
+    color: var(--plans-green);
 
     font-family:
         Georgia,
@@ -52,33 +884,27 @@
     font-size:
         clamp(
             28px,
-            4vw,
-            38px
+            3.5vw,
+            36px
         );
 
     font-weight: 400;
 }
 
-.plan-label {
-    display: inline-block;
 
-    padding:
-        6px 12px;
+.plan-heading-actions {
+    display: flex;
 
-    color: var(--dark-green);
-    background: var(--light-sage);
+    flex-wrap: wrap;
 
-    border-radius: 999px;
+    justify-content: flex-end;
 
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
+    gap: 10px;
 }
 
 
 /* ============================================================
-   PLAN-ZUSAMMENFASSUNG
+   ZUSAMMENFASSUNG
    ============================================================ */
 
 .plan-summary-grid {
@@ -92,65 +918,57 @@
 
     gap: 14px;
 
-    margin-bottom: 22px;
+    margin-bottom: 25px;
 }
+
 
 .plan-summary-item {
     padding: 17px;
 
-    text-align: center;
-
-    background: var(--light-beige);
+    background:
+        rgba(255, 255, 255, 0.43);
 
     border:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.32
-        );
+        rgba(102, 87, 61, 0.12);
 
-    border-radius: 18px;
+    border-radius: 17px;
 }
+
 
 .plan-summary-item span,
 .plan-summary-item strong {
     display: block;
 }
 
+
 .plan-summary-item span {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 
-    color: var(--text-soft);
+    color: var(--plans-text-light);
 
-    font-size: 13px;
+    font-size: 12px;
+
+    text-transform: uppercase;
 }
+
 
 .plan-summary-item strong {
-    color: var(--dark-green);
+    color: var(--plans-green);
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 17px;
+    font-weight: 600;
 }
+
 
 .highlight-summary {
     background:
-        linear-gradient(
-            145deg,
-            var(--light-sage),
-            var(--very-light-sage)
-        );
+        rgba(220, 226, 213, 0.66);
 }
 
 
 /* ============================================================
-   SICHERHEITS- UND PROFILHINWEISE
+   ALLERGIEN / AUSSCHLÜSSE
    ============================================================ */
 
 .plan-safety-summary {
@@ -162,167 +980,725 @@
             minmax(0, 1fr)
         );
 
-    gap: 18px;
+    gap: 16px;
 
-    margin-bottom: 24px;
-    padding: 20px;
+    margin-bottom: 28px;
+}
 
-    background: var(--warning-background);
+
+.plan-safety-summary > div {
+    padding: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.38);
 
     border:
         1px solid
-        var(--warning-border);
+        rgba(102, 87, 61, 0.12);
 
-    border-radius: 20px;
+    border-radius: 17px;
 }
 
-.plan-safety-summary strong {
-    color: var(--dark-green);
-}
 
-.medical-note {
+.plan-safety-summary h3 {
     margin:
-        22px 0 0;
+        0 0 12px;
 
-    padding-top: 15px;
+    color: var(--plans-green);
 
-    color: var(--text-soft);
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    border-top:
-        1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.32
-        );
+    font-size: 19px;
+    font-weight: 400;
+}
 
-    font-size: 12px;
-    font-style: italic;
-    text-align: center;
+
+.plan-safety-summary p {
+    margin: 0;
+
+    color: var(--plans-text);
+
+    line-height: 1.6;
+}
+
+
+.warning-chip,
+.excluded-chip {
+    display: inline-flex;
+
+    margin:
+        3px 5px 3px 0;
+
+    padding:
+        7px 11px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+}
+
+
+.warning-chip {
+    color: #70484a;
+
+    background: #f4e5e2;
+}
+
+
+.excluded-chip {
+    color: #625b4e;
+
+    background: #eee4d5;
 }
 
 
 /* ============================================================
-   TABELLEN
+   ERNÄHRUNGSTAGE
    ============================================================ */
 
-.table-scroll {
-    width: 100%;
+.nutrition-plan-days {
+    display: grid;
 
-    overflow-x: auto;
+    gap: 22px;
 
-    border-radius: 20px;
+    margin-top: 28px;
 }
 
-table {
-    width: 100%;
 
-    border-collapse: collapse;
+.nutrition-day-card {
+    padding: 23px;
 
-    background: var(--white);
-}
-
-th,
-td {
-    padding: 14px;
-
-    text-align: left;
-    vertical-align: top;
+    background:
+        rgba(255, 255, 255, 0.34);
 
     border:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.34
-        );
+        rgba(102, 87, 61, 0.13);
+
+    border-radius: 21px;
 }
 
-th {
-    color: var(--white);
-    background: var(--dark-green);
+
+.nutrition-day-heading {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 9px;
+
+    margin-bottom: 18px;
+}
+
+
+.nutrition-day-heading span {
+    color: var(--plans-gold);
 
     font-size: 13px;
-    font-weight: 600;
-}
-
-tbody tr:nth-child(even) {
-    background: var(--light-beige);
-}
-
-td strong {
-    color: var(--dark-green);
-}
-
-.day-cell {
-    min-width: 80px;
-
-    color: var(--dark-green);
-    background: var(--light-sage);
-
     font-weight: 700;
-    text-align: center;
+
+    text-transform: uppercase;
 }
+
+
+.nutrition-day-heading h3 {
+    margin: 0;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 28px;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   MAHLZEITEN-GRID
+   ============================================================ */
+
+.nutrition-meal-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+
+    align-items: stretch;
+}
+
+
+/* ============================================================
+   MAHLZEITENKARTEN
+
+   Wichtig:
+   Flex + gleiche Höhe sorgen dafür,
+   dass die Daumen immer unten
+   auf derselben Höhe stehen.
+   ============================================================ */
+
+.nutrition-meal-card {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 17px;
+
+    background:
+        rgba(255, 255, 255, 0.53);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.12);
+
+    border-radius: 17px;
+
+    scroll-margin-top: 40px;
+}
+
+
+.nutrition-meal-type {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--plans-gold);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   REZEPTE
+
+   Flex 1 sorgt dafür, dass der Rezeptbereich
+   den verfügbaren Platz einnimmt und die
+   Daumen nach unten gedrückt werden.
+   ============================================================ */
+
+.recipe-details {
+    flex: 1;
+}
+
+
+.recipe-details summary {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 126px;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+
+.recipe-details summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.recipe-details summary strong {
+    display: block;
+
+    min-height: 50px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 19px;
+    font-weight: 400;
+
+    line-height: 1.35;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.recipe-details summary:hover strong {
+    color: #58705c;
+}
+
 
 .meal-calories {
     display: block;
 
-    margin-top: 6px;
+    margin-top: 5px;
 
-    color: var(--text-soft);
+    color: var(--plans-text-light);
+
+    font-size: 13px;
+}
+
+
+.recipe-hint {
+    display: inline-block;
+
+    margin-top: auto;
+
+    padding-top: 10px;
+
+    color: var(--plans-green-medium);
 
     font-size: 12px;
+    font-weight: 600;
 }
 
-.nutrition-table {
-    min-width: 920px;
+
+.recipe-hint-close {
+    display: none;
 }
 
-.fitness-table {
-    min-width: 850px;
+.recipe-details[open] .recipe-hint-open {
+    display: none;
+}
+
+.recipe-details[open] .recipe-hint-close {
+    display: inline-block;
+}
+
+
+.recipe-content {
+    margin-top: 16px;
+
+    padding-top: 15px;
+
+    border-top:
+        1px solid
+        rgba(102, 87, 61, 0.13);
+}
+
+
+.recipe-section + .recipe-section {
+    margin-top: 17px;
+}
+
+
+.recipe-section h4 {
+    margin:
+        0 0 8px;
+
+    color: var(--plans-green);
+
+    font-size: 15px;
+}
+
+
+.recipe-section ul,
+.recipe-section ol {
+    margin: 0;
+
+    padding-left: 19px;
+}
+
+
+.recipe-section li,
+.recipe-section p {
+    color: var(--plans-text);
+
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 
 /* ============================================================
-   ERNÄHRUNGSPLAN
+   GERICHTSBEWERTUNG
+
+   Nur ✓ ×
+   Immer am unteren Rand der Karte.
    ============================================================ */
 
-.meal-block {
-    display: grid;
+.meal-preference-area {
+    margin-top: auto;
 
-    gap: 5px;
+    padding-top: 13px;
+
+    border-top:
+        1px solid
+        rgba(111, 139, 116, 0.13);
 }
 
-.meal-block strong {
-    color: var(--dark-green);
+
+.meal-preference-buttons {
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+.meal-preference-buttons form {
+    display: inline-flex;
+
+    flex: 0 0 auto;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+.meal-preference-button {
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+
+    background:
+        rgba(255, 255, 255, 0.76);
+
+    border:
+        2px solid
+        rgba(102, 87, 61, 0.16);
+
+    border-radius: 50%;
+
+    box-shadow: none;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 23px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.meal-preference-button:hover {
+    background:
+        rgba(255, 255, 255, 0.96);
+}
+
+
+/* ============================================================
+   HAKEN AKTIV
+   ============================================================ */
+
+.meal-like-button {
+    color: #6f7e72;
+}
+
+
+.meal-like-button:hover {
+    color: #5f8066;
+
+    border-color:
+        rgba(95, 128, 102, 0.42);
+}
+
+
+.meal-like-button.is-active {
+    color: #4f7658;
+
+    border-color: #66866d;
+
+    background: #f6faf6;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(102, 134, 109, 0.12);
+}
+
+
+.meal-like-button.is-active:hover {
+    color: #4f7658;
+
+    border-color: #66866d;
+}
+
+
+/* ============================================================
+   X AKTIV
+   ============================================================ */
+
+.meal-dislike-button {
+    color: #88646b;
+}
+
+
+.meal-dislike-button:hover {
+    color: #8f5360;
+
+    border-color:
+        rgba(143, 83, 96, 0.42);
+}
+
+
+.meal-dislike-button.is-active {
+    color: #7f4451;
+
+    border-color: #8f5360;
+
+    background: #fff8f9;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(143, 83, 96, 0.11);
+}
+
+
+.meal-dislike-button.is-active:hover {
+    color: #7f4451;
+
+    border-color: #8f5360;
+}
+
+
+/* ============================================================
+   EINKAUFSLISTE
+   ============================================================ */
+
+.shopping-help-text {
+    max-width: 620px;
+
+    margin:
+        8px 0 0;
+
+    color: #667068;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   EINKAUFSZETTEL
+   ============================================================ */
+
+.shopping-paper {
+    margin-top: 23px;
+
+    padding: 28px;
+
+    background: #f7f0df;
+
+    border:
+        1px solid
+        rgba(129, 104, 70, 0.16);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 9px 24px
+        rgba(72, 61, 43, 0.07);
+}
+
+
+.shopping-paper-heading {
+    margin-bottom: 24px;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid
+        rgba(102, 87, 61, 0.14);
+}
+
+
+.shopping-paper-heading > span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 27px;
+}
+
+
+.shopping-paper-heading small {
+    color: #74796f;
 
     font-size: 14px;
 }
 
-.meal-ingredients {
+
+/* ============================================================
+   EINKAUFSKATEGORIEN
+   ============================================================ */
+
+.shopping-grid {
     display: grid;
 
-    gap: 4px;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
-    margin-top: 8px;
+    gap: 18px;
+
+    align-items: start;
 }
 
-.meal-ingredient {
-    color: var(--text-soft);
 
-    font-size: 12px;
-    line-height: 1.5;
+.shopping-category {
+    min-width: 0;
+
+    padding: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.43);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.11);
+
+    border-radius: 16px;
 }
 
-.meal-description {
-    margin-top: 6px;
 
-    color: var(--text-soft);
+.shopping-category h3 {
+    margin:
+        0 0 13px;
 
-    font-size: 12px;
-    line-height: 1.55;
+    color: var(--plans-green);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.shopping-items {
+    margin: 0;
+
+    padding: 0;
+}
+
+
+/* ============================================================
+   EINKAUFSARTIKEL
+   ============================================================ */
+
+.shopping-list-item {
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    border-bottom:
+        1px solid
+        rgba(102, 87, 61, 0.08);
+}
+
+
+.shopping-list-item:last-child {
+    border-bottom: 0;
+}
+
+
+.shopping-item-button {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding:
+        10px 4px;
+
+    color: #405247;
+
+    background: transparent;
+
+    border: 0;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    line-height: 1.45;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.shopping-item-button:hover {
+    color: var(--plans-green);
+}
+
+
+/* ============================================================
+   DURCHGESTRICHEN
+   ============================================================ */
+
+.shopping-list-item.is-crossed
+.shopping-item-button {
+    color: #92938b;
+
+    opacity: 0.58;
+
+    text-decoration: line-through;
+
+    text-decoration-thickness: 2px;
+
+    text-decoration-color:
+        rgba(91, 94, 84, 0.74);
 }
 
 
@@ -331,572 +1707,237 @@ td strong {
    ============================================================ */
 
 .training-day-card {
-    margin-top: 24px;
+    margin-top: 20px;
+
     padding: 22px;
 
     background:
-        linear-gradient(
-            145deg,
-            var(--light-beige),
-            rgba(255, 255, 255, 0.96)
-        );
+        rgba(255, 255, 255, 0.36);
 
     border:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.35
-        );
+        rgba(102, 87, 61, 0.12);
 
-    border-radius: 22px;
+    border-radius: 20px;
 }
+
 
 .training-day-heading {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
     gap: 15px;
 
-    margin-bottom: 16px;
+    margin-bottom: 17px;
 }
+
 
 .training-day-heading h3 {
     margin: 0;
 
-    color: var(--dark-green);
+    color: var(--plans-green);
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 400;
 }
 
+
 .training-day-heading span {
-    padding:
-        7px 12px;
+    color: var(--plans-text-light);
 
-    color: var(--dark-green);
-    background: var(--light-sage);
-
-    border-radius: 999px;
-
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 14px;
 }
 
-.exercise-list {
-    display: grid;
 
-    gap: 14px;
+/* ============================================================
+   FITNESS-TABELLE
+   ============================================================ */
+
+.table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
 }
 
-.exercise-card {
-    display: grid;
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        auto;
+.fitness-table {
+    width: 100%;
 
-    gap: 16px;
+    border-collapse: collapse;
 
-    padding: 17px;
-
-    background: var(--white);
-
-    border:
-        1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.32
-        );
-
-    border-radius: 18px;
-}
-
-.exercise-card h4 {
-    margin:
-        0 0 7px;
-
-    color: var(--dark-green);
-
-    font-size: 16px;
-}
-
-.exercise-meta {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-top: 9px;
-}
-
-.exercise-meta span {
-    padding:
-        6px 10px;
-
-    color: var(--dark-green);
-    background: var(--very-light-sage);
-
-    border-radius: 999px;
-
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.exercise-description {
-    margin:
-        8px 0 0;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-    line-height: 1.55;
-}
-
-.exercise-image-placeholder {
-    width: 110px;
-    min-height: 90px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--text-soft);
-    background: var(--very-light-sage);
-
-    border:
-        1px dashed
-        rgba(
-            111,
-            135,
-            100,
-            0.45
-        );
+    background:
+        rgba(255, 255, 255, 0.35);
 
     border-radius: 15px;
-
-    font-size: 11px;
-    text-align: center;
 }
+
+
+.fitness-table th {
+    padding: 13px;
+
+    color: var(--plans-green);
+
+    background:
+        rgba(220, 226, 213, 0.55);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: left;
+}
+
+
+.fitness-table td {
+    padding: 13px;
+
+    color: var(--plans-text);
+
+    border-top:
+        1px solid
+        rgba(102, 87, 61, 0.09);
+
+    font-size: 14px;
+
+    vertical-align: top;
+}
+
+
+/* ============================================================
+   SCHRITTE-ALTERNATIVE
+   ============================================================ */
 
 .steps-alternative {
     display: flex;
+
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-
-    margin-top: 14px;
-    padding:
-        15px 18px;
-
-    background: var(--beige);
-
-    border:
-        1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.42
-        );
-
-    border-radius: 18px;
-}
-
-
-/* ============================================================
-   EINKAUFSLISTE
-   ============================================================ */
-
-.shopping-plan-card {
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf7,
-            #faf5e9
-        );
-}
-
-.shopping-note {
-    position: relative;
-
-    padding: 30px;
-
-    background: var(--paper-beige);
-
-    border:
-        1px solid
-        #e7ddca;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 12px 30px
-        rgba(
-            90,
-            77,
-            55,
-            0.12
-        );
-
-    background-image:
-        repeating-linear-gradient(
-            to bottom,
-            transparent,
-            transparent 31px,
-            rgba(
-                150,
-                134,
-                105,
-                0.12
-            ) 32px
-        );
-}
-
-.shopping-note::before {
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-    left: 52px;
-
-    width: 1px;
-
-    background:
-        rgba(
-            190,
-            116,
-            107,
-            0.25
-        );
-
-    content: "";
-}
-
-.shopping-note-top {
-    position: relative;
-
-    z-index: 1;
-
-    display: flex;
-    align-items: center;
 
     gap: 15px;
 
-    margin-bottom: 22px;
-    padding-left: 45px;
-}
+    margin-top: 15px;
 
-.shopping-note-top h3,
-.shopping-note-top p {
-    margin: 0;
-}
-
-.shopping-note-pin {
-    width: 17px;
-    height: 17px;
-
-    flex: 0 0 auto;
-
-    background: var(--sage-green);
-
-    border:
-        4px solid
-        var(--white);
-
-    border-radius: 50%;
-}
-
-.shopping-grid {
-    position: relative;
-
-    z-index: 1;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            minmax(0, 1fr)
-        );
-
-    gap: 18px;
-
-    padding-left: 45px;
-}
-
-.shopping-category {
-    padding: 17px;
+    padding: 14px;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            0.84
-        );
+        rgba(220, 226, 213, 0.45);
 
-    border:
-        1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.35
-        );
-
-    border-radius: 16px;
+    border-radius: 14px;
 }
 
-.shopping-category h4 {
-    margin:
-        0 0 12px;
 
-    padding-bottom: 8px;
-
-    color: var(--dark-green);
-
-    border-bottom:
-        1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.4
-        );
-}
-
-.shopping-items {
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-}
-
-.shopping-items li {
-    display: grid;
-
-    grid-template-columns:
-        19px minmax(0, 1fr);
-
-    gap: 9px;
-
-    margin-bottom: 10px;
-
-    color: var(--text-dark);
+.steps-alternative span {
+    color: var(--plans-text-light);
 
     font-size: 13px;
-    line-height: 1.45;
 }
 
-.shopping-checkbox {
-    width: 17px;
-    height: 17px;
 
-    margin-top: 2px;
+.steps-alternative strong {
+    color: var(--plans-green);
 
-    background: var(--white);
-
-    border:
-        2px solid
-        var(--medium-green);
-
-    border-radius: 4px;
+    font-size: 14px;
 }
 
 
 /* ============================================================
-   PLANLISTE
+   MEDIZINISCHER HINWEIS
    ============================================================ */
 
-.plans-list {
-    display: grid;
-
-    gap: 22px;
-
+.medical-note {
     margin:
-        25px 0;
-}
+        24px 0 0;
 
-.plan-list-card {
-    display: grid;
+    padding-top: 18px;
 
-    grid-template-columns:
-        125px minmax(0, 1fr) auto;
+    color: #787d77;
 
-    gap: 24px;
-
-    align-items: center;
-
-    padding: 24px;
-
-    background: var(--white);
-
-    border:
+    border-top:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.30
-        );
-
-    border-radius: 24px;
-
-    box-shadow: var(--soft-shadow);
-}
-
-.plan-list-date {
-    padding: 17px;
-
-    text-align: center;
-
-    background: var(--light-sage);
-
-    border-radius: 18px;
-}
-
-.plan-list-date span,
-.plan-list-date strong {
-    display: block;
-}
-
-.plan-list-date span {
-    margin-bottom: 6px;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-}
-
-.plan-list-date strong {
-    color: var(--dark-green);
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.plan-list-content {
-    display: grid;
-
-    gap: 13px;
-}
-
-.plan-list-title {
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-}
-
-.plan-list-title h3 {
-    margin:
-        0 0 3px;
-
-    color: var(--dark-green);
-
-    font-size: 16px;
-}
-
-.plan-list-title p {
-    margin: 0;
-
-    color: var(--text-soft);
+        rgba(102, 87, 61, 0.12);
 
     font-size: 13px;
+
+    line-height: 1.6;
 }
 
-.plan-list-icon {
+
+/* ============================================================
+   PLANDETAIL – UNTERE BUTTONS
+   ============================================================ */
+
+.plan-detail-actions {
     display: flex;
 
-    width: 40px;
-    height: 40px;
-
-    align-items: center;
     justify-content: center;
 
-    flex: 0 0 auto;
+    flex-wrap: wrap;
 
-    background: var(--light-beige);
+    gap: 13px;
 
-    border-radius: 50%;
+    width:
+        min(
+            1100px,
+            calc(100% - 40px)
+        );
 
-    font-size: 20px;
-}
-
-.plan-list-actions {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.plan-list-actions .button {
-    margin: 0;
+    margin:
+        38px auto 70px;
 }
 
 
 /* ============================================================
-   FEEDBACK
+   MELDUNGEN
    ============================================================ */
 
-.feedback-card {
-    padding: 28px;
+.plan-detail-page .message-box {
+    width:
+        min(
+            1050px,
+            calc(100% - 40px)
+        );
 
-    background: var(--white);
+    box-sizing: border-box;
+
+    margin:
+        0 auto 24px;
+
+    padding:
+        15px 18px;
+
+    color: #405247;
+
+    background:
+        rgba(220, 226, 213, 0.58);
 
     border:
         1px solid
-        rgba(
-            163,
-            177,
-            138,
-            0.30
-        );
+        rgba(102, 87, 61, 0.14);
 
-    border-radius: 24px;
-
-    box-shadow: var(--soft-shadow);
+    border-radius: 14px;
 }
 
-.feedback-card h3 {
-    margin:
-        0 0 18px;
 
-    color: var(--dark-green);
+.plan-detail-page .message-box p {
+    margin: 0;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 26px;
-    font-weight: 400;
+    line-height: 1.6;
 }
 
 
 /* ============================================================
-   TABLETS
+   TABLET
    ============================================================ */
 
 @media (max-width: 1050px) {
-    .shopping-grid {
+
+    .nutrition-meal-grid {
         grid-template-columns:
             repeat(
                 2,
@@ -904,19 +1945,32 @@ td strong {
             );
     }
 
+
+    .plan-summary-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+
     .plan-list-card {
         grid-template-columns:
-            115px minmax(0, 1fr);
+            130px
+            minmax(0, 1fr);
     }
+
 
     .plan-list-actions {
         grid-column:
             1 / -1;
 
-        align-items: center;
         flex-direction: row;
+
         justify-content: flex-end;
     }
+
 }
 
 
@@ -924,113 +1978,1096 @@ td strong {
    KLEINE TABLETS
    ============================================================ */
 
-@media (max-width: 900px) {
-    .plan-summary-grid {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
+@media (max-width: 760px) {
+
+    .plans-page .hero-content,
+    .plan-detail-page .hero-content {
+        transform:
+            translateY(-24px);
     }
 
-    .plan-heading {
+
+    .plans-page-heading,
+    .compact-plan-header {
+        margin-top: -20px;
+    }
+
+
+    .compact-plan-header,
+    .plan-heading,
+    .plans-category-heading {
         align-items: flex-start;
+
         flex-direction: column;
     }
+
+
+    .plans-category-heading > div {
+        align-items: flex-start;
+    }
+
+
+    .plan-heading-actions {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+
+    .plan-list-card {
+        grid-template-columns: 1fr;
+    }
+
+
+    .plan-list-actions {
+        grid-column: auto;
+
+        flex-direction: column;
+    }
+
 
     .plan-safety-summary {
         grid-template-columns: 1fr;
     }
 
-    .exercise-card {
+
+    .shopping-grid {
         grid-template-columns: 1fr;
     }
 
-    .exercise-image-placeholder {
-        width: 100%;
-        min-height: 120px;
+
+    .steps-alternative {
+        align-items: flex-start;
+
+        flex-direction: column;
     }
+
 }
 
 
 /* ============================================================
-   SMARTPHONES
+   SMARTPHONE
    ============================================================ */
 
-@media (max-width: 700px) {
-    .shopping-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 600px) {
 
-        padding-left: 0;
+    .plans-page .hero-content,
+    .plan-detail-page .hero-content {
+        transform:
+            translateY(-18px);
     }
 
-    .shopping-note {
-        padding: 22px;
+
+    .plans-page-heading,
+    .plans-category-section,
+    .compact-plan-header,
+    .plan-card,
+    .plan-detail-actions {
+        width:
+            calc(100% - 24px);
     }
 
-    .shopping-note::before {
-        display: none;
+
+    .plans-page-heading,
+    .compact-plan-header {
+        margin-top: -15px;
     }
 
-    .shopping-note-top {
-        padding-left: 0;
+
+    .plans-page-heading h1 {
+        font-size: 36px;
     }
 
-    .plan-list-card {
-        grid-template-columns: 1fr;
+
+    .plans-category-section,
+    .plan-card {
+        padding: 21px;
+
+        border-radius: 21px;
     }
 
-    .plan-list-date {
-        width: 100%;
-    }
 
-    .plan-list-actions {
-        grid-column: auto;
-
-        align-items: stretch;
+    .plans-category-heading > div {
         flex-direction: column;
+    }
+
+
+    .plan-summary-grid,
+    .nutrition-meal-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .shopping-paper {
+        padding: 18px;
+
+        border-radius: 17px;
+    }
+
+
+    .shopping-category {
+        padding: 16px;
+    }
+
+
+    .plans-main-button,
+    .plans-category-create-button,
+    .plan-view-button,
+    .plan-download-button,
+    .plans-back-button,
+    .plan-soft-button,
+    .download-menu,
+    .download-menu-content {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .plan-detail-actions {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .meal-preference-button {
+        width: 42px;
+        height: 42px;
+    }
+
+}
+
+
+/* ============================================================
+   TOUCH-GERÄTE
+   ============================================================ */
+
+@media (hover: none) {
+
+    .plans-main-button:hover,
+    .plans-category-create-button:hover,
+    .plan-view-button:hover,
+    .plan-download-button:hover,
+    .plans-back-button:hover,
+    .plan-soft-button:hover {
+        transform: none;
+    }
+
+}
+
+
+/* ============================================================
+   REDUZIERTE ANIMATION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .plans-main-button,
+    .plans-category-create-button,
+    .plan-view-button,
+    .plan-download-button,
+    .plans-back-button,
+    .plan-soft-button,
+    .meal-preference-button {
+        transition: none;
+    }
+
+}
+
+/* ============================================================
+   FITNESSPLAN – GRÖSSERE SCHRIFT
+   ============================================================ */
+
+.fitness-table th {
+    font-size: 16px !important;
+    line-height: 1.4;
+}
+
+
+.fitness-table td {
+    font-size: 18px !important;
+    line-height: 1.5;
+}
+
+
+.fitness-table .fitness-exercise-name > strong {
+    display: block;
+
+    margin-bottom: 16px;
+
+    font-size: 22px !important;
+    line-height: 1.35;
+
+    color: var(--plans-green);
+}
+
+
+.fitness-table .fitness-value-cell {
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+
+.fitness-table .exercise-details summary {
+    font-size: 16px !important;
+    line-height: 1.4;
+}
+
+
+.fitness-table .exercise-instructions {
+    margin-top: 14px;
+
+    padding: 16px 18px;
+}
+
+
+.fitness-table .exercise-instructions h5 {
+    margin-bottom: 8px;
+
+    font-size: 17px !important;
+}
+
+
+.fitness-table .exercise-instructions p {
+    font-size: 16px !important;
+    line-height: 1.7;
+}
+
+
+.steps-alternative span,
+.steps-alternative strong {
+    font-size: 16px !important;
+}
+
+/* ============================================================
+   PLAN LÖSCHEN
+   ============================================================ */
+
+.plan-delete-form {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+}
+
+.plan-delete-button {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 21px;
+    background: linear-gradient(135deg, rgba(248, 237, 235, 0.96), rgba(244, 229, 228, 0.92));
+    border: 1px solid rgba(143, 83, 96, 0.28);
+    border-radius: 14px;
+    color: #8f5360;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 7px 16px rgba(116, 67, 77, 0.08);
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.plan-delete-button::before {
+    content: "×";
+    margin-right: 8px;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.plan-delete-button:hover {
+    transform: translateY(-2px);
+    background: #f1dcda;
+    border-color: #9b6670;
+    color: #713846;
+    box-shadow: 0 10px 20px rgba(116, 67, 77, 0.13);
+}
+
+.plan-delete-button:focus-visible {
+    outline: 3px solid rgba(143, 83, 96, 0.16);
+    outline-offset: 3px;
+}
+
+/* ============================================================
+   SCREENSHOT-OPTIMIERUNG – ERNÄHRUNGS- UND FITNESSPLAN
+   Einheitliche Montserrat-Typografie + größere Lesbarkeit
+   ============================================================ */
+
+.plan-detail-page .compact-plan-header,
+.plan-detail-page .plan-card,
+.plan-detail-page .plan-card button,
+.plan-detail-page .plan-card a,
+.plan-detail-page .plan-card input,
+.plan-detail-page .plan-card select,
+.plan-detail-page .plan-card textarea {
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+.plan-detail-page .compact-plan-header h2,
+.plan-detail-page .plan-heading h2,
+.plan-detail-page .day-heading h3,
+.plan-detail-page .meal-card h4,
+.plan-detail-page .meal-name,
+.plan-detail-page .recipe-title,
+.plan-detail-page .shopping-list-heading h3,
+.plan-detail-page .fitness-day-heading h3,
+.plan-detail-page .fitness-table th,
+.plan-detail-page .fitness-table td {
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+.plan-detail-page .compact-plan-header h2 {
+    font-size: clamp(34px, 4vw, 44px);
+    font-weight: 600;
+}
+
+.plan-detail-page .compact-plan-header p {
+    font-size: 17px;
+}
+
+.plan-detail-page .plan-label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.plan-detail-page .plan-heading h2 {
+    font-size: clamp(31px, 3.5vw, 39px);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.plan-detail-page .plan-soft-button,
+.plan-detail-page .plan-primary-button {
+    min-height: 50px;
+    padding: 0 19px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.plan-detail-page .plan-summary-item {
+    padding: 19px;
+}
+
+.plan-detail-page .plan-summary-item span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.plan-detail-page .plan-summary-item strong {
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.plan-detail-page .day-heading h3,
+.plan-detail-page .nutrition-day-heading h3,
+.plan-detail-page .fitness-day-heading h3 {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.plan-detail-page .day-heading p,
+.plan-detail-page .nutrition-day-heading p,
+.plan-detail-page .fitness-day-heading p {
+    font-size: 17px;
+}
+
+.plan-detail-page .meal-card h4,
+.plan-detail-page .meal-name {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.plan-detail-page .meal-card p,
+.plan-detail-page .meal-card li,
+.plan-detail-page .recipe-content,
+.plan-detail-page .recipe-content p,
+.plan-detail-page .recipe-content li {
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.plan-detail-page .meal-meta,
+.plan-detail-page .meal-calories,
+.plan-detail-page .meal-amount {
+    font-size: 16px;
+}
+
+.plan-detail-page .recipe-title,
+.plan-detail-page .recipe-section h5,
+.plan-detail-page .recipe-section h4 {
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Feedback: heller Hautton statt gelbem Standard-Emoji. */
+.meal-preference-button,
+.exercise-preference-button {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1;
+    border-width: 1px;
+}
+
+.meal-like-button,
+.exercise-like-button {
+    color: inherit;
+    background: rgba(236, 243, 234, 0.82);
+    border-color: rgba(95, 128, 102, 0.25);
+}
+
+.meal-like-button:hover,
+.exercise-like-button:hover {
+    color: inherit;
+    background: #edf4eb;
+    border-color: rgba(95, 128, 102, 0.48);
+}
+
+.meal-like-button.is-active,
+.exercise-like-button.is-active {
+    color: inherit;
+    background: #e1eddf;
+    border-color: #66866d;
+    box-shadow: 0 0 0 3px rgba(102, 134, 109, 0.13);
+}
+
+.meal-dislike-button,
+.exercise-dislike-button {
+    color: inherit;
+    background: rgba(248, 237, 235, 0.86);
+    border-color: rgba(143, 83, 96, 0.22);
+}
+
+.meal-dislike-button:hover,
+.exercise-dislike-button:hover {
+    color: inherit;
+    background: #f6e7e5;
+    border-color: rgba(143, 83, 96, 0.46);
+}
+
+.meal-dislike-button.is-active,
+.exercise-dislike-button.is-active {
+    color: inherit;
+    background: #f1dcda;
+    border-color: #9b6670;
+    box-shadow: 0 0 0 3px rgba(143, 83, 96, 0.11);
+}
+
+.plan-detail-page .meal-preference-area,
+.plan-detail-page .exercise-preference-area {
+    padding-top: 15px;
+}
+
+.plan-detail-page .shopping-help-text,
+.plan-detail-page .shopping-list-item,
+.plan-detail-page .shopping-list-item label {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.plan-detail-page .shopping-list-heading h3 {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.plan-detail-page .fitness-table th {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.plan-detail-page .fitness-table td {
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+    .plan-detail-page .compact-plan-header h2 {
+        font-size: 31px;
+    }
+
+    .plan-detail-page .plan-heading h2 {
+        font-size: 28px;
+    }
+
+    .plan-detail-page .meal-card h4,
+    .plan-detail-page .meal-name {
+        font-size: 20px;
+    }
+
+    .meal-preference-button,
+    .exercise-preference-button {
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
     }
 }
 
-@media (max-width: 600px) {
-    .plan-card,
-    .feedback-card,
-    .plan-list-card {
-        padding: 21px;
+/* ============================================================
+   FITNESSPLAN – DESIGN ANGEPASST AN ERNÄHRUNGSPLAN
+   ============================================================ */
 
-        border-radius: 22px;
-    }
+.plan-detail-page .fitness-plan-days {
+    display: grid;
+    gap: 22px;
+    margin-top: 28px;
+}
 
-    .plan-summary-grid {
-        grid-template-columns: 1fr;
-    }
+.plan-detail-page .training-day-card {
+    margin-top: 0;
+    padding: 23px;
+    background: rgba(255, 255, 255, 0.34);
+    border: 1px solid rgba(102, 87, 61, 0.13);
+    border-radius: 21px;
+}
 
-    .training-day-heading,
-    .steps-alternative {
+.plan-detail-page .training-day-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.plan-detail-page .training-day-heading > div {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+}
+
+.plan-detail-page .training-day-heading span {
+    color: var(--plans-gold);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.plan-detail-page .training-day-heading h3 {
+    margin: 0;
+    color: var(--plans-green);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.plan-detail-page .training-day-heading > strong {
+    color: var(--plans-green-medium);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.plan-detail-page .fitness-table {
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.53);
+    border: 1px solid rgba(102, 87, 61, 0.12);
+    border-radius: 17px;
+}
+
+.plan-detail-page .fitness-table th {
+    padding: 15px 14px;
+    color: var(--plans-green);
+    background: rgba(220, 226, 213, 0.58);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.plan-detail-page .fitness-table td {
+    padding: 16px 14px;
+    color: var(--plans-text);
+    border-top: 1px solid rgba(102, 87, 61, 0.10);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    vertical-align: top;
+}
+
+.plan-detail-page .fitness-table .fitness-exercise-name > strong {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--plans-green);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 21px !important;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.plan-detail-page .fitness-table .fitness-value-cell {
+    color: var(--plans-green);
+    font-size: 17px !important;
+    font-weight: 600;
+}
+
+.plan-detail-page .exercise-details {
+    margin-top: 2px;
+}
+
+.plan-detail-page .exercise-details summary {
+    color: var(--plans-green-medium);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 15px !important;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    list-style: none;
+}
+
+.plan-detail-page .exercise-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.plan-detail-page .exercise-details-open::after {
+    content: "  ↓";
+}
+
+.plan-detail-page .exercise-details[open] .exercise-details-open::after {
+    content: "  ↑";
+}
+
+.plan-detail-page .exercise-instructions {
+    margin-top: 14px;
+    padding: 16px 17px;
+    background: rgba(247, 241, 231, 0.62);
+    border: 1px solid rgba(102, 87, 61, 0.11);
+    border-radius: 14px;
+}
+
+.plan-detail-page .exercise-instructions h5 {
+    margin: 0 0 8px;
+    color: var(--plans-green);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+.plan-detail-page .exercise-instructions p {
+    margin: 0;
+    color: var(--plans-text);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 16px !important;
+    line-height: 1.7;
+}
+
+.plan-detail-page .fitness-rating-cell {
+    min-width: 122px;
+}
+
+.plan-detail-page .exercise-preference-area {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.plan-detail-page .exercise-preference-buttons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.plan-detail-page .exercise-preference-buttons form {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+}
+
+/* Daumen exakt wie beim Ernährungsplan */
+.plan-detail-page .exercise-preference-button {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.plan-detail-page .steps-alternative {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 16px;
+    padding: 15px 16px;
+    background: rgba(220, 226, 213, 0.48);
+    border: 1px solid rgba(102, 87, 61, 0.10);
+    border-radius: 15px;
+}
+
+.plan-detail-page .steps-alternative span {
+    color: var(--plans-text-light);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 16px !important;
+    font-weight: 500;
+}
+
+.plan-detail-page .steps-alternative strong {
+    color: var(--plans-green);
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 17px !important;
+    font-weight: 600;
+}
+
+.plan-detail-page .medical-note {
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+@media (max-width: 760px) {
+    .plan-detail-page .training-day-heading {
         align-items: flex-start;
         flex-direction: column;
     }
 
-    .table-scroll {
-        border-radius: 16px;
+    .plan-detail-page .training-day-heading > div {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 600px) {
+    .plan-detail-page .training-day-card {
+        padding: 18px;
+        border-radius: 17px;
     }
 
-    th,
-    td {
-        padding: 11px;
+    .plan-detail-page .training-day-heading h3 {
+        font-size: 25px;
+    }
 
-        font-size: 12px;
+    .plan-detail-page .exercise-preference-button {
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
     }
 }
 
 
 /* ============================================================
-   REDUZIERTE ANIMATIONEN
+   MEINE PLÄNE – EINHEITLICHE AKTIONSBUTTONS
+   Plan ansehen / PDF / Plan löschen
    ============================================================ */
 
-@media (prefers-reduced-motion: reduce) {
-    .exercise-card,
-    .plan-list-card {
-        transition: none;
+.plans-page .plan-list-actions {
+    width: 230px;
+    gap: 10px;
+}
+
+.plans-page .plan-list-actions > .plan-view-button,
+.plans-page .plan-list-actions > .plan-download-button,
+.plans-page .plan-list-actions > .download-menu,
+.plans-page .plan-list-actions > .plan-delete-form {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+.plans-page .plan-list-actions .plan-view-button,
+.plans-page .plan-list-actions .plan-download-button,
+.plans-page .plan-list-actions .download-menu > summary,
+.plans-page .plan-list-actions .plan-delete-button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 100%;
+    min-width: 0;
+    height: 54px;
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0 18px;
+
+    color: #405247;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eadbc0,
+            #e6dfcf 48%,
+            #dce2d5
+        );
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.20);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(72, 61, 43, 0.10);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.plans-page .plan-list-actions .plan-view-button:hover,
+.plans-page .plan-list-actions .plan-download-button:hover,
+.plans-page .plan-list-actions .download-menu > summary:hover,
+.plans-page .plan-list-actions .download-menu[open] > summary {
+    color: #314b3d;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e2d1b7,
+            #dedbca 48%,
+            #d2dccf
+        );
+
+    border-color:
+        rgba(82, 104, 87, 0.26);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(72, 61, 43, 0.15);
+}
+
+
+/* Plan löschen: normal wie "Plan ansehen", Hover erst rot */
+
+.plans-page .plan-delete-form {
+    display: flex;
+    padding: 0;
+}
+
+.plans-page .plan-list-actions .plan-delete-button::before {
+    content: none;
+}
+
+.plans-page .plan-list-actions .plan-delete-button:hover {
+    color: #753f4b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f2dfdc,
+            #eed7d5 52%,
+            #ead1d3
+        );
+
+    border-color:
+        rgba(143, 83, 96, 0.42);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 24px
+        rgba(116, 67, 77, 0.16);
+}
+
+.plans-page .plan-list-actions .plan-delete-button:focus-visible,
+.plans-page .plan-list-actions .plan-view-button:focus-visible,
+.plans-page .plan-list-actions .plan-download-button:focus-visible,
+.plans-page .plan-list-actions .download-menu > summary:focus-visible {
+    outline:
+        3px solid
+        rgba(102, 134, 109, 0.18);
+
+    outline-offset: 3px;
+}
+
+
+/* ============================================================
+   PDF-DROPDOWN – NEUER PFEIL + RUHIGERES MENÜ
+   ============================================================ */
+
+.plans-page .download-menu {
+    position: relative;
+}
+
+.plans-page .download-menu > summary {
+    position: relative;
+    list-style: none;
+    padding: 0 44px 0 18px;
+}
+
+.plans-page .download-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* eigener Chevron statt des alten Zeichens */
+
+.plans-page .download-menu > summary::after {
+    content: "";
+
+    position: absolute;
+    right: 20px;
+    top: 50%;
+
+    width: 8px;
+    height: 8px;
+
+    margin: -6px 0 0 0;
+
+    border-right: 2px solid #657267;
+    border-bottom: 2px solid #657267;
+
+    transform: rotate(45deg);
+    transform-origin: center;
+
+    transition:
+        transform 0.2s ease,
+        margin 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.plans-page .download-menu[open] > summary::after {
+    content: "";
+    margin-top: -2px;
+    transform: rotate(-135deg);
+    border-color: #405247;
+}
+
+
+/* Dropdown-Karte */
+
+.plans-page .download-menu-content {
+    position: absolute;
+
+    top: calc(100% + 9px);
+    right: 0;
+    z-index: 40;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 8px;
+    overflow: hidden;
+
+    background: rgba(250, 247, 239, 0.98);
+
+    border:
+        1px solid
+        rgba(102, 87, 61, 0.16);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 16px 34px
+        rgba(72, 61, 43, 0.16);
+}
+
+.plans-page .download-menu-content a {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 9px 12px;
+
+    color: #405247;
+    background: transparent;
+
+    border: 0;
+    border-radius: 11px;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+
+    text-decoration: none;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+/* kleines PDF-Badge */
+
+.plans-page .download-menu-content a::before {
+    content: "PDF";
+
+    min-width: 38px;
+    height: 26px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    margin-right: 11px;
+
+    color: #5c6d60;
+    background: #e8eee3;
+
+    border:
+        1px solid
+        rgba(102, 134, 109, 0.18);
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.plans-page .download-menu-content a:hover {
+    color: #314b3d;
+    background: rgba(220, 226, 213, 0.68);
+    transform: translateX(2px);
+}
+
+@media (max-width: 760px) {
+    .plans-page .plan-list-actions {
+        width: 100%;
     }
 }

@@ -1,36 +1,204 @@
 {% extends "base.html" %}
 
+{% block title %}
+Einloggen | Love Yourself
+{% endblock %}
+
+{% block body_class %}
+login-page
+{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
 
-{% if error %}
-<div class="message-box">
-    <p>{{ error }}</p>
-</div>
-{% endif %}
+<section class="login-section">
 
-<form method="POST">
+    <div class="login-wrapper">
 
-    <label>Username:</label>
-    <input type="text" name="username" required>
+        <!-- ========================================= -->
+        <!-- LINKE SEITE -->
+        <!-- ========================================= -->
 
-    <label>Password:</label>
-    <input type="password" name="password" required>
+        <div class="login-intro">
 
-    <button type="submit">Login</button>
+            <div class="login-intro-content">
 
-</form>
+                <h2>
+                    Schön, dass du wieder da bist.
+                </h2>
 
-<br>
+                <p class="login-intro-text">
+                    Logge dich ein und setze deine persönliche Reise
+                    mit Love Yourself genau dort fort,
+                    wo du aufgehört hast.
+                </p>
 
-<a href="{{ url_for('forgot_password') }}">
-    Passwort vergessen?
-</a>
+                <div class="login-benefits">
 
-<br><br>
+                    <div class="login-benefit">
 
-<a href="{{ url_for('register') }}">
-    Noch keinen Account? Registrieren
-</a>
+                        <div class="login-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Deine Ziele</strong>
+
+                            <span>
+                                Behalte deinen Fortschritt und
+                                deine persönlichen Ziele im Blick.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-benefit">
+
+                        <div class="login-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Deine Pläne</strong>
+
+                            <span>
+                                Greife jederzeit auf deine persönlichen
+                                Ernährungs- und Trainingspläne zu.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-benefit">
+
+                        <div class="login-benefit-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Deine Reise</strong>
+
+                            <span>
+                                Mach in deinem eigenen Tempo weiter.
+                                Schritt für Schritt.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- RECHTE SEITE / FORMULAR -->
+        <!-- ========================================= -->
+
+        <div class="login-form-card">
+
+            <div class="login-form-heading">
+
+                <h1>Einloggen</h1>
+
+                <p>
+                    Melde dich bei deinem Love Yourself Konto an.
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+            <div class="login-error-message">
+
+                <span class="login-error-icon">
+                    !
+                </span>
+
+                <p>{{ error }}</p>
+
+            </div>
+
+            {% endif %}
+
+
+            <form
+                method="POST"
+                class="login-form"
+            >
+
+                <!-- Benutzername -->
+
+                <div class="login-field">
+
+                    <label for="username">
+                        Benutzername
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Dein Benutzername"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Passwort -->
+
+                <div class="login-field">
+
+                    <label for="password">
+                        Passwort
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Dein Passwort"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Button -->
+
+                <button
+                    type="submit"
+                    class="login-submit-button"
+                >
+                    Einloggen
+                </button>
+
+            </form>
+
+
+            <div class="login-register">
+
+                <span>
+                    Du hast noch kein Konto?
+                </span>
+
+                <a href="{{ url_for('auth.register') }}">
+                    Jetzt registrieren
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

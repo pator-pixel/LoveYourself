@@ -80,18 +80,28 @@
     >
 
     <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/weight.css') }}"
+    >
+
+    <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/plans.css') }}"
     >
 
     <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/support.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/generate_plan.css') }}"
     >
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/about.css') }}"
+    >
+
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/community.css') }}"
     >
 
     <link
@@ -455,35 +465,6 @@
         />
     </symbol>
 
-    <!-- Support -->
-
-    <symbol
-        id="icon-support"
-        viewBox="0 0 24 24"
-    >
-        <circle
-            cx="12"
-            cy="12"
-            r="9"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-        />
-        <path
-            d="M8.3 8.3a5.2 5.2 0 0 1 7.4 0M8.3 15.7a5.2 5.2 0 0 0 7.4 0"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-        />
-        <path
-            d="m7 7-2-2M17 7l2-2M7 17l-2 2M17 17l2 2"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-        />
-    </symbol>
 
     <!-- Impressum -->
 
@@ -702,7 +683,7 @@
 
                 <a
                     class="sidebar-link"
-                    href="{{ url_for('plans') }}"
+                    href="{{ url_for('plans_routes.plans') }}"
                 >
                     <span class="sidebar-icon">
                         <svg
@@ -722,7 +703,7 @@
 
                 <a
                     class="sidebar-link"
-                    href="{{ url_for('generate_plan') }}"
+                    href="{{ url_for('plans_routes.generate_plan') }}"
                 >
                     <span class="sidebar-icon">
                         <svg
@@ -844,9 +825,9 @@
                 </span>
             </a>
 
-            <div
-                class="sidebar-link sidebar-link-disabled"
-                title="Diese Funktion wird später ergänzt."
+            <a
+                class="sidebar-link"
+                href="{{ url_for('community.community') }}"
             >
                 <span class="sidebar-icon">
                     <svg
@@ -862,31 +843,8 @@
                 <span>
                     Unsere gemeinsame Reise
                 </span>
-            </div>
+            </a>
 
-            {% if is_logged_in %}
-
-                <a
-                    class="sidebar-link"
-                    href="{{ url_for('support') }}"
-                >
-                    <span class="sidebar-icon">
-                        <svg
-                            class="nav-icon-svg"
-                            width="20"
-                            height="20"
-                            aria-hidden="true"
-                        >
-                            <use href="#icon-support"></use>
-                        </svg>
-                    </span>
-
-                    <span>
-                        Support
-                    </span>
-                </a>
-
-            {% endif %}
 
             <a
                 class="sidebar-link"
@@ -908,29 +866,6 @@
                 </span>
             </a>
 
-            {% if is_admin %}
-
-                <a
-                    class="sidebar-link admin-sidebar-link"
-                    href="{{ url_for('admin_support') }}"
-                >
-                    <span class="sidebar-icon">
-                        <svg
-                            class="nav-icon-svg"
-                            width="20"
-                            height="20"
-                            aria-hidden="true"
-                        >
-                            <use href="#icon-admin"></use>
-                        </svg>
-                    </span>
-
-                    <span>
-                        Admin-Support
-                    </span>
-                </a>
-
-            {% endif %}
 
         </div>
 
